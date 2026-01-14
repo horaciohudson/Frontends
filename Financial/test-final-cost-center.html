@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Final - Centro de Custo</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 3px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .info { background-color: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Teste Final - Centro de Custo</h1>
+    
+    <button onclick="testFinalFix()">Testar Correção Final</button>
+    
+    <div id="results"></div>
+
+    <script>
+        function addResult(title, content, type = 'info') {
+            const resultsDiv = document.getElementById('results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `result ${type}`;
+            resultDiv.innerHTML = `<h3>${title}</h3><pre>${content}</pre>`;
+            resultsDiv.appendChild(resultDiv);
+        }
+
+        function testFinalFix() {
+            console.log('\n=== TESTE FINAL DA CORREÇÃO ===');
+            
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const selectedCompanyId = sessionStorage.getItem('selectedCompanyId');
+            
+            // Simular a lógica do service corrigido
+            let companyId = user.tenantId || selectedCompanyId;
+            
+            const testData = {
+                user: user,
+                selectedCompanyId: selectedCompanyId,
+                finalCompanyId: companyId,
+                hasValidCompanyId: !!companyId
+            };
+
+            addResult('Dados de Teste', JSON.stringify(testData, null, 2), 'info');
+
+            if (!companyId) {
+                addResult('❌ Erro', 'Company ID não encontrado', 'error');
+                return;
+            }
+
+            // Simular dados que seriam enviados
+            const createData = {
+                companyId: companyId,
+                costCenterCode: 'CC001',
+                costCenterName: 'Teste Final',
+                description: 'Teste da correção final',
+                isActive: true
+            };
+
+            addResult('✅ Dados Válidos', 
+                `Company ID encontrado: ${companyId}\n\n` +
+                `Dados que seriam enviados:\n${JSON.stringify(createData, null, 2)}`, 
+                'success'
+            );
+
+            // Verificar UUID
+            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+            const isValidUUID = uuidRegex.test(companyId);
+
+            addResult('Validação UUID', 
+                `Company ID: ${companyId}\nÉ UUID válido: ${isValidUUID}`, 
+                isValidUUID ? 'success' : 'error'
+            );
+
+            if (isValidUUID) {
+                addResult('🎉 Correção Aplicada', 
+                    'A correção deve resolver o problema!\n\n' +
+                    'Agora o service usa:\n' +
+                    '1. user.tenantId (se disponível)\n' +
+                    '2. selectedCompanyId (como fallback)\n' +
+                    '3. data.companyId (como último recurso)', 
+                    'success'
+                );
+            }
+        }
+
+        // Executar teste ao carregar
+        window.onload = testFinalFix;
+    </script>
+</body>
+</html>

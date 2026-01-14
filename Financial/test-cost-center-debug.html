@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Centro de Custo</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 3px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .info { background-color: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Debug - Centro de Custo</h1>
+    <div id="results"></div>
+
+    <script>
+        function addResult(title, content, type = 'info') {
+            const resultsDiv = document.getElementById('results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `result ${type}`;
+            resultDiv.innerHTML = `<h3>${title}</h3><pre>${content}</pre>`;
+            resultsDiv.appendChild(resultDiv);
+        }
+
+        function debugCostCenter() {
+            console.log('=== DEBUG CENTRO DE CUSTO ===');
+
+            // Verificar dados do usuário
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const selectedCompanyId = sessionStorage.getItem('selectedCompanyId');
+
+            const userData = {
+                user: user,
+                tenantId: user.tenantId,
+                tenantIdType: typeof user.tenantId,
+                selectedCompanyId: selectedCompanyId,
+                selectedCompanyIdType: typeof selectedCompanyId
+            };
+
+            console.log('1. Dados do usuário:', userData);
+            addResult('1. Dados do Usuário', JSON.stringify(userData, null, 2), 'info');
+
+            // Simular dados que seriam enviados
+            const createData = {
+                companyId: user.tenantId,
+                costCenterCode: 'CC001',
+                costCenterName: 'Teste Debug',
+                description: 'Teste para debug',
+                isActive: true
+            };
+
+            console.log('2. Dados que seriam enviados:', createData);
+            addResult('2. Dados para Envio', JSON.stringify(createData, null, 2), 'info');
+
+            // Verificar se todos os campos obrigatórios estão preenchidos
+            const validation = {
+                companyId: {
+                    value: createData.companyId,
+                    isValid: !!createData.companyId,
+                    type: typeof createData.companyId
+                },
+                costCenterCode: {
+                    value: createData.costCenterCode,
+                    isValid: !!createData.costCenterCode,
+                    type: typeof createData.costCenterCode
+                },
+                costCenterName: {
+                    value: createData.costCenterName,
+                    isValid: !!createData.costCenterName,
+                    type: typeof createData.costCenterName
+                }
+            };
+
+            console.log('3. Validação dos campos:', validation);
+            addResult('3. Validação dos Campos', JSON.stringify(validation, null, 2), 'info');
+
+            // Verificar se há problemas
+            const problems = [];
+            if (!validation.companyId.isValid) {
+                problems.push('companyId está vazio ou null');
+            }
+            if (!validation.costCenterCode.isValid) {
+                problems.push('costCenterCode está vazio ou null');
+            }
+            if (!validation.costCenterName.isValid) {
+                problems.push('costCenterName está vazio ou null');
+            }
+
+            if (problems.length > 0) {
+                console.error('❌ Problemas encontrados:', problems);
+                addResult('❌ Problemas Encontrados', problems.join('\n'), 'error');
+            } else {
+                console.log('✅ Todos os campos obrigatórios estão preenchidos');
+                addResult('✅ Validação', 'Todos os campos obrigatórios estão preenchidos', 'success');
+            }
+
+            // Verificar formato UUID
+            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+            const isValidUUID = createData.companyId ? uuidRegex.test(createData.companyId) : false;
+
+            const uuidValidation = {
+                companyId: createData.companyId,
+                isValidUUID: isValidUUID,
+                regex: uuidRegex.toString()
+            };
+
+            console.log('4. Validação UUID:', uuidValidation);
+            addResult('4. Validação UUID', JSON.stringify(uuidValidation, null, 2), 
+                isValidUUID ? 'success' : 'error');
+
+            if (!isValidUUID) {
+                console.error('❌ CompanyId não é um UUID válido');
+            } else {
+                console.log('✅ CompanyId é um UUID válido');
+            }
+
+            // Verificar se o problema pode ser serialização JSON
+            try {
+                const jsonString = JSON.stringify(createData);
+                const parsed = JSON.parse(jsonString);
+                
+                addResult('5. Teste de Serialização', 
+                    `Original: ${JSON.stringify(createData, null, 2)}\n\n` +
+                    `JSON String: ${jsonString}\n\n` +
+                    `Parsed: ${JSON.stringify(parsed, null, 2)}`, 
+                    'success'
+                );
+            } catch (error) {
+                addResult('5. Erro de Serialização', error.message, 'error');
+            }
+
+            console.log('=== FIM DEBUG ===');
+        }
+
+        // Executar debug ao carregar a página
+        window.onload = debugCostCenter;
+    </script>
+</body>
+</html>

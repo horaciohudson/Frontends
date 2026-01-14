@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Requisição Centro de Custo</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 3px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .info { background-color: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Debug - Requisição Centro de Custo</h1>
+    
+    <button onclick="debugRequest()">Debug Requisição</button>
+    <button onclick="testDirectRequest()">Teste Direto</button>
+    
+    <div id="results"></div>
+
+    <script>
+        function addResult(title, content, type = 'info') {
+            const resultsDiv = document.getElementById('results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `result ${type}`;
+            resultDiv.innerHTML = `<h3>${title}</h3><pre>${content}</pre>`;
+            resultsDiv.appendChild(resultDiv);
+        }
+
+        async function debugRequest() {
+            console.log('\n=== DEBUG DA REQUISIÇÃO ===');
+            
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const selectedCompanyId = sessionStorage.getItem('selectedCompanyId');
+            
+            addResult('Dados de Autenticação', 
+                `Token: ${token ? 'Presente' : 'Ausente'}\n` +
+                `User: ${JSON.stringify(user, null, 2)}\n` +
+                `Selected Company ID: ${selectedCompanyId}`, 
+                'info'
+            );
+
+            // Simular o que o service faz
+            const createData = {
+                companyId: user.tenantId,
+                costCenterCode: 'CC001',
+                costCenterName: 'Teste',
+                description: 'Teste de criação',
+                isActive: true
+            };
+
+            addResult('Dados que seriam enviados', JSON.stringify(createData, null, 2), 'info');
+
+            // Verificar se todos os campos estão preenchidos
+            const validation = {
+                companyId: createData.companyId ? '✅' : '❌ NULL',
+                costCenterCode: createData.costCenterCode ? '✅' : '❌ NULL',
+                costCenterName: createData.costCenterName ? '✅' : '❌ NULL',
+                isActive: createData.isActive !== undefined ? '✅' : '❌ NULL'
+            };
+
+            addResult('Validação dos Campos', JSON.stringify(validation, null, 2), 
+                Object.values(validation).every(v => v === '✅') ? 'success' : 'error'
+            );
+        }
+
+        async function testDirectRequest() {
+            console.log('\n=== TESTE DIRETO ===');
+            
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            if (!token) {
+                addResult('Erro', 'Token não encontrado. Faça login primeiro.', 'error');
+                return;
+            }
+
+            const createData = {
+                companyId: user.tenantId,
+                costCenterCode: 'CC001',
+                costCenterName: 'Teste Direto',
+                description: 'Teste de criação direta',
+                isActive: true
+            };
+
+            try {
+                const response = await fetch('http://localhost:8080/api/cost-centers', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                        'X-Tenant-ID': user.tenantId,
+                        'X-Company-ID': user.tenantId
+                    },
+                    body: JSON.stringify(createData)
+                });
+
+                addResult('Response Status', `${response.status} - ${response.statusText}`, 
+                    response.ok ? 'success' : 'error'
+                );
+
+                const responseText = await response.text();
+                addResult('Response Body', responseText, response.ok ? 'success' : 'error');
+
+            } catch (error) {
+                addResult('Erro na Requisição', error.message, 'error');
+            }
+        }
+
+        // Executar debug ao carregar
+        window.onload = debugRequest;
+    </script>
+</body>
+</html>

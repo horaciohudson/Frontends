@@ -1,0 +1,100 @@
+/* FormChartAccount.module.css */
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #fdfdfd;
+  border: 1px solid #ddd;
+  padding: 1.5rem;
+  border-radius: 8px;
+  max-width: 800px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 200px;
+}
+
+.column-code {
+  max-width: 150px;
+}
+
+.column-name {
+  flex: 2;
+}
+
+.column-type,
+.column-nature,
+.column-level {
+  max-width: 180px;
+}
+
+.column-parent {
+  flex: 2;
+}
+
+.column-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.8rem;
+}
+
+.form-label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #333;
+}
+
+.form-input,
+.form-select {
+  padding: 0.5rem;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-select {
+  background-color: #fff;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+  margin-top: 1rem;
+}
+
+.button,
+.button-new,
+.cancel {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button {
+  background-color: #2e7dd7;
+  color: white;
+}
+
+.cancel {
+  background-color: #aaa;
+  color: white;
+}
+
+.button-new {
+  background-color: #4caf50;
+  color: white;
+}

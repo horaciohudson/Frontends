@@ -1,0 +1,119 @@
+{
+  "packagingTypes": {
+    "UNIT": "Unidade",
+    "PIECE": "Peça",
+    "KILO": "Quilograma",
+    "LITER": "Litro",
+    "METER": "Metro",
+    "PACKAGE": "Pacote",
+    "BOX": "Caixa"
+  },
+  "operationTypes": {
+    "SALE": "Venda",
+    "BUY": "Compra",
+    "TRANSFER": "Transferência"
+  },
+  "addressTypes": {
+    "COMMERCIAL": "Comercial",
+    "CORRESPONDENCE": "Correspondência"
+  },
+  "accountOrigins": {
+    "ASSET": "Ativo",
+    "LIABILITY": "Passivo",
+    "REVENUE": "Receita",
+    "EXPENSE": "Despesa",
+    "EQUITY": "Patrimônio"
+  },
+  "customerTypes": {
+    "PHYSICAL": "Físico",
+    "LEGAL": "Jurídico",
+    "PROFESSIONAL": "Profissional"
+  },
+  "documentTypes": {
+    "CPF": "CPF",
+    "CNPJ": "CNPJ",
+    "RG": "RG",
+    "PASSPORT": "Passaporte"
+  },
+  "paymentMethods": {
+    "CASH": "Dinheiro",
+    "CREDIT_CARD": "Cartão de Crédito",
+    "DEBIT_CARD": "Cartão de Débito",
+    "BANK_TRANSFER": "Transferência Bancária",
+    "PIX": "PIX",
+    "CHECK": "Cheque",
+    "BOLETO": "Boleto Bancário",
+    "STORE_FINANCING": "Crediário da Loja",
+    "VOUCHER": "Vale/Voucher",
+    "OTHER": "Outros"
+  },
+  "orderStatus": {
+    "SHIPPED": "Enviado",
+    "DELIVERED": "Entregue",
+    "INVOICED": "Faturado",
+    "CANCELED": "Cancelado",
+    "OPEN": "Aberto",
+    "IN_PREPARATION": "Em Preparação",
+    "PENDING_PAYMENT": "Aguardando Pagamento",
+    "RETURNED": "Devolvido"
+  },
+  "productStatus": {
+    "ACTIVE": "Ativo",
+    "INACTIVE": "Inativo",
+    "DISCONTINUED": "Descontinuado",
+    "OUT_OF_STOCK": "Sem Estoque"
+  },
+  "companyFlags": {
+    "FACTORY": "Fábrica",
+    "SUPPLIER": "Fornecedor",
+    "CUSTOMER": "Cliente",
+    "TRANSPORTER": "Transportadora"
+  },
+  "fiscalTypes": {
+    "ICMS": "ICMS",
+    "IPI": "IPI",
+    "PIS": "PIS",
+    "COFINS": "COFINS",
+    "ISS": "ISS",
+    "FUNRURAL": "FUNRURAL"
+  },
+  "currencyTypes": {
+    "BRL": "Real Brasileiro",
+    "USD": "Dólar Americano",
+    "EUR": "Euro",
+    "GBP": "Libra Esterlina"
+  },
+  "activityTypes": {
+    "COMMERCE": "Comércio",
+    "INDUSTRY": "Indústria",
+    "SERVICES": "Serviços",
+    "AGRICULTURE": "Agricultura"
+  },
+  "unitType": {
+    "UNIT": "Unidade",
+    "PIECE": "Peça",
+    "METER": "Metro",
+    "KILO": "Quilograma",
+    "LITER": "Litro",
+    "HOUR": "Hora",
+    "KWH": "Quilowatt-hora"
+  },
+  "orderType": {
+    "ORDER": "Pedido",
+    "BUDGET": "Orçamento",
+    "SALE": "Venda",
+    "RENTAL": "Aluguel"
+  },
+  "addressType": {
+    "COMMERCIAL": "Comercial",
+    "CORRESPONDENCE": "Correspondência",
+    "BILLING": "Cobrança",
+    "DELIVERY": "Entrega",
+    "REGISTERED": "Registrado",
+    "OTHER": "Outro"
+  },
+  "noteType": {
+    "ENTRY": "Entrada",
+    "EXIT": "Saída"
+  }
+}

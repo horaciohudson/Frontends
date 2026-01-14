@@ -1,0 +1,215 @@
+/* Loading and Empty States */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    gap: 1rem;
+}
+
+.empty-state {
+    background: white;
+    padding: 4rem 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.empty-message {
+    font-size: 1.1rem;
+    color: #5a6c7d;
+}
+
+/* Company Table */
+.company-table {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.company-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.company-table th {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 2px solid #dee2e6;
+    white-space: nowrap;
+}
+
+.company-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: middle;
+}
+
+.company-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.company-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Status badges */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.status-badge.status-active {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-badge.status-inactive {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Type badges */
+.type-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+.type-badge {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.type-badge.supplier {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+
+.type-badge.customer {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.type-badge.transporter {
+    background-color: #fff3e0;
+    color: #ef6c00;
+}
+
+.type-badge.factory {
+    background-color: #f3e5f5;
+    color: #7b1fa2;
+}
+
+/* Action buttons */
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-edit,
+.btn-delete,
+.btn-select {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: none;
+}
+
+.btn-edit:hover {
+    background-color: #ebf8ff;
+    border-color: #4299e1;
+    transform: scale(1.1);
+}
+
+.btn-delete:hover {
+    background-color: #fed7d7;
+    border-color: #e53e3e;
+    transform: scale(1.1);
+}
+
+.btn-select:hover {
+    background-color: #f0fff4;
+    border-color: #38a169;
+    transform: scale(1.1);
+}
+
+.btn-edit:disabled,
+.btn-delete:disabled,
+.btn-select:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .company-table {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .company-table th,
+    .company-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .btn-edit,
+    .btn-delete,
+    .btn-select {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    .company-table,
+    .empty-state {
+        background-color: #161b22;
+    }
+
+    .company-table th {
+        background-color: #21262d;
+        color: #f0f6fc;
+        border-bottom-color: #30363d;
+    }
+
+    .company-table td {
+        border-bottom-color: #30363d;
+        color: #f0f6fc;
+    }
+
+    .company-table tbody tr:hover {
+        background-color: #21262d;
+    }
+
+    .btn-edit,
+    .btn-delete,
+    .btn-select {
+        border-color: #30363d;
+    }
+}

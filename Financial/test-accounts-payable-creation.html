@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Criação de Conta a Pagar</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .result { margin-top: 20px; padding: 15px; border-radius: 4px; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 4px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Teste - Criação de Conta a Pagar</h1>
+    
+    <form id="testForm">
+        <div class="form-group">
+            <label for="description">Descrição:</label>
+            <input type="text" id="description" value="Teste de Conta a Pagar" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="supplierName">Nome do Fornecedor:</label>
+            <input type="text" id="supplierName" value="Fornecedor Teste" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="originalAmount">Valor Original:</label>
+            <input type="number" id="originalAmount" value="100.00" step="0.01" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="issueDate">Data de Emissão:</label>
+            <input type="date" id="issueDate" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="dueDate">Data de Vencimento:</label>
+            <input type="date" id="dueDate" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="competenceDate">Data de Competência:</label>
+            <input type="date" id="competenceDate" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="category">Categoria:</label>
+            <input type="text" id="category" value="Categoria Teste">
+        </div>
+        
+        <div class="form-group">
+            <label for="costCenter">Centro de Custo:</label>
+            <input type="text" id="costCenter" value="Centro de Custo Teste">
+        </div>
+        
+        <button type="submit">Criar Conta a Pagar</button>
+    </form>
+    
+    <div id="result"></div>
+
+    <script>
+        // Configurar datas padrão
+        const today = new Date().toISOString().split('T')[0];
+        const nextMonth = new Date();
+        nextMonth.setMonth(nextMonth.getMonth() + 1);
+        const nextMonthStr = nextMonth.toISOString().split('T')[0];
+        
+        document.getElementById('issueDate').value = today;
+        document.getElementById('dueDate').value = nextMonthStr;
+        document.getElementById('competenceDate').value = today;
+
+        document.getElementById('testForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Enviando...</p>';
+            
+            try {
+                // Obter token do localStorage
+                const token = localStorage.getItem('token');
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                
+                if (!token) {
+                    throw new Error('Token não encontrado. Faça login primeiro.');
+                }
+                
+                // Preparar dados
+                const formData = {
+                    description: document.getElementById('description').value,
+                    supplierName: document.getElementById('supplierName').value,
+                    originalAmount: parseFloat(document.getElementById('originalAmount').value),
+                    issueDate: document.getElementById('issueDate').value,
+                    dueDate: document.getElementById('dueDate').value,
+                    competenceDate: document.getElementById('competenceDate').value,
+                    category: document.getElementById('category').value,
+                    costCenter: document.getElementById('costCenter').value,
+                    paymentStatus: 'PENDING',
+                    paymentType: 'SINGLE'
+                };
+                
+                console.log('📤 Dados a serem enviados:', formData);
+                
+                // Fazer requisição
+                const response = await fetch('http://localhost:8080/api/accounts-payable', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                        'X-Tenant-ID': user.tenantId || 'default-tenant'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                console.log('📥 Response status:', response.status);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('❌ Error response:', errorText);
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+                
+                const result = await response.json();
+                console.log('✅ Success result:', result);
+                
+                resultDiv.innerHTML = `
+                    <div class="result success">
+                        <h3>✅ Conta a Pagar criada com sucesso!</h3>
+                        <pre>${JSON.stringify(result, null, 2)}</pre>
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('❌ Erro:', error);
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <h3>❌ Erro ao criar conta a pagar</h3>
+                        <p><strong>Erro:</strong> ${error.message}</p>
+                        <pre>${error.stack || 'Stack trace não disponível'}</pre>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

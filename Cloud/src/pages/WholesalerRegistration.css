@@ -1,0 +1,260 @@
+.wholesaler-registration {
+    padding: 20px;
+    min-height: 100vh;
+    background: #f5f5f5;
+}
+
+.wholesaler-registration .container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Header */
+.registration-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.registration-header h1 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.registration-header .subtitle {
+    color: #666;
+    font-size: 16px;
+}
+
+/* Form */
+.registration-form {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+.form-section {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+}
+
+.form-section h2 {
+    margin: 0 0 20px 0;
+    color: #667eea;
+    font-size: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-row:last-child {
+    margin-bottom: 0;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 14px;
+}
+
+.form-group input {
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.form-group input::placeholder {
+    color: #999;
+}
+
+/* Actions */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: #5568d3;
+}
+
+.btn-primary:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.btn-primary.btn-lg {
+    padding: 15px 30px;
+    font-size: 18px;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #5a6268;
+}
+
+.btn-secondary:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* Form Note */
+.form-note {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 6px;
+    border-left: 4px solid #667eea;
+}
+
+.form-note p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Auth Required */
+.auth-required {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 8px;
+}
+
+.auth-required h2 {
+    margin: 0 0 15px 0;
+    color: #333;
+}
+
+.auth-required p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Loading State */
+.loading-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 8px;
+}
+
+.loading-state p {
+    font-size: 18px;
+    color: #666;
+}
+
+/* Existing Registration Status */
+.existing-registration {
+    text-align: center;
+    padding: 40px;
+    background: white;
+    border-radius: 8px;
+    border-left: 6px solid;
+}
+
+.existing-registration .status-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.existing-registration h2 {
+    margin: 0 0 20px 0;
+    color: #333;
+    font-size: 28px;
+}
+
+.existing-registration .company-info {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 6px;
+    margin: 20px 0;
+}
+
+.existing-registration .company-info p {
+    margin: 8px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.existing-registration .status-message {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+    margin: 20px 0;
+}
+
+.existing-registration .actions {
+    margin-top: 30px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .registration-form {
+        padding: 20px;
+    }
+
+    .existing-registration {
+        padding: 30px 20px;
+    }
+
+    .existing-registration .status-icon {
+        font-size: 48px;
+    }
+
+    .existing-registration h2 {
+        font-size: 24px;
+    }
+}

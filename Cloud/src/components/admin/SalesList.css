@@ -1,0 +1,163 @@
+.admin-sales-list {
+    padding: 2rem;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.list-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.8rem;
+}
+
+.list-subtitle {
+    margin: 0.5rem 0 0 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 2px dashed #ddd;
+}
+
+.empty-state p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.sales-table-container {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sales-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.sales-table thead {
+    background: #f5f5f5;
+}
+
+.sales-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #555;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.sales-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.sales-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.customer-name-cell strong {
+    color: #333;
+}
+
+.amount-cell strong {
+    color: #4CAF50;
+    font-size: 1.05rem;
+}
+
+.status-badge {
+    padding: 0.35rem 0.85rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.status-pending {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+.status-confirmed {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+.status-processing {
+    background: #f3e5f5;
+    color: #6a1b9a;
+}
+
+.status-shipped {
+    background: #e0f2f1;
+    color: #00695c;
+}
+
+.status-delivered {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-cancelled {
+    background: #ffebee;
+    color: #c62828;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.btn-action {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.btn-action:hover {
+    background: var(--bg-light);
+    transform: scale(1.1);
+}
+
+.btn-view {
+    color: var(--accent-red);
+}
+
+.btn-invoice {
+    color: #2196F3;
+}
+
+.btn-invoice:hover {
+    background: #e3f2fd;
+}
+
+@media (max-width: 768px) {
+    .admin-sales-list {
+        padding: 1rem;
+    }
+
+    .sales-table-container {
+        overflow-x: auto;
+    }
+
+    .sales-table {
+        min-width: 800px;
+    }
+}

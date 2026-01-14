@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Auth</title>
+</head>
+<body>
+    <h1>Debug Auth Service</h1>
+    <button onclick="checkAuth()">Check Auth</button>
+    <pre id="result"></pre>
+
+    <script>
+        function checkAuth() {
+            const token = localStorage.getItem('auth_token');
+            const user = localStorage.getItem('auth_user');
+            
+            const result = {
+                token: token ? 'exists' : 'not found',
+                user: user ? JSON.parse(user) : 'not found',
+                tokenDecoded: token ? decodeJWT(token) : 'no token'
+            };
+            
+            document.getElementById('result').textContent = JSON.stringify(result, null, 2);
+        }
+        
+        function decodeJWT(token) {
+            try {
+                const parts = token.split('.');
+                const base64Url = parts[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(
+                    atob(base64)
+                        .split('')
+                        .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+                        .join('')
+                );
+                return JSON.parse(jsonPayload);
+            } catch (error) {
+                return 'decode error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "order": {
+    "enums": {
+      "status": {
+        "PENDING": "Pending",
+        "APPROVED": "Approved",
+        "REJECTED": "Rejected"
+      },
+      "orderType": {
+        "PURCHASE": "Purchase",
+        "SALE": "Sale"
+      }
+    }
+  },
+  "logs": {
+    "customersReceived": "Customers received successfully"
+  },
+  "welcome": "Welcome",
+  "language": "Language"
+}

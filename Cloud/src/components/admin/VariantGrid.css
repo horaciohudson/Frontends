@@ -1,0 +1,169 @@
+.variant-grid-container {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.variant-grid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.variant-grid-header h3 {
+    margin: 0;
+    color: #333;
+}
+
+.variant-grid-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.variant-grid-empty {
+    text-align: center;
+    padding: 40px;
+    background: #fff3cd;
+    border-radius: 8px;
+    color: #856404;
+}
+
+.variant-grid-table-wrapper {
+    overflow-x: auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.variant-grid-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.variant-grid-table thead {
+    background: #f5f5f5;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.variant-grid-table th {
+    padding: 12px 8px;
+    text-align: center;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.size-header {
+    text-align: left !important;
+    min-width: 120px;
+    background: #fff;
+    position: sticky;
+    left: 0;
+    z-index: 11;
+}
+
+.color-header {
+    min-width: 150px;
+}
+
+.color-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.color-preview {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    display: inline-block;
+}
+
+.variant-grid-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.size-cell {
+    padding: 12px;
+    font-weight: 600;
+    background: #fff;
+    position: sticky;
+    left: 0;
+    border-right: 2px solid #e0e0e0;
+}
+
+.variant-cell {
+    padding: 8px;
+    text-align: center;
+}
+
+.variant-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stock-input,
+.price-input {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.stock-input:focus,
+.price-input:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+.stock-input.has-stock {
+    background: #e8f5e9;
+    border-color: #4CAF50;
+    font-weight: 600;
+}
+
+.price-input {
+    background: #fff3e0;
+}
+
+.variant-grid-legend {
+    margin-top: 15px;
+    padding: 12px;
+    background: #e3f2fd;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #1976d2;
+}
+
+.variant-grid-legend strong {
+    color: #0d47a1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .variant-grid-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .variant-grid-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .variant-grid-actions button {
+        flex: 1;
+        min-width: 120px;
+    }
+}

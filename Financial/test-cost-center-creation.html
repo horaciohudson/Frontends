@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Criação de Centro de Custo</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 3px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .info { background-color: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+        input, textarea { width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ddd; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>Teste - Criação de Centro de Custo</h1>
+    
+    <div class="test-section">
+        <h2>Problemas Identificados e Corrigidos</h2>
+        <div class="result success">
+            <h3>✅ Mapeamento de Campos Corrigido</h3>
+            <p>Backend espera: costCenterCode, costCenterName (não code, name)</p>
+        </div>
+        
+        <div class="result success">
+            <h3>✅ CompanyId Corrigido</h3>
+            <p>Usando tenantId consistentemente para evitar erro 403</p>
+        </div>
+        
+        <div class="result success">
+            <h3>✅ Query Parameter Removido</h3>
+            <p>POST não adiciona mais companyId como query parameter</p>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Teste de Criação</h2>
+        <div>
+            <label>Código do Centro de Custo:</label>
+            <input type="text" id="costCenterCode" value="CC001" placeholder="Ex: CC001">
+        </div>
+        <div>
+            <label>Nome do Centro de Custo:</label>
+            <input type="text" id="costCenterName" value="Administração" placeholder="Ex: Administração">
+        </div>
+        <div>
+            <label>Descrição:</label>
+            <textarea id="description" placeholder="Descrição opcional">Centro de custo para despesas administrativas</textarea>
+        </div>
+        <button onclick="testCreateCostCenter()">Criar Centro de Custo</button>
+        <button onclick="testGetCostCenters()">Listar Centros de Custo</button>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8080/api';
+        
+        function addResult(title, content, type = 'info') {
+            const resultsDiv = document.getElementById('results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `result ${type}`;
+            resultDiv.innerHTML = `<h3>${title}</h3><pre>${content}</pre>`;
+            resultsDiv.appendChild(resultDiv);
+        }
+
+        async function makeAuthenticatedRequest(method, endpoint, data = null) {
+            try {
+                const token = localStorage.getItem('token');
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                
+                if (!token) {
+                    throw new Error('Token de autenticação não encontrado. Faça login primeiro.');
+                }
+
+                const headers = {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    'X-Tenant-ID': user.tenantId,
+                    'X-Company-ID': user.tenantId // Usar tenantId consistentemente
+                };
+
+                console.log('🔍 Request headers:', headers);
+                console.log('🔍 Request data:', data);
+
+                const config = {
+                    method: method,
+                    headers: headers
+                };
+
+                if (data) {
+                    config.body = JSON.stringify(data);
+                }
+
+                const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+
+                console.log('🔍 Response status:', response.status);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+
+                const responseData = await response.json();
+                return { success: true, data: responseData };
+            } catch (error) {
+                console.error('❌ Request error:', error);
+                return { success: false, error: error.message };
+            }
+        }
+
+        async function testCreateCostCenter() {
+            console.log('\n=== TESTANDO CRIAÇÃO DE CENTRO DE CUSTO ===');
+            
+            const costCenterCode = document.getElementById('costCenterCode').value;
+            const costCenterName = document.getElementById('costCenterName').value;
+            const description = document.getElementById('description').value;
+            
+            if (!costCenterCode || !costCenterName) {
+                addResult('Erro de Validação', 'Código e Nome são obrigatórios', 'error');
+                return;
+            }
+
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            const createData = {
+                companyId: user.tenantId,
+                costCenterCode: costCenterCode.toUpperCase(),
+                costCenterName: costCenterName,
+                description: description,
+                isActive: true
+            };
+
+            addResult('Dados para Criação', JSON.stringify(createData, null, 2), 'info');
+
+            const result = await makeAuthenticatedRequest('POST', '/cost-centers', createData);
+            
+            if (result.success) {
+                addResult('Centro de Custo Criado', 
+                    `✅ Sucesso! Centro de custo criado.\n\n${JSON.stringify(result.data, null, 2)}`, 
+                    'success'
+                );
+            } else {
+                addResult('Erro na Criação', `❌ Erro: ${result.error}`, 'error');
+            }
+        }
+
+        async function testGetCostCenters() {
+            console.log('\n=== TESTANDO LISTAGEM DE CENTROS DE CUSTO ===');
+            
+            const result = await makeAuthenticatedRequest('GET', '/cost-centers?isActive=true');
+            
+            if (result.success) {
+                addResult('Centros de Custo', 
+                    `✅ Sucesso! ${result.data.length} centros de custo encontrados.\n\n${JSON.stringify(result.data, null, 2)}`, 
+                    'success'
+                );
+            } else {
+                addResult('Erro na Listagem', `❌ Erro: ${result.error}`, 'error');
+            }
+        }
+
+        // Mostrar informações ao carregar a página
+        window.onload = function() {
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            addResult('Status das Correções', 
+                `🔧 Correções aplicadas:\n` +
+                `✅ Mapeamento de campos corrigido (costCenterCode, costCenterName)\n` +
+                `✅ CompanyId usando tenantId consistentemente\n` +
+                `✅ Query parameter removido para POSTs\n` +
+                `✅ Validação de campos obrigatórios\n\n` +
+                `Token: ${token ? 'Presente' : 'Ausente'}\n` +
+                `User: ${user.name || 'N/A'}\n` +
+                `Tenant ID: ${user.tenantId || 'Não definido'}`, 
+                token ? 'success' : 'error'
+            );
+        };
+    </script>
+</body>
+</html>

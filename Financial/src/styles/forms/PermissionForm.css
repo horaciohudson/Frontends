@@ -1,0 +1,402 @@
+/* PermissionForm.css */
+
+.permission-form {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.permission-form .alert {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid;
+}
+
+.permission-form .alert-error {
+  background-color: #fef2f2;
+  border-color: #fecaca;
+  color: #dc2626;
+}
+
+.permission-form .alert-success {
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #16a34a;
+}
+
+.permission-form .alert-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* User Info Section */
+.permission-form .user-info-section {
+  margin-bottom: 24px;
+}
+
+.permission-form .user-info-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.permission-form .user-info-card h3 {
+  margin: 0 0 16px 0;
+  color: #374151;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.permission-form .user-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.permission-form .user-detail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.permission-form .user-detail strong {
+  color: #6b7280;
+  min-width: 60px;
+}
+
+.permission-form .status-badge {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.permission-form .status-active {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.permission-form .status-inactive {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+/* Form Group */
+.permission-form .form-group {
+  margin-bottom: 20px;
+}
+
+.permission-form .form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.permission-form .form-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.permission-form .form-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Role Selection */
+.permission-form .role-selection-section {
+  margin-bottom: 24px;
+}
+
+.permission-form .role-selection-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.permission-form .role-selection-card h3 {
+  margin: 0 0 16px 0;
+  color: #374151;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.permission-form .roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.permission-form .role-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.permission-form .role-item:hover {
+  border-color: #d1d5db;
+  background-color: #f9fafb;
+}
+
+.permission-form .role-checkbox {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.permission-form .role-checkbox input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.permission-form .role-name {
+  font-weight: 500;
+  color: #374151;
+}
+
+.permission-form .role-description {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Permissions Section */
+.permission-form .permissions-section {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.permission-form .permissions-section h3 {
+  margin: 0 0 20px 0;
+  color: #374151;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Module Tabs */
+.permission-form .module-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.permission-form .tab-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.permission-form .tab-button:hover {
+  color: #374151;
+}
+
+.permission-form .tab-button.active {
+  color: #3b82f6;
+  border-bottom-color: #3b82f6;
+}
+
+.permission-form .tab-icon {
+  font-size: 16px;
+}
+
+/* Permissions Grid */
+.permission-form .permissions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.permission-form .permission-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.permission-form .permission-card:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.permission-form .permission-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.permission-form .permission-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.permission-form .permission-checkbox input[type="checkbox"] {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.permission-form .checkmark {
+  margin-left: 4px;
+}
+
+.permission-form .permission-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+  line-height: 1.3;
+}
+
+.permission-form .permission-description {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.permission-form .permission-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.permission-form .permission-key {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #6b7280;
+  background-color: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.permission-form .permission-module {
+  font-size: 12px;
+  font-weight: 500;
+  color: #3b82f6;
+  background-color: #eff6ff;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* No Permissions */
+.permission-form .no-permissions {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b7280;
+}
+
+.permission-form .no-permissions p {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Action Buttons */
+.permission-form .action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.permission-form .changes-indicator {
+  margin-left: auto;
+}
+
+.permission-form .changes-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background-color: #fef3c7;
+  color: #d97706;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Loading */
+.permission-form .loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.permission-form .loading-spinner {
+  background: white;
+  padding: 20px 40px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #374151;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .permission-form {
+    padding: 16px;
+  }
+  
+  .permission-form .permissions-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .permission-form .user-details {
+    grid-template-columns: 1fr;
+  }
+  
+  .permission-form .roles-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .permission-form .module-tabs {
+    flex-wrap: wrap;
+  }
+  
+  .permission-form .action-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .permission-form .changes-indicator {
+    margin-left: 0;
+    text-align: center;
+  }
+}

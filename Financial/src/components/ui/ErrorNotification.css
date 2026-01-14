@@ -1,0 +1,115 @@
+/* Estilos para notificações de erro */
+
+.error-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  max-width: 400px;
+  min-width: 300px;
+  z-index: 9999;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: slideInRight 0.3s ease-out;
+}
+
+.error-notification--error {
+  background-color: #fee;
+  border: 1px solid #fcc;
+  color: #c33;
+}
+
+.error-notification--warning {
+  background-color: #fff8e1;
+  border: 1px solid #ffcc02;
+  color: #f57c00;
+}
+
+.error-notification--info {
+  background-color: #e3f2fd;
+  border: 1px solid #2196f3;
+  color: #1976d2;
+}
+
+.error-notification__content {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+  gap: 12px;
+}
+
+.error-notification__icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.error-notification__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.error-notification__message {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.error-notification__details {
+  font-size: 12px;
+  opacity: 0.8;
+  line-height: 1.3;
+}
+
+.error-notification__close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  flex-shrink: 0;
+  transition: background-color 0.2s;
+}
+
+.error-notification--error .error-notification__close {
+  color: #c33;
+}
+
+.error-notification--warning .error-notification__close {
+  color: #f57c00;
+}
+
+.error-notification--info .error-notification__close {
+  color: #1976d2;
+}
+
+.error-notification__close:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .error-notification {
+    left: 20px;
+    right: 20px;
+    max-width: none;
+    min-width: auto;
+  }
+}

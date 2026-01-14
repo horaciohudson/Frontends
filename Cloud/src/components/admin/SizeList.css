@@ -1,0 +1,123 @@
+.admin-size-list {
+    padding: 20px;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.list-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.list-subtitle {
+    margin: 5px 0 0 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.empty-state p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.sizes-table-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.sizes-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.sizes-table thead {
+    background: #f5f5f5;
+}
+
+.sizes-table th {
+    font-weight: 600;
+    color: #333;
+}
+
+.sizes-table th,
+.sizes-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.sizes-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.sizes-table tbody tr.inactive-row {
+    opacity: 0.6;
+}
+
+.size-name-cell strong {
+    color: #2c3e50;
+}
+
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-badge.active {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge.inactive {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.actions-cell {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-icon {
+    padding: 6px 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.btn-icon:hover {
+    background: #f0f0f0;
+}
+
+.btn-edit:hover {
+    background: #e3f2fd;
+}
+
+.btn-toggle:hover {
+    background: #fff3cd;
+}
+
+.btn-activate:hover {
+    background: #d4edda;
+}

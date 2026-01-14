@@ -1,0 +1,133 @@
+.compositions-page {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1e2a38;
+    margin: 0;
+}
+
+.page-filters {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .compositions-page {
+        padding: 1rem;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .page-header .btn {
+        width: 100%;
+    }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    .page-title {
+        color: #f0f6fc;
+    }
+
+    .page-filters {
+        background-color: #161b22;
+    }
+}
+
+/* Button disabled state */
+.btn-disabled {
+    opacity: 0.6;
+    cursor: not-allowed !important;
+    background-color: #a0aec0 !important;
+    border-color: #a0aec0 !important;
+}
+
+.btn-disabled:hover {
+    background-color: #a0aec0 !important;
+    border-color: #a0aec0 !important;
+    transform: none !important;
+}
+
+/* Form warning styles */
+.form-input-warning {
+    border-color: #f6ad55 !important;
+    box-shadow: 0 0 0 3px rgba(246, 173, 85, 0.1) !important;
+}
+
+.form-warning {
+    color: #c05621;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: #fffbeb;
+    border: 1px solid #f6ad55;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Items Form Container */
+.items-form-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+}
+
+.items-form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.items-form-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1e2a38;
+}
+
+.items-form-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+@media (max-width: 768px) {
+    .items-form-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .items-form-actions {
+        width: 100%;
+    }
+
+    .items-form-actions .btn {
+        flex: 1;
+    }
+}

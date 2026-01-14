@@ -1,0 +1,146 @@
+.mega-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.mega-menu {
+    position: fixed;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 1200px;
+    background: white;
+    box-shadow: var(--shadow-xl);
+    z-index: 1000;
+    max-height: 70vh;
+    overflow-y: auto;
+    animation: fadeIn 0.2s ease-out;
+    border-radius: var(--radius-lg);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.mega-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 2px solid var(--border-light);
+}
+
+.mega-menu-header h3 {
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-medium);
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+    color: var(--text-dark);
+}
+
+.mega-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.mega-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.mega-menu-item:hover {
+    background: var(--bg-light);
+    border-color: var(--border-medium);
+    transform: translateX(5px);
+}
+
+.category-icon-large {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+}
+
+.category-info {
+    flex: 1;
+}
+
+.category-info h4 {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin: 0 0 0.25rem 0;
+}
+
+.category-desc {
+    font-size: 0.85rem;
+    color: var(--text-medium);
+    margin: 0;
+    line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+    .mega-menu {
+        top: 100px;
+        max-height: 80vh;
+    }
+
+    .mega-menu-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .mega-menu-item {
+        padding: 0.75rem;
+    }
+
+    .category-icon-large {
+        font-size: 2rem;
+    }
+
+    .category-info h4 {
+        font-size: 1rem;
+    }
+}

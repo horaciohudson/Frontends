@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste de Cores</title>
+</head>
+<body>
+    <h1>Teste do ColorService</h1>
+    <div id="result"></div>
+    
+    <script type="module">
+        // Simular o ColorService
+        const mockColors = [
+          { id: 1, name: "Branco", hexCode: "#FFFFFF", active: true, displayOrder: 1, sizeId: null },
+          { id: 2, name: "Preto", hexCode: "#000000", active: true, displayOrder: 2, sizeId: null },
+          { id: 3, name: "Azul", hexCode: "#0066CC", active: true, displayOrder: 3, sizeId: null },
+          { id: 4, name: "Vermelho", hexCode: "#CC0000", active: true, displayOrder: 4, sizeId: null },
+          { id: 5, name: "Verde", hexCode: "#00CC00", active: true, displayOrder: 5, sizeId: null },
+          { id: 6, name: "Amarelo", hexCode: "#FFCC00", active: true, displayOrder: 6, sizeId: null },
+          { id: 7, name: "Rosa", hexCode: "#FF69B4", active: true, displayOrder: 7, sizeId: null },
+          { id: 8, name: "Roxo", hexCode: "#8A2BE2", active: true, displayOrder: 8, sizeId: null },
+          { id: 9, name: "Laranja", hexCode: "#FF8C00", active: true, displayOrder: 9, sizeId: null },
+          { id: 10, name: "Cinza", hexCode: "#808080", active: true, displayOrder: 10, sizeId: null }
+        ];
+
+        async function testColors() {
+            console.log("🎨 Testando cores mock...");
+            
+            // Simular getGlobalColors
+            const globalColors = mockColors.filter(c => c.sizeId === null);
+            console.log("✅ Cores globais:", globalColors);
+            
+            // Simular getColorsBySize
+            const sizeColors = mockColors.filter(c => c.sizeId === 1);
+            console.log("✅ Cores do tamanho 1:", sizeColors);
+            
+            // Combinar cores
+            const allColors = [...sizeColors, ...globalColors.filter(gc => 
+                !sizeColors.some(sc => sc.id === gc.id)
+            )];
+            
+            console.log("✅ Todas as cores disponíveis:", allColors);
+            
+            // Mostrar resultado na página
+            document.getElementById('result').innerHTML = `
+                <h2>Cores Globais (${globalColors.length}):</h2>
+                <ul>
+                    ${globalColors.map(c => `<li style="color: ${c.hexCode}">${c.name} (${c.hexCode})</li>`).join('')}
+                </ul>
+                
+                <h2>Total de Cores Disponíveis: ${allColors.length}</h2>
+            `;
+        }
+        
+        testColors();
+    </script>
+</body>
+</html>

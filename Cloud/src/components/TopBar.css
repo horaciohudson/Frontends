@@ -1,0 +1,89 @@
+.top-bar {
+    background: #1a1a2e;
+    color: white;
+    padding: 0.5rem 0;
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.top-bar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.top-bar-benefits {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.benefit-icon {
+    font-size: 1rem;
+}
+
+.benefit-text {
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.top-bar-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.top-bar-link {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s ease;
+}
+
+.top-bar-link:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.top-bar-link--wholesale {
+    font-weight: 600;
+    color: #ffd700;
+}
+
+.top-bar-link--wholesale:hover {
+    color: #ffed4e;
+}
+
+.top-bar-link--disabled {
+    color: rgba(255, 255, 255, 0.4);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .top-bar-content {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .top-bar-benefits {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .benefit-text {
+        font-size: 0.75rem;
+    }
+
+    .top-bar-links {
+        font-size: 0.75rem;
+    }
+}

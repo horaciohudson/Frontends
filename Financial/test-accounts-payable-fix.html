@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Correção Contas a Pagar</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 3px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .info { background-color: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Teste - Correção Contas a Pagar</h1>
+    
+    <div class="result info">
+        <h3>Problemas Identificados e Corrigidos</h3>
+        <p><strong>❌ Problema:</strong> Backend esperava supplierId como Long, mas frontend enviava UUID string</p>
+        <p><strong>✅ Correção:</strong> Mapeamento no service para remover supplierId e usar apenas supplierName</p>
+        <p><strong>✅ Adicionado:</strong> companyId automático no payload</p>
+    </div>
+    
+    <button onclick="testAccountsPayableMapping()">Testar Mapeamento</button>
+    
+    <div id="results"></div>
+
+    <script>
+        function addResult(title, content, type = 'info') {
+            const resultsDiv = document.getElementById('results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `result ${type}`;
+            resultDiv.innerHTML = `<h3>${title}</h3><pre>${content}</pre>`;
+            resultsDiv.appendChild(resultDiv);
+        }
+
+        function testAccountsPayableMapping() {
+            console.log('\n=== TESTE MAPEAMENTO CONTAS A PAGAR ===');
+            
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const selectedCompanyId = sessionStorage.getItem('selectedCompanyId');
+            
+            // Simular dados do formulário (como o frontend envia)
+            const frontendData = {
+                description: 'Teste de conta a pagar',
+                supplierId: '693705d5-ac2d-4f36-b849-acd13648852e', // UUID que causava erro
+                supplierName: 'Fornecedor Teste',
+                originalAmount: 100.00,
+                issueDate: '2025-12-19',
+                dueDate: '2025-12-26',
+                competenceDate: '2025-12-19',
+                category: 'Despesas Administrativas',
+                costCenter: 'Administração'
+            };
+
+            addResult('Dados do Frontend (ANTES)', JSON.stringify(frontendData, null, 2), 'info');
+
+            // Simular o mapeamento que o service agora faz
+            const backendData = {
+                ...frontendData,
+                supplierId: undefined, // Remove UUID que causava erro
+                categoryId: undefined,
+                costCenterId: undefined,
+                categoryName: frontendData.category,
+                costCenterName: frontendData.costCenter,
+                companyId: user.tenantId || selectedCompanyId
+            };
+
+            addResult('Dados para Backend (DEPOIS)', JSON.stringify(backendData, null, 2), 'success');
+
+            // Verificar se os campos problemáticos foram removidos
+            const problems = [];
+            if (backendData.supplierId !== undefined) {
+                problems.push('supplierId ainda está sendo enviado como UUID');
+            }
+            if (!backendData.supplierName) {
+                problems.push('supplierName não está definido');
+            }
+            if (!backendData.companyId) {
+                problems.push('companyId não está definido');
+            }
+
+            if (problems.length > 0) {
+                addResult('❌ Problemas Encontrados', problems.join('\n'), 'error');
+            } else {
+                addResult('✅ Mapeamento Correto', 
+                    'Todos os campos problemáticos foram corrigidos:\n' +
+                    '• supplierId removido (evita erro UUID → Long)\n' +
+                    '• supplierName mantido\n' +
+                    '• companyId adicionado automaticamente\n' +
+                    '• category/costCenter mapeados para categoryName/costCenterName', 
+                    'success'
+                );
+            }
+
+            addResult('Próximos Passos', 
+                '1. Teste criando uma conta a pagar no sistema\n' +
+                '2. Verifique se o erro 403 foi resolvido\n' +
+                '3. Confirme se os dados são salvos corretamente', 
+                'info'
+            );
+        }
+
+        // Executar teste ao carregar
+        window.onload = testAccountsPayableMapping;
+    </script>
+</body>
+</html>

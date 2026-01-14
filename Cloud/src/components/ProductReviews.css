@@ -1,0 +1,285 @@
+.product-reviews {
+    margin: 3rem 0;
+    padding: 2rem 0;
+    border-top: 2px solid var(--border-light);
+}
+
+.reviews-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.reviews-summary h2 {
+    font-size: 1.75rem;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.rating-summary {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.average-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.rating-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.review-count {
+    color: var(--text-medium);
+    font-size: 0.95rem;
+}
+
+/* Stars */
+.stars {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.star {
+    font-size: 1.5rem;
+    color: #ddd;
+    transition: color 0.2s ease;
+}
+
+.star.filled {
+    color: #ffc107;
+}
+
+.stars.interactive .star {
+    cursor: pointer;
+    font-size: 2rem;
+}
+
+.stars.interactive .star:hover {
+    color: #ffc107;
+    transform: scale(1.1);
+}
+
+/* Review Form */
+.review-form-container {
+    background: var(--bg-light);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 2px solid var(--border-light);
+}
+
+.review-form h3 {
+    margin-bottom: 1.5rem;
+    color: var(--text-dark);
+}
+
+.review-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.review-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.review-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+}
+
+.review-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.char-count {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--text-medium);
+    font-size: 0.875rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+/* Reviews List */
+.reviews-loading,
+.reviews-empty {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-medium);
+    font-size: 1rem;
+}
+
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.review-item {
+    background: white;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    transition: box-shadow 0.3s ease;
+}
+
+.review-item:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.reviewer-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.reviewer-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-red));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.reviewer-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.reviewer-name {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.review-date {
+    font-size: 0.875rem;
+    color: var(--text-medium);
+}
+
+.review-content {
+    margin: 1rem 0;
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+.review-images {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.review-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.review-image:hover {
+    transform: scale(1.05);
+}
+
+/* Pagination */
+.reviews-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .product-reviews {
+        margin: 2rem 0;
+        padding: 1.5rem 0;
+    }
+
+    .reviews-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .reviews-summary h2 {
+        font-size: 1.5rem;
+    }
+
+    .rating-summary {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .rating-number {
+        font-size: 2rem;
+    }
+
+    .review-form-container {
+        padding: 1.5rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions button {
+        width: 100%;
+    }
+
+    .review-item {
+        padding: 1rem;
+    }
+
+    .reviewer-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .review-images {
+        gap: 0.5rem;
+    }
+
+    .review-image {
+        width: 80px;
+        height: 80px;
+    }
+}

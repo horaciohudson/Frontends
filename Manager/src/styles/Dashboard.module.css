@@ -1,0 +1,49 @@
+.dashboard-layout {
+  display: grid;
+  grid-template-rows: 60px 1fr 60px;
+  grid-template-columns: 250px 1fr;
+  grid-template-areas:
+    "header header"
+    "sidebar content"
+    "footer footer";
+  height: 100vh;
+}
+.header {
+  grid-area: header;
+}
+.sidebar {.dashboard-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.dashboard-body {
+  display: flex;
+  flex: 1;
+}
+  grid-area: sidebar;
+}
+.dashboard-content {
+  grid-area: content;
+  padding: 2rem;
+  background: #fff;
+}
+.footer {
+  grid-area: footer;
+  background-color: #1e2a38;
+  color: white;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dashboard-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.dashboard-body {
+  display: flex;
+  flex: 1;
+}

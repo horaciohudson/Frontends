@@ -1,0 +1,143 @@
+.payment-method-form {
+  background-color: #e6ebee;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  margin-bottom: 2rem;
+  max-width: 800px;
+}
+
+.payment-method-form-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.payment-method-form-row label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  min-width: 120px;
+}
+
+.payment-method-form-row input[type="text"],
+.payment-method-form-row input[type="number"],
+.payment-method-form-row select {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  min-width: 200px;
+  background-color: white;
+}
+
+.payment-method-form-row select {
+  cursor: pointer;
+}
+
+.payment-method-form-row input[type="checkbox"] {
+  margin-right: 0.5rem;
+  transform: scale(1.2);
+}
+
+
+
+/* Classes existentes mantidas para compatibilidade */
+.row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.row label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  min-width: 100px;
+}
+
+.row input[type="text"],
+.row input[type="number"] {
+  flex-grow: 1;
+  padding: 0.20rem 0.75rem;
+  line-height: 1.5;
+  height: auto;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  max-width: 100%;
+  min-width: 250px;
+}
+
+.row input[type="checkbox"] {
+  transform: scale(1.2);
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.button {
+  background-color: #365a7c;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.button:hover {
+  background-color: #115293;
+  transform: scale(1.05);
+}
+
+.button.cancel {
+  background-color: #aaa;
+}
+
+.button.cancel:hover {
+  background-color: #888;
+}
+
+.button-new {
+  background-color: #43a047;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.button-new:hover {
+  background-color: #2e7d32;
+  transform: scale(1.05);
+}
+
+.new-button {
+  background-color: #43a047;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.new-button:hover {
+  background-color: #2e7d32;
+  transform: scale(1.05);
+}
+
+.long-field {
+  min-width: 300px;
+  flex-grow: 2;
+}

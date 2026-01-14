@@ -1,0 +1,242 @@
+/* Loading and Empty States */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    gap: 1rem;
+}
+
+.empty-state {
+    background: white;
+    padding: 4rem 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.empty-message {
+    font-size: 1.1rem;
+    color: #5a6c7d;
+}
+
+/* Materials Table */
+.materials-table {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.materials-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.materials-table th {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 2px solid #dee2e6;
+    white-space: nowrap;
+    font-size: 0.9rem;
+}
+
+.materials-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: middle;
+    font-size: 0.9rem;
+}
+
+.materials-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.materials-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Cell specific styles */
+.code-cell {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.name-cell {
+    font-weight: 500;
+    color: #1a202c;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.currency-cell {
+    text-align: right;
+    font-weight: 500;
+    color: #2d3748;
+}
+
+.number-cell {
+    text-align: right;
+    font-weight: 500;
+    color: #2d3748;
+}
+
+/* Status badges */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.status-badge.status-active {
+    background-color: #c6f6d5;
+    color: #22543d;
+}
+
+.status-badge.status-inactive {
+    background-color: #fed7d7;
+    color: #742a2a;
+}
+
+/* Stock control badges */
+.stock-control-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.stock-control-badge.controlled {
+    background-color: #bee3f8;
+    color: #2a69ac;
+}
+
+.stock-control-badge.not-controlled {
+    background-color: #e2e8f0;
+    color: #4a5568;
+}
+
+/* Action buttons */
+.actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.btn-icon {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: none;
+}
+
+.btn-icon:hover {
+    transform: scale(1.1);
+}
+
+.btn-edit:hover {
+    background-color: #ebf8ff;
+    border-color: #4299e1;
+}
+
+.btn-toggle:hover {
+    background-color: #fffbeb;
+    border-color: #d69e2e;
+}
+
+.btn-delete:hover {
+    background-color: #fed7d7;
+    border-color: #e53e3e;
+}
+
+.btn-icon:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .materials-table {
+        overflow-x: auto;
+    }
+    
+    .materials-table th,
+    .materials-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .materials-table th,
+    .materials-table td {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.8rem;
+    }
+    
+    .name-cell {
+        max-width: 120px;
+    }
+    
+    .actions {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .btn-icon {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    .materials-table,
+    .empty-state {
+        background-color: #161b22;
+    }
+
+    .materials-table th {
+        background-color: #21262d;
+        color: #f0f6fc;
+        border-bottom-color: #30363d;
+    }
+
+    .materials-table td {
+        border-bottom-color: #30363d;
+        color: #f0f6fc;
+    }
+
+    .materials-table tbody tr:hover {
+        background-color: #21262d;
+    }
+
+    .code-cell,
+    .name-cell,
+    .currency-cell,
+    .number-cell {
+        color: #f0f6fc;
+    }
+
+    .btn-icon {
+        border-color: #30363d;
+    }
+}

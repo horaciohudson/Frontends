@@ -1,0 +1,163 @@
+.filter-bar {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.filter-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.filter-field {
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.filter-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.filter-input,
+.filter-select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #334155;
+  background: white;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filter-input::placeholder {
+  color: #94a3b8;
+}
+
+.filter-date-range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-date-range .filter-input {
+  flex: 1;
+}
+
+.date-range-separator {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.filter-multi-select {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.selected-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.selected-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  background: #eff6ff;
+  color: #3b82f6;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.tag-remove {
+  margin-left: 6px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #3b82f6;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.tag-remove:hover {
+  color: #1d4ed8;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filter-btn.search {
+  background: #3b82f6;
+  color: white;
+}
+
+.filter-btn.search:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.filter-btn.clear {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.filter-btn.clear:hover:not(:disabled) {
+  background: #e2e8f0;
+}
+
+.filter-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .filter-fields {
+    flex-direction: column;
+  }
+  
+  .filter-field {
+    max-width: none;
+  }
+  
+  .filter-actions {
+    flex-direction: column;
+  }
+  
+  .filter-btn {
+    width: 100%;
+  }
+}

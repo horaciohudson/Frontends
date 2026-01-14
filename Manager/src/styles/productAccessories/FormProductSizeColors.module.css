@@ -1,0 +1,438 @@
+.container {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.sizeInfo {
+  background: #e3f2fd;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  border-left: 4px solid #2196f3;
+}
+
+.sizeInfo h3 {
+  margin: 0 0 10px 0;
+  color: #1976d2;
+  font-size: 1.2em;
+}
+
+.stockInfo {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.totalStock,
+.colorStock,
+.remainingStock {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.totalStock {
+  background: #e8f5e8;
+  color: #2e7d32;
+}
+
+.colorStock {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.remainingStock {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.remainingStock.negative {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+.priceInfo {
+  margin-top: 15px;
+  padding: 15px;
+  background: #f3e5f5;
+  border-radius: 6px;
+  border-left: 4px solid #9c27b0;
+}
+
+.priceInfo h4 {
+  margin: 0 0 10px 0;
+  color: #7b1fa2;
+  font-size: 1em;
+}
+
+.priceDetails {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.priceItem {
+  padding: 5px 10px;
+  background: #fce4ec;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: #880e4f;
+}
+
+.priceNote {
+  margin: 0;
+  font-size: 0.85em;
+  color: #7b1fa2;
+  font-style: italic;
+}
+
+.existingColorsInfo {
+  margin-top: 15px;
+  padding: 15px;
+  background: #e8f5e8;
+  border-radius: 6px;
+  border-left: 4px solid #4caf50;
+}
+
+.existingColorsInfo h4 {
+  margin: 0 0 10px 0;
+  color: #2e7d32;
+  font-size: 1em;
+}
+
+.existingColorsList {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.existingColorItem {
+  padding: 4px 8px;
+  background: #c8e6c9;
+  border-radius: 4px;
+  font-size: 0.85em;
+  color: #1b5e20;
+  border: 1px solid #a5d6a7;
+}
+
+.existingColorsNote {
+  margin: 0;
+  font-size: 0.85em;
+  color: #2e7d32;
+  font-style: italic;
+}
+
+.stockStatusDisplay {
+  display: flex;
+  align-items: center;
+  height: 38px; /* Mesma altura dos inputs */
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #f8f9fa;
+}
+
+.stockStatus {
+  font-weight: 600;
+  font-size: 0.9em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-align: center;
+  min-width: 80px;
+}
+
+.stockLow {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef5350;
+}
+
+.stockNormal {
+  background: #fff3e0;
+  color: #ef6c00;
+  border: 1px solid #ff9800;
+}
+
+.stockHigh {
+  background: #e8f5e8;
+  color: #2e7d32;
+  border: 1px solid #4caf50;
+}
+
+.stockStatusEmpty {
+  color: #666;
+  font-style: italic;
+}
+
+/* Estilos para estoque baixo na tabela */
+.lowStockRow {
+  background: #fff5f5 !important;
+  border-left: 4px solid #f44336;
+}
+
+.lowStockRow:hover {
+  background: #ffebee !important;
+}
+
+.lowStockValue {
+  color: #c62828;
+  font-weight: 600;
+}
+
+.lowStockAlert {
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+.minimumStockValue {
+  font-weight: 500;
+}
+
+.minimumStockNote {
+  font-size: 0.8em;
+  color: #666;
+  font-style: italic;
+}
+
+.existingColorLowStock {
+  background: #ffcdd2 !important;
+  border-color: #f44336 !important;
+  color: #c62828 !important;
+}
+
+.lowStockAlert {
+  margin-top: 15px;
+  padding: 15px;
+  background: #ffebee;
+  border-radius: 6px;
+  border-left: 4px solid #f44336;
+  border: 2px solid #ffcdd2;
+}
+
+.lowStockAlert h4 {
+  margin: 0 0 10px 0;
+  color: #c62828;
+  font-size: 1em;
+}
+
+.lowStockList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.lowStockItem {
+  padding: 8px 12px;
+  background: #ffcdd2;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: #b71c1c;
+  border: 1px solid #ef5350;
+}
+
+.lowStockNote {
+  margin: 10px 0 0 0;
+  font-size: 0.9em;
+  color: #c62828;
+  font-weight: 500;
+}
+
+.form {
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.formCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #333;
+  font-size: 0.9em;
+}
+
+.input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9em;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #2196f3;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+.input:disabled {
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+.formActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.saveButton,
+.newButton {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.saveButton:hover,
+.newButton:hover {
+  background: #45a049;
+}
+
+.saveButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.cancelButton {
+  background: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.cancelButton:hover {
+  background: #da190b;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.table th {
+  background: #f5f5f5;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+}
+
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.editButton,
+.deleteButton {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8em;
+  margin-right: 5px;
+  transition: background-color 0.2s;
+}
+
+.editButton {
+  background: #2196f3;
+  color: white;
+}
+
+.editButton:hover {
+  background: #1976d2;
+}
+
+.deleteButton {
+  background: #f44336;
+  color: white;
+}
+
+.deleteButton:hover {
+  background: #da190b;
+}
+
+.success {
+  color: #4caf50;
+  background: #e8f5e8;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 10px 0;
+  border-left: 4px solid #4caf50;
+}
+
+.error {
+  color: #f44336;
+  background: #ffebee;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 10px 0;
+  border-left: 4px solid #f44336;
+}
+
+.noRecords {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 20px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+  
+  .stockInfo {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .table {
+    font-size: 0.8em;
+  }
+  
+  .table th,
+  .table td {
+    padding: 8px;
+  }
+}

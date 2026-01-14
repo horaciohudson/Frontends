@@ -1,0 +1,73 @@
+.conta-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  background-color: #e6ebee;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.conta-table thead {
+  background-color: #365a7c;
+  color: #eaeffd;
+}
+
+.conta-table th,
+.conta-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.conta-table tbody tr:nth-child(even) {
+  background-color: #e4ebf5;
+}
+
+.conta-table tbody tr:hover {
+  background-color: #e3f2fd;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.conta-table button {
+  margin-right: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #365a7c;
+  color: white;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.conta-table button:hover {
+  background-color: #245079;
+  transform: scale(1.05);
+}
+
+/* Larguras por coluna */
+.coluna-correntista {
+  width: 200px;
+}
+.coluna-banco {
+  width: 120px;
+}
+.coluna-agencia {
+  width: 50px;
+}
+.coluna-numero {
+  width: 50px;
+}
+.coluna-saldo {
+  width: 80px;
+  text-align: right;
+}
+.coluna-origem {
+  width: 140px;
+}
+
+.coluna-acoes {
+  width: 140px;
+}

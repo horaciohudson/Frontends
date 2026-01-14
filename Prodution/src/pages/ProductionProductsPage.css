@@ -1,0 +1,124 @@
+.production-products-page {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1e2a38;
+    margin: 0;
+}
+
+.page-filters {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .production-products-page {
+        padding: 1rem;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .page-header .btn {
+        width: 100%;
+    }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    .page-title {
+        color: #f0f6fc;
+    }
+
+    .page-filters {
+        background-color: #161b22;
+    }
+}
+
+/* Error Boundary Styles */
+.error-boundary {
+    background: #fed7d7;
+    border: 1px solid #e53e3e;
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 2rem;
+    text-align: center;
+}
+
+.error-boundary h2 {
+    color: #742a2a;
+    margin-bottom: 1rem;
+}
+
+.error-boundary details {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem 0;
+    text-align: left;
+}
+
+.error-boundary summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: #742a2a;
+}
+
+.error-boundary p {
+    margin: 0.5rem 0;
+    font-family: monospace;
+    font-size: 0.9rem;
+}
+
+/* Button disabled state */
+.btn-disabled {
+    opacity: 0.6;
+    cursor: not-allowed !important;
+    background-color: #a0aec0 !important;
+    border-color: #a0aec0 !important;
+}
+
+.btn-disabled:hover {
+    background-color: #a0aec0 !important;
+    border-color: #a0aec0 !important;
+    transform: none !important;
+}
+
+/* Form warning styles */
+.form-input-warning {
+    border-color: #f6ad55 !important;
+    box-shadow: 0 0 0 3px rgba(246, 173, 85, 0.1) !important;
+}
+
+.form-warning {
+    color: #c05621;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: #fffbeb;
+    border: 1px solid #f6ad55;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}

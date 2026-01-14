@@ -1,0 +1,139 @@
+.company-form {
+    padding: 0;
+    min-height: 400px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.company-form .form-section {
+    margin-bottom: 24px;
+    padding: 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+.company-form .form-section h3 {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 8px;
+}
+
+.company-form .form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.company-form .form-row.two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.company-form .form-row.three-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.company-form .form-row.four-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.company-form .form-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.company-form .form-group label {
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #333;
+    font-size: 14px;
+}
+
+.company-form .form-group input,
+.company-form .form-group select,
+.company-form .form-group textarea {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.company-form .form-group input:focus,
+.company-form .form-group select:focus,
+.company-form .form-group textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.company-form .form-group input.error,
+.company-form .form-group select.error,
+.company-form .form-group textarea.error {
+    border-color: #dc3545;
+}
+
+.company-form .form-group .error-message {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.company-form .checkbox-group {
+    flex-direction: row;
+    align-items: center;
+}
+
+.company-form .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.company-form .checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+
+    .company-form .form-row.two-columns,
+    .company-form .form-row.three-columns,
+    .company-form .form-row.four-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .company-form .form-section {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 640px) {
+    .company-form {
+        max-height: 60vh;
+    }
+
+    .company-form .form-section {
+        margin-bottom: 16px;
+        padding: 12px;
+    }
+
+    .company-form .form-section h3 {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+}

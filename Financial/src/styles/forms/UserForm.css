@@ -1,0 +1,176 @@
+.user-form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-header {
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.form-header h2 {
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Reduzido de 20px para 15px */
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px; /* Reduzido de 20px para 15px */
+  align-items: start;
+}
+
+.form-row:has(.checkbox-field) {
+  align-items: center;
+}
+
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-top: 25px; /* Alinha com os outros campos */
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  gap: 8px;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #007bff;
+  cursor: pointer;
+}
+
+.checkbox-text {
+  font-weight: 500;
+  user-select: none;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.error-message {
+  background-color: #fee;
+  color: #c33;
+  padding: 12px 16px;
+  border-radius: 6px;
+  border-left: 4px solid #c33;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+/* Campos de uma coluna */
+.form-row:has(.full-width),
+.form-row.full-width {
+  grid-template-columns: 1fr;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .user-form-container {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  .form-header h2 {
+    font-size: 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .checkbox-field {
+    padding-top: 0;
+    margin-top: 10px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-form-container {
+    padding: 10px;
+    margin: 5px;
+  }
+
+  .form-header {
+    margin-bottom: 20px;
+  }
+
+  .form-header h2 {
+    font-size: 18px;
+  }
+
+  .user-form {
+    gap: 15px;
+  }
+
+  .checkbox-label {
+    font-size: 13px;
+  }
+
+  .checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Estados de foco e hover para checkbox */
+.checkbox-label:hover .checkbox-text {
+  color: #007bff;
+}
+
+.checkbox-label input[type="checkbox"]:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Animações */
+.user-form-container {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

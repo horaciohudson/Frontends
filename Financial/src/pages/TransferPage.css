@@ -1,0 +1,60 @@
+.transfer-page {
+  padding: 20px;
+}
+
+.transfer-page .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.transfer-page .page-header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.transfer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.transfer-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.transfer-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.transfer-form .form-group label {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.transfer-form .form-group input,
+.transfer-form .form-group select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.transfer-form .form-group input:disabled,
+.transfer-form .form-group select:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.transfer-form .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}

@@ -1,0 +1,197 @@
+.tableContainer {
+  overflow-x: auto;
+  margin-top: 1.5rem;
+}
+
+.table {
+  width: 100%;
+  min-width: 800px;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  background-color: #e6ebee;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.table thead {
+  background-color: #365a7c;
+  color: #eaeffd;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.table th {
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #e4ebf5;
+}
+
+.table tbody tr:hover {
+  background-color: #e3f2fd;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.table tbody tr.inactive {
+  opacity: 0.6;
+}
+
+.code {
+  background-color: #f5f5f5;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-cash {
+  background-color: #4caf50;
+  color: white;
+}
+
+.badge-credit_card {
+  background-color: #2196f3;
+  color: white;
+}
+
+.badge-debit_card {
+  background-color: #ff9800;
+  color: white;
+}
+
+.badge-pix {
+  background-color: #9c27b0;
+  color: white;
+}
+
+.badge-boleto {
+  background-color: #607d8b;
+  color: white;
+}
+
+.badge-store_financing {
+  background-color: #795548;
+  color: white;
+}
+
+.badge-voucher {
+  background-color: #e91e63;
+  color: white;
+}
+
+.badge-bank_transfer {
+  background-color: #3f51b5;
+  color: white;
+}
+
+.badge-check {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.badge-other {
+  background-color: #9e9e9e;
+  color: white;
+}
+
+.center {
+  text-align: center;
+}
+
+.date {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.status {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status.enabled,
+.status.active {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status.disabled,
+.status.inactive {
+  background-color: #f44336;
+  color: white;
+}
+
+.withInterest {
+  font-size: 0.75rem;
+  color: #666;
+  font-style: italic;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.editButton,
+.deleteButton {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  font-weight: 500;
+}
+
+.editButton {
+  background-color: #365a7c;
+  color: white;
+}
+
+.editButton:hover {
+  background-color: #245079;
+  transform: scale(1.05);
+}
+
+.deleteButton {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.deleteButton:hover {
+  background-color: #c82333;
+  transform: scale(1.05);
+}
+
+.noData {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 2rem;
+}

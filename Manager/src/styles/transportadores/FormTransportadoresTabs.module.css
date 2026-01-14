@@ -1,0 +1,51 @@
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.abas {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.aba {
+  padding: 10px 20px;
+  border: none;
+  background-color: #eee;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.aba.ativa {
+  background-color: #365a7c;
+  color: white;
+}
+
+.aba:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.conteudo {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+}
+
+.transportadorAtivo {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.error {
+  color: #d32f2f;
+  margin-bottom: 10px;
+}
+
+.loading {
+  color: #365a7c;
+  margin-bottom: 10px;
+}

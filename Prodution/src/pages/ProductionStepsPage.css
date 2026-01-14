@@ -1,0 +1,298 @@
+.production-steps-page {
+    padding: 24px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.production-steps-page .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.production-steps-page .page-header h1 {
+    margin: 0;
+    color: #333;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.production-steps-page .btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.production-steps-page .btn-primary:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+.production-steps-page .btn-primary:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+.production-steps-page .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.production-steps-page .btn-secondary:hover {
+    background-color: #545b62;
+}
+
+.production-steps-page .filters-bar {
+    display: flex;
+    gap: 16px;
+    align-items: end;
+    margin-bottom: 24px;
+    padding: 16px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    flex-wrap: wrap;
+}
+
+.production-steps-page .form-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+}
+
+.production-steps-page .form-group label {
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #333;
+    font-size: 14px;
+}
+
+.production-steps-page .company-select,
+.production-steps-page .status-filter {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+}
+
+.production-steps-page .search-bar {
+    flex: 1;
+    min-width: 300px;
+}
+
+.production-steps-page .search-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.production-steps-page .empty-state,
+.production-steps-page .loading-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.production-steps-page .empty-icon {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.production-steps-page .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 16px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.production-steps-page .steps-table-container {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.production-steps-page .steps-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.production-steps-page .steps-table th {
+    background-color: #f8f9fa;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #e0e0e0;
+    font-size: 14px;
+}
+
+.production-steps-page .steps-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+    vertical-align: top;
+}
+
+.production-steps-page .steps-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.production-steps-page .steps-table tr.inactive {
+    opacity: 0.6;
+}
+
+.production-steps-page .sequence-cell {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: #007bff;
+    text-align: center;
+    width: 100px;
+}
+
+.production-steps-page .name-cell {
+    font-weight: 500;
+    max-width: 200px;
+}
+
+.production-steps-page .description-cell {
+    color: #666;
+    max-width: 300px;
+}
+
+.production-steps-page .time-cell {
+    text-align: center;
+    font-family: 'Courier New', monospace;
+}
+
+.production-steps-page .boolean-cell {
+    text-align: center;
+}
+
+.production-steps-page .status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.production-steps-page .status-badge.active {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.production-steps-page .status-badge.inactive {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.production-steps-page .actions-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.production-steps-page .btn-edit,
+.production-steps-page .btn-deactivate,
+.production-steps-page .btn-activate,
+.production-steps-page .btn-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.production-steps-page .btn-edit:hover {
+    background-color: #e3f2fd;
+}
+
+.production-steps-page .btn-deactivate:hover {
+    background-color: #ffebee;
+}
+
+.production-steps-page .btn-activate:hover {
+    background-color: #e8f5e8;
+}
+
+.production-steps-page .btn-delete:hover {
+    background-color: #ffebee;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .production-steps-page .steps-table {
+        font-size: 13px;
+    }
+
+    .production-steps-page .steps-table th,
+    .production-steps-page .steps-table td {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    .production-steps-page {
+        padding: 16px;
+    }
+
+    .production-steps-page .page-header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+    }
+
+    .production-steps-page .filters-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .production-steps-page .form-group {
+        min-width: auto;
+    }
+
+    .production-steps-page .search-bar {
+        min-width: auto;
+    }
+
+    .production-steps-page .steps-table-container {
+        overflow-x: auto;
+    }
+
+    .production-steps-page .steps-table {
+        min-width: 800px;
+    }
+}

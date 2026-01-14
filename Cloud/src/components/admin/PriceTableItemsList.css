@@ -1,0 +1,248 @@
+.price-table-items-list {
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.items-header {
+    margin-bottom: 30px;
+}
+
+.btn-back {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 15px;
+    transition: background 0.3s;
+}
+
+.btn-back:hover {
+    background: #5a6268;
+}
+
+.header-info h2 {
+    margin: 0 0 10px 0;
+    color: #2c3e50;
+    font-size: 24px;
+}
+
+.table-description {
+    color: #666;
+    margin: 0 0 15px 0;
+    font-size: 14px;
+}
+
+.table-stats {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.table-stats .stat {
+    font-size: 14px;
+    color: #555;
+}
+
+.table-stats .stat strong {
+    color: #2c3e50;
+}
+
+.badge-active {
+    background: #28a745;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.items-loading,
+.items-error,
+.items-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.items-error {
+    color: #dc3545;
+}
+
+.items-empty .hint {
+    color: #999;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.items-table-container {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.items-table thead {
+    background: #f8f9fa;
+}
+
+.items-table th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #2c3e50;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.items-table tbody tr {
+    border-bottom: 1px solid #dee2e6;
+    transition: background 0.2s;
+}
+
+.items-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.items-table tbody tr.inactive {
+    opacity: 0.6;
+}
+
+.items-table td {
+    padding: 12px 15px;
+}
+
+.items-table .sku {
+    font-family: 'Courier New', monospace;
+    color: #666;
+    font-size: 13px;
+}
+
+.items-table .product-name {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.items-table .size,
+.items-table .color {
+    color: #666;
+}
+
+.items-table .price {
+    font-weight: 600;
+    color: #28a745;
+    font-size: 15px;
+}
+
+.items-table .discount {
+    color: #007bff;
+    font-weight: 500;
+}
+
+.items-table .status-badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.items-table .status-badge.active {
+    background: #d4edda;
+    color: #155724;
+}
+
+.items-table .status-badge.inactive {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+    padding: 20px 0;
+}
+
+.pagination-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    min-width: 40px;
+    transition: background 0.3s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: #0056b3;
+}
+
+.pagination-btn:disabled {
+    background: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    font-size: 14px;
+    color: #2c3e50;
+    font-weight: 500;
+    padding: 0 15px;
+}
+
+.pagination-info .items-range {
+    color: #666;
+    font-weight: normal;
+    margin-left: 5px;
+}
+
+@media (max-width: 768px) {
+    .price-table-items-list {
+        padding: 15px;
+    }
+
+    .items-table {
+        font-size: 12px;
+    }
+
+    .items-table th,
+    .items-table td {
+        padding: 8px 10px;
+    }
+
+    .table-stats {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .pagination-info {
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+    }
+
+    .pagination-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+        min-width: 35px;
+    }
+}

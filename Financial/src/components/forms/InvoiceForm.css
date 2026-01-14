@@ -1,0 +1,258 @@
+.invoice-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.invoice-form .form-loading {
+  padding: 40px;
+  text-align: center;
+  color: #64748b;
+}
+
+.invoice-form .form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.invoice-form .form-section h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.invoice-form .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.invoice-form .section-header h3 {
+  border: none;
+  padding: 0;
+}
+
+.invoice-form .btn-add-item {
+  padding: 6px 12px;
+  background: #f0fdf4;
+  color: #22c55e;
+  border: 1px solid #22c55e;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.invoice-form .btn-add-item:hover {
+  background: #22c55e;
+  color: white;
+}
+
+.invoice-form .form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.invoice-form .form-row.three-columns {
+  display: grid;
+  grid-template-columns: 1fr 100px 150px;
+  gap: 16px;
+}
+
+.invoice-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.invoice-form label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.invoice-form input,
+.invoice-form textarea,
+.invoice-form select {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.invoice-form input:focus,
+.invoice-form textarea:focus,
+.invoice-form select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.invoice-form input.error,
+.invoice-form select.error {
+  border-color: #ef4444;
+}
+
+.invoice-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.invoice-form .error-message {
+  font-size: 12px;
+  color: #ef4444;
+}
+
+/* Items List */
+.invoice-form .items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.invoice-form .item-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+}
+
+.invoice-form .item-fields {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.invoice-form .item-fields .form-group {
+  min-width: 0;
+}
+
+.invoice-form .item-fields .description {
+  flex: 2;
+  min-width: 200px;
+}
+
+.invoice-form .item-fields .quantity {
+  flex: 0 0 80px;
+}
+
+.invoice-form .item-fields .unit-price {
+  flex: 0 0 120px;
+}
+
+.invoice-form .item-fields .tax {
+  flex: 0 0 180px;
+}
+
+.invoice-form .item-fields .total {
+  flex: 0 0 100px;
+}
+
+.invoice-form .total-value {
+  padding: 10px 12px;
+  background: #e2e8f0;
+  border-radius: 6px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.invoice-form .btn-remove-item {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.invoice-form .btn-remove-item:hover:not(:disabled) {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+.invoice-form .btn-remove-item:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Totals Section */
+.invoice-form .totals-section {
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.invoice-form .totals-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.invoice-form .totals-row.total {
+  border-top: 1px solid #e2e8f0;
+  margin-top: 8px;
+  padding-top: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.invoice-form .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.invoice-form .btn-submit {
+  padding: 10px 24px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.invoice-form .btn-submit:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.invoice-form .btn-submit:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .invoice-form .form-row.three-columns {
+    grid-template-columns: 1fr;
+  }
+  
+  .invoice-form .item-fields {
+    flex-direction: column;
+  }
+  
+  .invoice-form .item-fields .form-group {
+    flex: 1 1 100%;
+  }
+}

@@ -1,0 +1,169 @@
+.wholesaler-list {
+    padding: 20px;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.list-header h2 {
+    margin: 0;
+    color: #333;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-buttons button {
+    padding: 8px 16px;
+    border: 2px solid #ddd;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.filter-buttons button:hover {
+    border-color: #667eea;
+    background: #f0f4ff;
+}
+
+.filter-buttons button.active {
+    border-color: #667eea;
+    background: #667eea;
+    color: white;
+}
+
+.table-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+}
+
+.wholesaler-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.wholesaler-table thead {
+    background: #f8f9fa;
+}
+
+.wholesaler-table th {
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #555;
+    border-bottom: 2px solid #dee2e6;
+    white-space: nowrap;
+}
+
+.wholesaler-table td {
+    padding: 12px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.wholesaler-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.trade-name {
+    font-size: 12px;
+    color: #666;
+    margin-top: 2px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-approved {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-rejected {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status-suspended {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.btn-view {
+    padding: 6px 12px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.btn-view:hover {
+    background: #5568d3;
+}
+
+.loading,
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+    font-size: 16px;
+}
+
+.empty-state p {
+    margin: 0;
+}
+
+@media (max-width: 1200px) {
+    .wholesaler-table {
+        font-size: 14px;
+    }
+    
+    .wholesaler-table th,
+    .wholesaler-table td {
+        padding: 10px 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    .list-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-buttons {
+        justify-content: center;
+    }
+    
+    .filter-buttons button {
+        flex: 1;
+        min-width: 80px;
+    }
+}

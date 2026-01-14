@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Simples - Comboboxes</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 4px; }
+        select { width: 100%; padding: 8px; margin: 5px 0; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        .result { margin-top: 10px; padding: 10px; border-radius: 4px; }
+        .success { background: #d4edda; }
+        .error { background: #f8d7da; }
+    </style>
+</head>
+<body>
+    <h1>Teste Simples - Comboboxes</h1>
+    
+    <div class="test">
+        <h3>Teste de Categorias</h3>
+        <select id="categorySelect">
+            <option value="">Carregando categorias...</option>
+        </select>
+        <button onclick="testCategories()">Testar Categorias</button>
+        <div id="categoryResult"></div>
+    </div>
+    
+    <div class="test">
+        <h3>Teste de Centros de Custo</h3>
+        <select id="costCenterSelect">
+            <option value="">Carregando centros de custo...</option>
+        </select>
+        <button onclick="testCostCenters()">Testar Centros de Custo</button>
+        <div id="costCenterResult"></div>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('token');
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        
+        if (!token) {
+            document.body.innerHTML = '<h1>❌ Erro: Token não encontrado. Faça login primeiro.</h1>';
+        }
+
+        async function testCategories() {
+            const select = document.getElementById('categorySelect');
+            const result = document.getElementById('categoryResult');
+            
+            try {
+                result.innerHTML = '<p>🔄 Carregando...</p>';
+                
+                const response = await fetch('http://localhost:8080/api/financial-categories?isActive=true', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'X-Tenant-ID': user.tenantId || 'default-tenant'
+                    }
+                });
+                
+                if (response.ok) {
+                    const categories = await response.json();
+                    
+                    // Limpar select
+                    select.innerHTML = '<option value="">Selecione uma categoria...</option>';
+                    
+                    // Adicionar opções
+                    categories.forEach(category => {
+                        const option = document.createElement('option');
+                        option.value = category.categoryName;
+                        option.textContent = `${category.categoryCode} - ${category.categoryName}`;
+                        select.appendChild(option);
+                    });
+                    
+                    result.innerHTML = `<div class="result success">✅ ${categories.length} categorias carregadas com sucesso!</div>`;
+                } else {
+                    result.innerHTML = `<div class="result error">❌ Erro: ${response.status}</div>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<div class="result error">❌ Erro: ${error.message}</div>`;
+            }
+        }
+
+        async function testCostCenters() {
+            const select = document.getElementById('costCenterSelect');
+            const result = document.getElementById('costCenterResult');
+            
+            try {
+                result.innerHTML = '<p>🔄 Carregando...</p>';
+                
+                const response = await fetch('http://localhost:8080/api/cost-centers', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'X-Tenant-ID': user.tenantId || 'default-tenant'
+                    }
+                });
+                
+                if (response.ok) {
+                    const costCenters = await response.json();
+                    
+                    // Limpar select
+                    select.innerHTML = '<option value="">Selecione um centro de custo...</option>';
+                    
+                    // Adicionar opções
+                    costCenters.forEach(costCenter => {
+                        const option = document.createElement('option');
+                        option.value = costCenter.name || costCenter.costCenterName;
+                        option.textContent = `${costCenter.code || costCenter.costCenterCode} - ${costCenter.name || costCenter.costCenterName}`;
+                        select.appendChild(option);
+                    });
+                    
+                    result.innerHTML = `<div class="result success">✅ ${costCenters.length} centros de custo carregados com sucesso!</div>`;
+                } else {
+                    result.innerHTML = `<div class="result error">❌ Erro: ${response.status}</div>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<div class="result error">❌ Erro: ${error.message}</div>`;
+            }
+        }
+
+        // Carregar automaticamente ao abrir a página
+        window.onload = function() {
+            testCategories();
+            testCostCenters();
+        };
+    </script>
+</body>
+</html>

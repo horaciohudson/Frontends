@@ -1,0 +1,271 @@
+.wholesaler-detail-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.wholesaler-detail {
+    background: white;
+    border-radius: 12px;
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    border-bottom: 2px solid #f0f0f0;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+}
+
+.detail-header h2 {
+    margin: 0;
+    color: #333;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.close-btn:hover {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.detail-content {
+    padding: 30px;
+}
+
+.info-section {
+    margin-bottom: 30px;
+}
+
+.info-section h3 {
+    margin: 0 0 15px 0;
+    color: #667eea;
+    font-size: 18px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.status-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.rejection-reason {
+    padding: 12px;
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.info-item label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+}
+
+.info-item span {
+    font-size: 15px;
+    color: #333;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-approved {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-rejected {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status-suspended {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.detail-actions {
+    display: flex;
+    gap: 10px;
+    padding: 20px 30px;
+    border-top: 2px solid #f0f0f0;
+    background: #f8f9fa;
+    position: sticky;
+    bottom: 0;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-approve {
+    background: #28a745;
+    color: white;
+}
+
+.btn-approve:hover:not(:disabled) {
+    background: #218838;
+}
+
+.btn-reject {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-reject:hover:not(:disabled) {
+    background: #c82333;
+}
+
+.btn-suspend {
+    background: #ffc107;
+    color: #333;
+}
+
+.btn-suspend:hover:not(:disabled) {
+    background: #e0a800;
+}
+
+.btn-cancel {
+    background: #6c757d;
+    color: white;
+    margin-left: auto;
+}
+
+.btn-cancel:hover {
+    background: #5a6268;
+}
+
+.reason-form {
+    margin: 20px 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 2px solid #dee2e6;
+}
+
+.reason-form h4 {
+    margin: 0 0 15px 0;
+    color: #333;
+}
+
+.reason-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    margin-bottom: 15px;
+}
+
+.reason-form textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.reason-form .form-actions {
+    display: flex;
+    gap: 10px;
+}
+
+@media (max-width: 768px) {
+    .wholesaler-detail-overlay {
+        padding: 0;
+    }
+
+    .wholesaler-detail {
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    .detail-header,
+    .detail-content,
+    .detail-actions,
+    .reason-form {
+        padding: 15px 20px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-actions {
+        flex-wrap: wrap;
+    }
+
+    .btn-cancel {
+        margin-left: 0;
+        width: 100%;
+    }
+}

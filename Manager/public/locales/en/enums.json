@@ -1,0 +1,115 @@
+{
+  "packagingTypes": {
+    "UNIT": "Unit",
+    "PIECE": "Piece",
+    "KILO": "Kilogram",
+    "LITER": "Liter",
+    "METER": "Meter",
+    "PACKAGE": "Package",
+    "BOX": "Box"
+  },
+  "operationTypes": {
+    "SALE": "Sale",
+    "BUY": "Purchase",
+    "TRANSFER": "Transfer"
+  },
+  "addressTypes": {
+    "COMMERCIAL": "Commercial",
+    "CORRESPONDENCE": "Correspondence"
+  },
+  "accountOrigins": {
+    "ASSET": "Asset",
+    "LIABILITY": "Liability",
+    "REVENUE": "Revenue",
+    "EXPENSE": "Expense",
+    "EQUITY": "Equity"
+  },
+  "customerTypes": {
+    "PHYSICAL": "Physical",
+    "LEGAL": "Legal",
+    "PROFESSIONAL": "Professional"
+  },
+  "documentTypes": {
+    "CPF": "CPF",
+    "CNPJ": "CNPJ",
+    "RG": "RG",
+    "PASSPORT": "Passport"
+  },
+  "paymentMethods": {
+    "CASH": "Cash",
+    "CREDIT_CARD": "Credit Card",
+    "DEBIT_CARD": "Debit Card",
+    "BANK_TRANSFER": "Bank Transfer",
+    "PIX": "PIX",
+    "CHECK": "Check",
+    "BOLETO": "Bank Slip",
+    "STORE_FINANCING": "Store Financing",
+    "VOUCHER": "Voucher",
+    "OTHER": "Other"
+  },
+  "orderStatus": {
+    "SHIPPED": "Shipped",
+    "DELIVERED": "Delivered",
+    "INVOICED": "Invoiced",
+    "CANCELED": "Canceled",
+    "OPEN": "Open",
+    "IN_PREPARATION": "In Preparation",
+    "PENDING_PAYMENT": "Pending Payment",
+    "RETURNED": "Returned"
+  },
+  "productStatus": {
+    "ACTIVE": "Active",
+    "INACTIVE": "Inactive",
+    "DISCONTINUED": "Discontinued",
+    "OUT_OF_STOCK": "Out of Stock"
+  },
+  "companyFlags": {
+    "FACTORY": "Factory",
+    "SUPPLIER": "Supplier",
+    "CUSTOMER": "Customer",
+    "TRANSPORTER": "Transporter"
+  },
+  "fiscalTypes": {
+    "ICMS": "ICMS",
+    "IPI": "IPI",
+    "PIS": "PIS",
+    "COFINS": "COFINS",
+    "ISS": "ISS",
+    "FUNRURAL": "FUNRURAL"
+  },
+  "currencyTypes": {
+    "BRL": "Brazilian Real",
+    "USD": "US Dollar",
+    "EUR": "Euro",
+    "GBP": "British Pound"
+  },
+  "activityTypes": {
+    "COMMERCE": "Commerce",
+    "INDUSTRY": "Industry",
+    "SERVICES": "Services",
+    "AGRICULTURE": "Agriculture"
+  },
+  "unitType": {
+    "UNIT": "Unit",
+    "PIECE": "Piece",
+    "METER": "Meter",
+    "KILO": "Kilogram",
+    "LITER": "Liter",
+    "HOUR": "Hour",
+    "KWH": "Kilowatt-hour"
+  },
+  "orderType": {
+    "ORDER": "Order",
+    "BUDGET": "Budget",
+    "SALE": "Sale",
+    "RENTAL": "Rental"
+  },
+  "addressType": {
+    "SHIPPING": "Shipping",
+    "BILLING": "Billing"
+  },
+  "noteType": {
+    "ENTRY": "Entry",
+    "EXIT": "Exit"
+  }
+}

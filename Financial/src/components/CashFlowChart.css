@@ -1,0 +1,301 @@
+/* CashFlow Chart Component */
+.cashflow-chart {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.chart-title {
+  color: #1e2a38;
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+}
+
+/* Chart Totals */
+.chart-totals {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.total-item {
+  flex: 1;
+  min-width: 120px;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+.total-item.inflow {
+  border-left: 3px solid #28a745;
+}
+
+.total-item.outflow {
+  border-left: 3px solid #dc3545;
+}
+
+.total-item.balance {
+  border-left: 3px solid #17a2b8;
+}
+
+.total-item.balance.positive {
+  border-left-color: #28a745;
+}
+
+.total-item.balance.negative {
+  border-left-color: #dc3545;
+}
+
+.total-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #5a6c7d;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.total-value {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e2a38;
+}
+
+.total-item.inflow .total-value {
+  color: #28a745;
+}
+
+.total-item.outflow .total-value {
+  color: #dc3545;
+}
+
+.total-item.balance.positive .total-value {
+  color: #28a745;
+}
+
+.total-item.balance.negative .total-value {
+  color: #dc3545;
+}
+
+/* Chart Container */
+.chart-container {
+  display: flex;
+  gap: 0.5rem;
+  position: relative;
+}
+
+/* Y Axis */
+.chart-y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 80px;
+  padding-right: 0.5rem;
+  text-align: right;
+  font-size: 0.7rem;
+  color: #5a6c7d;
+}
+
+/* Chart Area */
+.chart-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.grid-line {
+  border-bottom: 1px dashed #e9ecef;
+}
+
+/* Chart Bars */
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: calc(100% - 20px);
+  gap: 2px;
+  padding-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.bar-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  min-width: 0;
+}
+
+.bars-container {
+  display: flex;
+  gap: 1px;
+  align-items: flex-end;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+}
+
+.bar {
+  width: 45%;
+  max-width: 15px;
+  min-height: 2px;
+  border-radius: 2px 2px 0 0;
+  transition: height 0.3s ease, opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.bar:hover {
+  opacity: 0.8;
+}
+
+.bar.inflow {
+  background: linear-gradient(180deg, #28a745 0%, #20c997 100%);
+}
+
+.bar.outflow {
+  background: linear-gradient(180deg, #dc3545 0%, #fd7e14 100%);
+}
+
+.bar-label {
+  font-size: 0.6rem;
+  color: #5a6c7d;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Legend */
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+.legend-color.inflow {
+  background: linear-gradient(180deg, #28a745 0%, #20c997 100%);
+}
+
+.legend-color.outflow {
+  background: linear-gradient(180deg, #dc3545 0%, #fd7e14 100%);
+}
+
+.legend-text {
+  font-size: 0.85rem;
+  color: #5a6c7d;
+}
+
+/* Empty State */
+.chart-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: #5a6c7d;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.chart-empty p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .chart-totals {
+    flex-direction: column;
+  }
+
+  .total-item {
+    min-width: auto;
+  }
+
+  .chart-y-axis {
+    width: 60px;
+    font-size: 0.6rem;
+  }
+
+  .bar-label {
+    display: none;
+  }
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .cashflow-chart {
+    background-color: #2d2d2d;
+  }
+
+  .chart-title {
+    color: white;
+  }
+
+  .total-item {
+    background-color: #3a3a3a;
+  }
+
+  .total-value {
+    color: #e0e0e0;
+  }
+
+  .total-label,
+  .chart-y-axis,
+  .bar-label,
+  .legend-text {
+    color: #b0b0b0;
+  }
+
+  .grid-line {
+    border-bottom-color: #4a4a4a;
+  }
+
+  .chart-legend {
+    border-top-color: #4a4a4a;
+  }
+
+  .chart-empty {
+    background-color: #3a3a3a;
+    color: #b0b0b0;
+  }
+}

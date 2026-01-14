@@ -1,0 +1,114 @@
+.form-linha {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.coluna {
+  display: flex;
+  flex-direction: column;
+}
+
+.coluna-banco {
+  width: 240px;
+}
+
+.coluna-agencia {
+  width: 180px;
+}
+
+.coluna-numero {
+  width: 180px;
+}
+
+.coluna-agenciaNome {
+  width: 280px;
+}
+
+.coluna-correntista {
+  width: 345px;
+}
+
+.coluna-contato {
+  width: 280px;
+}
+
+.coluna-telefone {
+  width: 180px;
+}
+
+.coluna-saldo {
+  width: 185px;
+}
+
+.coluna-origem {
+  width: 220px;
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+.form-input,
+.form-select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: #fff;
+}
+
+.form-input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.button {
+  background-color: #365a7c;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.button:hover {
+  background-color: #2a4963;
+  transform: scale(1.05);
+}
+
+.button.cancelar {
+  background-color: #aaa;
+}
+
+.button.cancelar:hover {
+  background-color: #888;
+}
+
+.button-novo {
+  background-color: #43a047;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.button-novo:hover {
+  background-color: #2e7d32;
+  transform: scale(1.05);
+}

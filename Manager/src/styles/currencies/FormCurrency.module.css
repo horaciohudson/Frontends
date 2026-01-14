@@ -1,0 +1,82 @@
+.currency-form {
+  background-color: #e6ebee;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  margin-bottom: 2rem;
+  max-width: 800px;
+}
+
+.currency-form-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.currency-form-row label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  min-width: 120px;
+}
+
+.currency-form-row input[type="text"] {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  min-width: 250px;
+}
+
+.currency-button {
+  background-color: #365a7c;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.currency-button:hover {
+  background-color: #115293;
+  transform: scale(1.05);
+}
+
+.currency-button.cancel {
+  background-color: #aaa;
+}
+
+.currency-button.cancel:hover {
+  background-color: #888;
+}
+
+.currency-button-new {
+  background-color: #43a047; /* Green */
+  color: white;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.currency-button-new:hover {
+  background-color: #2e7d32;
+  transform: scale(1.05);
+}
+.currency-form-input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  min-width: 220px;   /* <- largura mínima */
+  width: 100%;        /* <- ocupa toda a coluna disponível */
+  box-sizing: border-box;
+}

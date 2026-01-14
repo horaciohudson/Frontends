@@ -1,0 +1,278 @@
+.tabsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.tabsHeader {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.tabsHeader h1 {
+  margin: 0;
+  color: #333;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.tabsNavigation {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.tabButton {
+  background: none;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+}
+
+.tabButton:hover {
+  color: #007bff;
+  background-color: #f8f9fa;
+}
+
+.tabButton.activeTab {
+  color: #007bff;
+  border-bottom-color: #007bff;
+  background-color: #f8f9fa;
+}
+
+.tabContent {
+  min-height: 400px;
+}
+
+.movementsTab,
+.balanceTab {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.movementsTab h2,
+.balanceTab h2 {
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+}
+
+.movementsTab p,
+.balanceTab p {
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 32px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.placeholder {
+  background: #f8f9fa;
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+  padding: 40px;
+  margin-top: 20px;
+}
+
+.placeholder p {
+  color: #6c757d;
+  font-style: italic;
+  margin: 0;
+}
+
+.balanceSummary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.balanceCard {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.balanceCard h3 {
+  margin: 0 0 12px 0;
+  color: #555;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.balanceAmount,
+.incomeAmount,
+.expenseAmount {
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: block;
+}
+
+.balanceAmount {
+  color: #007bff;
+}
+
+.incomeAmount {
+  color: #28a745;
+}
+
+.expenseAmount {
+  color: #dc3545;
+}
+
+.loadingContainer {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loadingContainer p {
+  color: #666;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.errorContainer {
+  text-align: center;
+  padding: 40px 20px;
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.errorMessage {
+  color: #c33;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.retryButton {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.retryButton:hover {
+  background-color: #c82333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tabsContainer {
+    padding: 16px;
+  }
+  
+  .tabsHeader h1 {
+    font-size: 1.5rem;
+  }
+  
+  .tabsNavigation {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .tabButton {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 0;
+  }
+  
+  .balanceSummary {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .movementsTab,
+  .balanceTab {
+    padding: 20px 16px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

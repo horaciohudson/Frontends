@@ -1,0 +1,118 @@
+.tax-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tax-form .form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tax-form .form-section h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.tax-form .form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.tax-form .form-row.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.tax-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.tax-form label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.tax-form input,
+.tax-form textarea,
+.tax-form select {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tax-form input:focus,
+.tax-form textarea:focus,
+.tax-form select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.tax-form input.error,
+.tax-form textarea.error,
+.tax-form select.error {
+  border-color: #ef4444;
+}
+
+.tax-form input.error:focus,
+.tax-form textarea.error:focus,
+.tax-form select.error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.tax-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.tax-form .error-message {
+  font-size: 12px;
+  color: #ef4444;
+}
+
+.tax-form .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.tax-form .btn-submit {
+  padding: 10px 24px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.tax-form .btn-submit:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.tax-form .btn-submit:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .tax-form .form-row.two-columns {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Após Correção dos Dados</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .section { margin-bottom: 30px; padding: 15px; border: 1px solid #ddd; border-radius: 4px; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .loading { background: #fff3cd; border-color: #ffeaa7; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 4px; overflow-x: auto; max-height: 300px; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+        .info { background: #d1ecf1; border-color: #bee5eb; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>Teste - Após Correção dos Dados</h1>
+    
+    <div class="section info">
+        <h3>Problema Identificado:</h3>
+        <p><strong>Company ID incorreto nos dados de teste!</strong></p>
+        <ul>
+            <li><strong>Frontend usa tenantId:</strong> 3c8dcdab-ab64-4d8e-90ce-99bfcbd2ddec</li>
+            <li><strong>Backend busca com company_id:</strong> eee32700-45e9-45e8-9c44-416d871cc1f6</li>
+            <li><strong>Dados de teste tinham company_id:</strong> 3c8dcdab-ab64-4d8e-90ce-99bfcbd2ddec (incorreto)</li>
+        </ul>
+        <p><strong>Solução:</strong> Execute o arquivo <code>fix-combobox-data.sql</code> no banco de dados para corrigir os dados.</p>
+    </div>
+    
+    <button onclick="testAfterFix()">Testar Após Correção</button>
+    <button onclick="showExpectedUrls()">Mostrar URLs Esperadas</button>
+    
+    <div id="expected-urls" class="section" style="display: none;">
+        <h3>URLs que o Frontend está Chamando:</h3>
+        <ul>
+            <li><strong>Categorias:</strong> /api/financial-categories?companyId=3c8dcdab-ab64-4d8e-90ce-99bfcbd2ddec</li>
+            <li><strong>Centros de Custo:</strong> /api/cost-centers?companyId=3c8dcdab-ab64-4d8e-90ce-99bfcbd2ddec</li>
+        </ul>
+        <p><strong>Nota:</strong> O backend está usando o companyId como filtro, mas os dados no banco têm company_id diferente.</p>
+    </div>
+    
+    <div id="test-result" class="section">
+        <p>Clique em "Testar Após Correção" para verificar se os dados estão sendo retornados corretamente.</p>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('token');
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        
+        if (!token) {
+            document.body.innerHTML = '<h1>❌ Erro: Token não encontrado. Faça login primeiro.</h1>';
+        }
+
+        function showExpectedUrls() {
+            const urlsDiv = document.getElementById('expected-urls');
+            urlsDiv.style.display = urlsDiv.style.display === 'none' ? 'block' : 'none';
+        }
+
+        async function testAfterFix() {
+            const resultDiv = document.getElementById('test-result');
+            const sectionDiv = resultDiv.parentElement;
+            
+            resultDiv.innerHTML = '<p>🔄 Testando após correção dos dados...</p>';
+            sectionDiv.className = 'section loading';
+            
+            try {
+                let results = '<h3>Resultados do Teste:</h3>';
+                
+                // Testar categorias
+                console.log('🔍 Testando categorias...');
+                const categoriesResponse = await fetch('http://localhost:8080/api/financial-categories?isActive=true', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'X-Tenant-ID': user.tenantId || 'default-tenant'
+                    }
+                });
+                
+                if (categoriesResponse.ok) {
+                    const categories = await categoriesResponse.json();
+                    console.log('📥 Categorias recebidas:', categories);
+                    
+                    results += `<h4>✅ Categorias (${categories.length}):</h4>`;
+                    if (categories.length > 0) {
+                        results += '<ul>';
+                        categories.forEach(cat => {
+                            results += `<li>${cat.categoryCode} - ${cat.categoryName} (${cat.categoryKind})</li>`;
+                        });
+                        results += '</ul>';
+                    } else {
+                        results += '<p>⚠️ Nenhuma categoria encontrada. Execute o script SQL primeiro.</p>';
+                    }
+                } else {
+                    results += `<h4>❌ Erro ao carregar categorias: ${categoriesResponse.status}</h4>`;
+                }
+                
+                // Testar centros de custo
+                console.log('🔍 Testando centros de custo...');
+                const costCentersResponse = await fetch('http://localhost:8080/api/cost-centers', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'X-Tenant-ID': user.tenantId || 'default-tenant'
+                    }
+                });
+                
+                if (costCentersResponse.ok) {
+                    const costCenters = await costCentersResponse.json();
+                    console.log('📥 Centros de custo recebidos:', costCenters);
+                    
+                    results += `<h4>✅ Centros de Custo (${costCenters.length}):</h4>`;
+                    if (costCenters.length > 0) {
+                        results += '<ul>';
+                        costCenters.forEach(cc => {
+                            results += `<li>${cc.code || cc.costCenterCode} - ${cc.name || cc.costCenterName}</li>`;
+                        });
+                        results += '</ul>';
+                    } else {
+                        results += '<p>⚠️ Nenhum centro de custo encontrado. Execute o script SQL primeiro.</p>';
+                    }
+                } else {
+                    results += `<h4>❌ Erro ao carregar centros de custo: ${costCentersResponse.status}</h4>`;
+                }
+                
+                // Verificar se há dados
+                const totalItems = (categoriesResponse.ok ? (await categoriesResponse.json()).length : 0) + 
+                                 (costCentersResponse.ok ? (await costCentersResponse.json()).length : 0);
+                
+                if (totalItems > 0) {
+                    results += '<div style="background: #d4edda; padding: 10px; border-radius: 4px; margin-top: 15px;">';
+                    results += '<h4>🎉 Sucesso! Os dados foram corrigidos.</h4>';
+                    results += '<p>Agora os comboboxes no formulário de Nova Conta a Pagar devem funcionar corretamente.</p>';
+                    results += '</div>';
+                    sectionDiv.className = 'section success';
+                } else {
+                    results += '<div style="background: #fff3cd; padding: 10px; border-radius: 4px; margin-top: 15px;">';
+                    results += '<h4>⚠️ Ainda não há dados</h4>';
+                    results += '<p>Execute o arquivo <code>fix-combobox-data.sql</code> no banco de dados primeiro.</p>';
+                    results += '</div>';
+                    sectionDiv.className = 'section';
+                }
+                
+                resultDiv.innerHTML = results;
+                
+            } catch (error) {
+                console.error('❌ Erro:', error);
+                resultDiv.innerHTML = `
+                    <h3>❌ Erro no teste:</h3>
+                    <p>${error.message}</p>
+                    <pre>${error.stack || 'Stack trace não disponível'}</pre>
+                `;
+                sectionDiv.className = 'section error';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "sigeve_fe_antigo",
+			"path": "../../sigeve_fe_antigo"
+		},
+		{
+			"name": "sigeve-frontend",
+			"path": ".."
+		}
+	],
+	"settings": {}
+}

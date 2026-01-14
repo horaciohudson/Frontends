@@ -1,0 +1,299 @@
+/* Sale Detail Container */
+.sale-detail {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header */
+.sale-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-light);
+}
+
+.sale-detail-header h2 {
+    margin: 0 0 0.5rem 0;
+    color: var(--text-dark);
+    font-size: 1.8rem;
+}
+
+.sale-date {
+    color: var(--text-medium);
+    margin: 0;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-medium);
+    padding: 0.5rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.btn-close:hover {
+    background: var(--bg-light);
+    color: var(--text-dark);
+}
+
+/* Content */
+.sale-detail-content {
+    display: grid;
+    gap: 1.5rem;
+}
+
+/* Detail Cards */
+.detail-card {
+    background: var(--bg-light);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+}
+
+.detail-card h3 {
+    margin: 0 0 1rem 0;
+    color: var(--text-dark);
+    font-size: 1.2rem;
+    border-bottom: 2px solid var(--border-medium);
+    padding-bottom: 0.5rem;
+}
+
+/* Status Section */
+.status-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.current-status {
+    display: flex;
+    align-items: center;
+}
+
+.status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-confirmed {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-processing {
+    background: #cce5ff;
+    color: #004085;
+}
+
+.status-shipped {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-delivered {
+    background: #28a745;
+    color: white;
+}
+
+.status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status-default {
+    background: var(--border-medium);
+    color: var(--text-dark);
+}
+
+.status-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.status-actions label {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.status-actions select {
+    padding: 0.75rem;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.status-actions select:hover {
+    border-color: var(--accent-red);
+}
+
+.status-actions select:focus {
+    outline: none;
+    border-color: var(--accent-red);
+}
+
+.status-actions select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Info Grid */
+.info-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.info-label {
+    font-weight: 600;
+    color: var(--text-medium);
+    font-size: 0.9rem;
+}
+
+.info-value {
+    color: var(--text-dark);
+    font-size: 1rem;
+}
+
+/* Address Info */
+.address-info p {
+    margin: 0.25rem 0;
+    color: var(--text-dark);
+}
+
+/* Payment Method */
+.payment-method {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+/* Items Table */
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.items-table thead {
+    background: white;
+}
+
+.items-table th {
+    text-align: left;
+    padding: 0.75rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    border-bottom: 2px solid var(--border-medium);
+}
+
+.items-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-dark);
+}
+
+.items-table tbody tr:hover {
+    background: white;
+}
+
+.items-table tfoot td {
+    padding: 1rem 0.75rem;
+    font-size: 1.1rem;
+    border-top: 2px solid var(--border-medium);
+    border-bottom: none;
+}
+
+/* Footer */
+.sale-detail-footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 2px solid var(--border-light);
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sale-detail {
+        padding: 1rem;
+    }
+
+    .sale-detail-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .btn-close {
+        align-self: flex-end;
+    }
+
+    .items-table {
+        font-size: 0.9rem;
+    }
+
+    .items-table th,
+    .items-table td {
+        padding: 0.5rem;
+    }
+
+    .status-section {
+        gap: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .items-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .items-table thead {
+        display: none;
+    }
+
+    .items-table tbody tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-md);
+        padding: 0.75rem;
+    }
+
+    .items-table td {
+        display: block;
+        text-align: right;
+        padding: 0.5rem 0;
+        border: none;
+    }
+
+    .items-table td::before {
+        content: attr(data-label);
+        float: left;
+        font-weight: 600;
+        color: var(--text-medium);
+    }
+}

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Problema dos Comboboxes</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 4px; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Debug - Problema dos Comboboxes</h1>
+    
+    <div class="test-section">
+        <h2>Teste 1: Verificar se os dados estão sendo carregados</h2>
+        <button onclick="checkDataLoading()">Verificar Carregamento</button>
+        <div id="data-loading-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Teste 2: Simular o mapeamento dos dados</h2>
+        <button onclick="simulateMapping()">Simular Mapeamento</button>
+        <div id="mapping-result"></div>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('token');
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        
+        if (!token) {
+            document.body.innerHTML = '<h1>❌ Erro: Token não encontrado. Faça login primeiro.</h1>';
+        }
+
+        async function checkDataLoading() {
+            const resultDiv = document.getElementById('data-loading-result');
+            resultDiv.innerHTML = '<p>🔄 Verificando carregamento...</p>';
+            
+            try {
+                // Testar categorias
+                console.log('🔍 Testando categorias...');
+                const categoriesResponse = await fetch('http://localhost:8080/api/financial-categories?isActive=true', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'X-Tenant-ID': user.tenantId || 'default-tenant'
+                    }
+                });
+                
+                const categories = await categoriesResponse.json();
+                console.log('📥 Categorias recebidas:', categories);
+                
+                // Testar centros de custo
+                console.log('🔍 Testando centros de custo...');
+                const costCentersResponse = await fetch('http://localhost:8080/api/cost-centers', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'X-Tenant-ID': user.tenantId || 'default-tenant'
+                    }
+                });
+                
+                const costCenters = await costCentersResponse.json();
+                console.log('📥 Centros de custo recebidos:', costCenters);
+                
+                resultDiv.innerHTML = `
+                    <h3>✅ Dados carregados com sucesso!</h3>
+                    <h4>Categorias (${categories.length}):</h4>
+                    <pre>${JSON.stringify(categories, null, 2)}</pre>
+                    <h4>Centros de Custo (${costCenters.length}):</h4>
+                    <pre>${JSON.stringify(costCenters, null, 2)}</pre>
+                `;
+                
+            } catch (error) {
+                console.error('❌ Erro:', error);
+                resultDiv.innerHTML = `<p>❌ Erro: ${error.message}</p>`;
+            }
+        }
+
+        async function simulateMapping() {
+            const resultDiv = document.getElementById('mapping-result');
+            resultDiv.innerHTML = '<p>🔄 Simulando mapeamento...</p>';
+            
+            try {
+                // Carregar dados reais
+                const categoriesResponse = await fetch('http://localhost:8080/api/financial-categories?isActive=true', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'X-Tenant-ID': user.tenantId || 'default-tenant'
+                    }
+                });
+                const categories = await categoriesResponse.json();
+                
+                const costCentersResponse = await fetch('http://localhost:8080/api/cost-centers', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'X-Tenant-ID': user.tenantId || 'default-tenant'
+                    }
+                });
+                const costCenters = await costCentersResponse.json();
+                
+                // Simular o mapeamento como no código
+                console.log('🔍 Simulando mapeamento de categorias...');
+                const categoryOptions = categories
+                    .filter(category => category.isActive)
+                    .map(category => {
+                        console.log('🔍 Mapeando categoria:', category);
+                        return {
+                            value: category.categoryName,
+                            label: `${category.categoryCode} - ${category.categoryName}`
+                        };
+                    });
+                
+                console.log('🔍 Simulando mapeamento de centros de custo...');
+                const costCenterOptions = costCenters.map(costCenter => {
+                    console.log('🔍 Mapeando centro de custo:', costCenter);
+                    // Mapear como no service
+                    const mapped = {
+                        costCenterCode: costCenter.code || costCenter.costCenterCode,
+                        costCenterName: costCenter.name || costCenter.costCenterName
+                    };
+                    console.log('🔍 Centro de custo mapeado:', mapped);
+                    
+                    return {
+                        value: mapped.costCenterName,
+                        label: `${mapped.costCenterCode} - ${mapped.costCenterName}`
+                    };
+                });
+                
+                resultDiv.innerHTML = `
+                    <h3>✅ Mapeamento simulado!</h3>
+                    <h4>Opções de Categorias (${categoryOptions.length}):</h4>
+                    <pre>${JSON.stringify(categoryOptions, null, 2)}</pre>
+                    <h4>Opções de Centros de Custo (${costCenterOptions.length}):</h4>
+                    <pre>${JSON.stringify(costCenterOptions, null, 2)}</pre>
+                `;
+                
+            } catch (error) {
+                console.error('❌ Erro:', error);
+                resultDiv.innerHTML = `<p>❌ Erro: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

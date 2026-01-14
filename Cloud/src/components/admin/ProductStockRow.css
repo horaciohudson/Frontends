@@ -1,0 +1,64 @@
+.product-stock-row {
+    transition: background-color 0.2s ease;
+}
+
+.product-stock-row.row-out-of-stock {
+    background-color: #ffebee;
+}
+
+.product-stock-row.row-low-stock {
+    background-color: #fff3e0;
+}
+
+.product-stock-row.row-normal {
+    background-color: #fff;
+}
+
+.product-stock-row:hover {
+    background-color: #f5f5f5 !important;
+}
+
+.cell-product-info {
+    padding: 12px;
+}
+
+.product-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.product-sku {
+    font-size: 12px;
+    color: #666;
+    font-family: 'Courier New', monospace;
+}
+
+.cell-status {
+    padding: 12px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badge-in-stock {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.badge-low-stock {
+    background-color: #fff3e0;
+    color: #f57c00;
+}
+
+.badge-out-stock {
+    background-color: #ffebee;
+    color: #c62828;
+}

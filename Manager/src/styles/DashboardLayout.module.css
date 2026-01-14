@@ -1,0 +1,37 @@
+.dashboard-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.dashboard-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sidebar fixa com altura total */
+.sidebar {
+  width: 250px;
+  background-color: #26394b;
+  color: white;
+  padding: 1.5rem;
+  height: 100%; /* ocupa toda a altura da linha */
+  flex-shrink: 0; /* não encolhe */
+}
+
+/* Conteúdo ocupa o restante do espaço */
+.dashboard-content {
+  flex: 1;
+  padding: 2rem;
+  background-color: #d5dde2;
+  overflow-y: auto;
+}
+
+/* Footer */
+.footer {
+  background-color: #1e2a38;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}

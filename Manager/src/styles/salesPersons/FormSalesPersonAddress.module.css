@@ -1,0 +1,311 @@
+.container {
+  padding: 1.5rem;
+  background-color: #f5f7fa;
+  border-radius: 6px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+}
+
+.form-container {
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+}
+
+.form-linha {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.coluna {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  flex: 1;
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+.form-input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: #fff;
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #365a7c;
+  box-shadow: 0 0 0 2px rgba(54, 90, 124, 0.2);
+}
+
+/* Estilo para mensagem de nenhum vendedor selecionado */
+.no-selection {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  border: 1px dashed #ccc;
+}
+
+.form-input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  color: #666;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.button {
+  background-color: #365a7c;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.button:hover {
+  background-color: #2a4963;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.button.cancelar {
+  background-color: #6c757d;
+}
+
+.button.cancelar:hover {
+  background-color: #5a6268;
+}
+
+.button-novo {
+  background-color: #43a047;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.button-novo:hover {
+  background-color: #2e7d32;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.success {
+  color: #2e7d32;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  padding: 0.5rem;
+  background-color: #e8f5e8;
+  border-radius: 4px;
+  border-left: 4px solid #2e7d32;
+}
+
+.error {
+  color: #d32f2f;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  padding: 0.5rem;
+  background-color: #ffebee;
+  border-radius: 4px;
+  border-left: 4px solid #d32f2f;
+}
+
+.address-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  background-color: #fff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.address-table th,
+.address-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+.address-table thead {
+  background-color: #365a7c;
+  color: #fff;
+}
+
+.address-table thead th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.address-table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.address-table tbody tr:hover {
+  background-color: #e3f2fd;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Estilo para linhas clicáveis */
+.clickable-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.clickable-row:hover {
+  background-color: #e3f2fd !important;
+}
+
+.clickable-row:active {
+  background-color: #bbdefb !important;
+}
+
+.address-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.button-editar {
+  margin-right: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #365a7c;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.button-editar:hover {
+  background-color: #245079;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.button-excluir {
+  margin-right: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #d32f2f;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.button-excluir:hover {
+  background-color: #b71c1c;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .form-container {
+    padding: 0.75rem;
+  }
+
+  .form-linha {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .coluna {
+    min-width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .button,
+  .button.cancelar,
+  .button-novo {
+    width: 100%;
+    text-align: center;
+  }
+
+  .address-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-size: 0.85rem;
+  }
+
+  .address-table th,
+  .address-table td {
+    padding: 0.5rem;
+    min-width: 120px;
+  }
+
+  .button-editar,
+  .button-excluir {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.75rem;
+  }
+
+  .form-label {
+    font-size: 0.9rem;
+  }
+
+  .form-input {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .button-editar,
+  .button-excluir {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+    width: 100%;
+    margin-bottom: 0.25rem;
+  }
+
+  .address-table th,
+  .address-table td {
+    padding: 0.4rem;
+    font-size: 0.8rem;
+  }
+}

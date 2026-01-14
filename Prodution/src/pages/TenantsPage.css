@@ -1,0 +1,266 @@
+.tenants-page {
+    padding: 24px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.tenants-page .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.tenants-page .page-header h1 {
+    margin: 0;
+    color: #333;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.tenants-page .btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.tenants-page .btn-primary:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+.tenants-page .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.tenants-page .btn-secondary:hover {
+    background-color: #545b62;
+}
+
+.tenants-page .filters-bar {
+    display: flex;
+    gap: 16px;
+    align-items: end;
+    margin-bottom: 24px;
+    padding: 16px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    flex-wrap: wrap;
+}
+
+.tenants-page .form-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+}
+
+.tenants-page .form-group label {
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #333;
+    font-size: 14px;
+}
+
+.tenants-page .status-filter {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+}
+
+.tenants-page .search-bar {
+    flex: 1;
+    min-width: 300px;
+}
+
+.tenants-page .search-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+}
+
+.tenants-page .empty-state,
+.tenants-page .loading-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.tenants-page .empty-icon {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.tenants-page .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 16px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.tenants-page .tenants-table-container {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tenants-page .tenants-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tenants-page .tenants-table th {
+    background-color: #f8f9fa;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #e0e0e0;
+    font-size: 14px;
+}
+
+.tenants-page .tenants-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+    vertical-align: top;
+}
+
+.tenants-page .tenants-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.tenants-page .tenants-table tr.inactive {
+    opacity: 0.6;
+}
+
+.tenants-page .code-cell {
+    font-weight: 500;
+    color: #007bff;
+    font-family: 'Courier New', monospace;
+}
+
+.tenants-page .name-cell {
+    font-weight: 500;
+}
+
+.tenants-page .status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.tenants-page .status-badge.active {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.tenants-page .status-badge.inactive {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.tenants-page .actions-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.tenants-page .btn-edit,
+.tenants-page .btn-deactivate {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.tenants-page .btn-edit:hover {
+    background-color: #e3f2fd;
+}
+
+.tenants-page .btn-deactivate:hover {
+    background-color: #ffebee;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .tenants-page .tenants-table {
+        font-size: 13px;
+    }
+
+    .tenants-page .tenants-table th,
+    .tenants-page .tenants-table td {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    .tenants-page {
+        padding: 16px;
+    }
+
+    .tenants-page .page-header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+    }
+
+    .tenants-page .filters-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .tenants-page .form-group {
+        min-width: auto;
+    }
+
+    .tenants-page .search-bar {
+        min-width: auto;
+    }
+
+    .tenants-page .tenants-table-container {
+        overflow-x: auto;
+    }
+
+    .tenants-page .tenants-table {
+        min-width: 700px;
+    }
+}

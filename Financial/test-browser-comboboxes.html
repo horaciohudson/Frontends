@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste dos Comboboxes</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 3px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .info { background-color: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Teste dos Dados dos Comboboxes</h1>
+    
+    <div class="test-section">
+        <h2>Instruções</h2>
+        <p>1. Abra esta página no navegador onde você está logado no sistema</p>
+        <p>2. Abra o Console do Desenvolvedor (F12)</p>
+        <p>3. Clique nos botões abaixo para testar cada endpoint</p>
+        <p>4. Verifique os resultados no console e na página</p>
+    </div>
+
+    <div class="test-section">
+        <h2>Testes</h2>
+        <button onclick="testSuppliers()">Testar Fornecedores</button>
+        <button onclick="testCategories()">Testar Categorias</button>
+        <button onclick="testCostCenters()">Testar Centros de Custo</button>
+        <button onclick="testAll()">Testar Todos</button>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8080/api';
+        
+        function addResult(title, content, type = 'info') {
+            const resultsDiv = document.getElementById('results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `result ${type}`;
+            resultDiv.innerHTML = `<h3>${title}</h3><pre>${content}</pre>`;
+            resultsDiv.appendChild(resultDiv);
+        }
+
+        async function makeAuthenticatedRequest(endpoint, params = {}) {
+            try {
+                // Obter dados de autenticação do localStorage
+                const token = localStorage.getItem('token');
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                const selectedCompanyId = sessionStorage.getItem('selectedCompanyId');
+                
+                console.log('🔍 Dados de autenticação:', {
+                    token: token ? 'Presente' : 'Ausente',
+                    user: user,
+                    selectedCompanyId: selectedCompanyId
+                });
+
+                if (!token) {
+                    throw new Error('Token de autenticação não encontrado. Faça login primeiro.');
+                }
+
+                const headers = {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    'X-Tenant-ID': user.tenantId || selectedCompanyId,
+                    'X-Company-ID': selectedCompanyId || user.tenantId
+                };
+
+                console.log('🔍 Headers da requisição:', headers);
+
+                const url = new URL(`${API_BASE_URL}${endpoint}`);
+                Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+
+                console.log('🔍 URL completa:', url.toString());
+
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: headers
+                });
+
+                console.log('✅ Status da resposta:', response.status);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+
+                const data = await response.json();
+                console.log('✅ Dados retornados:', data);
+                
+                return {
+                    success: true,
+                    data: data,
+                    count: Array.isArray(data) ? data.length : 1
+                };
+            } catch (error) {
+                console.error('❌ Erro na requisição:', error);
+                return {
+                    success: false,
+                    error: error.message
+                };
+            }
+        }
+
+        async function testSuppliers() {
+            console.log('\n=== TESTANDO FORNECEDORES ===');
+            const result = await makeAuthenticatedRequest('/companies/suppliers/simple');
+            
+            if (result.success) {
+                addResult('Fornecedores', `✅ Sucesso! ${result.count} fornecedores encontrados.\n\n${JSON.stringify(result.data, null, 2)}`, 'success');
+            } else {
+                addResult('Fornecedores', `❌ Erro: ${result.error}`, 'error');
+            }
+        }
+
+        async function testCategories() {
+            console.log('\n=== TESTANDO CATEGORIAS ===');
+            const result = await makeAuthenticatedRequest('/financial-categories', { isActive: true });
+            
+            if (result.success) {
+                addResult('Categorias Financeiras', `✅ Sucesso! ${result.count} categorias encontradas.\n\n${JSON.stringify(result.data, null, 2)}`, 'success');
+            } else {
+                addResult('Categorias Financeiras', `❌ Erro: ${result.error}`, 'error');
+            }
+        }
+
+        async function testCostCenters() {
+            console.log('\n=== TESTANDO CENTROS DE CUSTO ===');
+            const result = await makeAuthenticatedRequest('/cost-centers', { isActive: true });
+            
+            if (result.success) {
+                addResult('Centros de Custo', `✅ Sucesso! ${result.count} centros de custo encontrados.\n\n${JSON.stringify(result.data, null, 2)}`, 'success');
+            } else {
+                addResult('Centros de Custo', `❌ Erro: ${result.error}`, 'error');
+            }
+        }
+
+        async function testAll() {
+            document.getElementById('results').innerHTML = '';
+            await testSuppliers();
+            await testCategories();
+            await testCostCenters();
+        }
+
+        // Mostrar informações de autenticação ao carregar a página
+        window.onload = function() {
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const selectedCompanyId = sessionStorage.getItem('selectedCompanyId');
+            
+            addResult('Informações de Autenticação', 
+                `Token: ${token ? 'Presente' : 'Ausente'}\n` +
+                `User: ${JSON.stringify(user, null, 2)}\n` +
+                `Selected Company ID: ${selectedCompanyId || 'Não definido'}`, 
+                token ? 'success' : 'error'
+            );
+        };
+    </script>
+</body>
+</html>

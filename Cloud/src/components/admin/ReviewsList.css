@@ -1,0 +1,358 @@
+.reviews-list-container {
+    padding: 2rem;
+}
+
+.reviews-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+}
+
+.reviews-header h2 {
+    font-size: 1.75rem;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.reviews-header p {
+    color: var(--text-medium);
+    font-size: 0.95rem;
+}
+
+.loading,
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-medium);
+}
+
+/* Table */
+.reviews-table-container {
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.reviews-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.reviews-table thead {
+    background: var(--bg-light);
+}
+
+.reviews-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-dark);
+    border-bottom: 2px solid var(--border-medium);
+}
+
+.reviews-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.reviews-table tr:hover {
+    background: var(--bg-light);
+}
+
+.reviews-table tr.flagged {
+    background: #fff3e0;
+}
+
+.reviews-table tr.flagged:hover {
+    background: #ffe0b2;
+}
+
+/* Product Info */
+.product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.product-name {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.flag-badge {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    background: #ff9800;
+    color: white;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Rating */
+.rating-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stars {
+    display: flex;
+    gap: 0.1rem;
+}
+
+.star {
+    font-size: 1.2rem;
+    color: #ddd;
+}
+
+.star.filled {
+    color: #ffc107;
+}
+
+.rating-number {
+    font-size: 0.875rem;
+    color: var(--text-medium);
+}
+
+/* Status Badge */
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.approved {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-badge.pending {
+    background: #fff3e0;
+    color: #ef6c00;
+}
+
+.status-badge.rejected {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.status-badge.default {
+    background: var(--bg-light);
+    color: var(--text-medium);
+}
+
+/* Date */
+.date-cell {
+    font-size: 0.875rem;
+    color: var(--text-medium);
+    white-space: nowrap;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+    background: var(--bg-light);
+    transform: scale(1.1);
+}
+
+.btn-view:hover {
+    background: #e3f2fd;
+}
+
+.btn-delete:hover {
+    background: #ffebee;
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: var(--text-dark);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-medium);
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+    color: var(--text-dark);
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.detail-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+}
+
+.detail-row strong {
+    min-width: 120px;
+    color: var(--text-dark);
+}
+
+.detail-row.full-width {
+    flex-direction: column;
+}
+
+.detail-row.flagged-detail {
+    background: #fff3e0;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border-left: 4px solid #ff9800;
+}
+
+.rating-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.feedback-text {
+    margin: 0.5rem 0 0 0;
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-light);
+}
+
+/* Responsivo */
+@media (max-width: 1024px) {
+    .reviews-table-container {
+        overflow-x: auto;
+    }
+
+    .reviews-table {
+        min-width: 800px;
+    }
+}
+
+@media (max-width: 768px) {
+    .reviews-list-container {
+        padding: 1rem;
+    }
+
+    .reviews-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .reviews-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .modal-content {
+        width: 95%;
+        max-height: 95vh;
+    }
+
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: 1rem;
+    }
+
+    .detail-row {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .detail-row strong {
+        min-width: auto;
+    }
+
+    .modal-footer {
+        flex-direction: column;
+    }
+
+    .modal-footer button {
+        width: 100%;
+    }
+}
