@@ -1,269 +1,69 @@
-2025-12-15T16:23:42.000-03:00 DEBUG 7348 --- [sigeve] [nio-8081-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/products?size=10
-✅ Autenticação construída para: admin@sigeve.com
-✅ Autoridades do token: [ROLE_ADMIN]
-2025-12-15T16:23:42.005-03:00 DEBUG 7348 --- [sigeve] [nio-8081-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /api/products?size=10
-Hibernate: 
-    select
-        p1_0.product_id,
-        p1_0.cancellation_reason,
-        p1_0.cancelled_at,
-        p1_0.cancelled_by,
-        p1_0.created_at,
-        p1_0.created_by,
-        p1_0.deleted_at,
-        p1_0.deleted_by,
-        p1_0.packaging,
-        p1_0.product_category_id,
+2026-01-18T08:35:23.788-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-01-18T08:35:23.788-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.sigeve.manager.dto.products.ProductCategoryDTO@2a5ad929, com.sigeve.manager.dto.products.Produc (truncated)...]
+2026-01-18T08:35:23.789-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-4] .m.m.a.ExceptionHandlerExceptionResolver : Using @ExceptionHandler com.sigeve.manager.exception.GlobalExceptionHandler#handleGeneralException(Exception, WebRequest)
+2026-01-18T08:35:23.820-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-01-18T08:35:23.824-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-01-18T08:35:23.829-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-01-18T08:35:23.832-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ErrorResponse[timestamp=2026-01-18T08:35:23.790895500, status=500, error=Internal Server Error, mess (truncated)...]
+2026-01-18T08:35:23.836-03:00  WARN 10836 --- [Manager] [nio-8080-exec-4] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.dao.InvalidDataAccessApiUsageException: Unable to locate Attribute with the given name [supplier] on this ManagedType [com.sigeve.manager.domain.model.Product]]
+2026-01-18T08:35:23.836-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 500 INTERNAL_SERVER_ERROR
+2026-01-18T08:35:23.848-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/api/product-categories", parameters={}
+2026-01-18T08:35:23.848-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api/companies/suppliers", parameters={}
+2026-01-18T08:35:23.848-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sigeve.manager.domain.controller.ProductCategoryController#findAll(String, Pageable)
+2026-01-18T08:35:23.848-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sigeve.manager.domain.controller.CompanyController#suppliers()
+2026-01-18T08:35:23.850-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-3] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        c1_0.company_id,
+        c1_0.cnpj,
+        c1_0.corporate_name,
+        c1_0.created_at,
+        c1_0.created_by,
+        c1_0.customer_flag,
+        c1_0.deleted_at,
+        c1_0.deleted_by,
+        c1_0.email,
+        c1_0.funrural_rate,
+        c1_0.is_active,
+        c1_0.iss_rate,
+        c1_0.phone,
+        c1_0.supplier_flag,
+        c1_0.tenant_id,
+        c1_0.trade_name,
+        c1_0.transporter_flag,
+        c1_0.updated_at,
+        c1_0.updated_by 
+    from
+        tab_companies c1_0 
+    where
+        c1_0.supplier_flag 
+    order by
+        c1_0.trade_name
+2026-01-18T08:35:23.853-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-01-18T08:35:23.853-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.sigeve.manager.dto.companies.CompanyMinDTO@4cf368d2, com.sigeve.manager.dto.companies.CompanyMi (truncated)...]
+2026-01-18T08:35:23.855-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-01-18T08:35:23.856-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/products", parameters={}
+2026-01-18T08:35:23.857-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sigeve.manager.domain.controller.ProductController#findAll(String, int, int)
+2026-01-18T08:35:23.860-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-5] .m.m.a.ExceptionHandlerExceptionResolver : Using @ExceptionHandler com.sigeve.manager.exception.GlobalExceptionHandler#handleGeneralException(Exception, WebRequest)
+2026-01-18T08:35:23.861-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-01-18T08:35:23.861-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ErrorResponse[timestamp=2026-01-18T08:35:23.860854300, status=500, error=Internal Server Error, mess (truncated)...]
+2026-01-18T08:35:23.861-03:00  WARN 10836 --- [Manager] [nio-8080-exec-5] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.dao.InvalidDataAccessApiUsageException: Unable to locate Attribute with the given name [supplier] on this ManagedType [com.sigeve.manager.domain.model.Product]]
+2026-01-18T08:35:23.861-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 500 INTERNAL_SERVER_ERROR
+2026-01-18T08:35:23.863-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-4] org.hibernate.SQL                        : 
+    /* <criteria> */ select
         pc1_0.product_category_id,
         pc1_0.created_at,
         pc1_0.name,
-        pc1_0.updated_at,
-        p1_0.product_name,
-        ps1_0.product_size_id,
-        ps1_0.created_at,
-        ps1_0.position,
-        ps1_0.product_sub_category_id,
-        ps1_0.size,
-        ps1_0.stock,
-        ps1_0.updated_at,
-        p1_0.product_sub_category_id,
-        psc2_0.product_sub_category_id,
-        psc2_0.created_at,
-        psc2_0.name,
-        psc2_0.product_category_id,
-        psc2_0.updated_at,
-        p1_0.reference,
-        p1_0.supplier_id,
-        s1_0.company_id,
-        s1_0.activity_id,
-        s1_0.company_address_id,
-        s1_0.cnpj,
-        s1_0.corporate_name,
-        s1_0.created_at,
-        s1_0.currency_id,
-        s1_0.customer_flag,
-        s1_0.email,
-        s1_0.factory,
-        s1_0.funrural_rate,
-        s1_0.iss_rate,
-        s1_0.manager,
-        s1_0.mobile,
-        s1_0.municipal_registration,
-        s1_0.phone,
-        s1_0.state_registration,
-        s1_0.supplier_flag,
-        s1_0.trade_name,
-        s1_0.transporter_flag,
-        s1_0.updated_at,
-        s1_0.whatsapp,
-        p1_0.technical_reference,
-        p1_0.updated_at,
-        p1_0.updated_by,
-        p1_0.warranty_months 
+        pc1_0.updated_at 
     from
-        tab_products p1_0 
-    join
         tab_product_categories pc1_0 
-            on pc1_0.product_category_id=p1_0.product_category_id 
-    left join
-        tab_product_sizes ps1_0 
-            on ps1_0.product_size_id=p1_0.product_size_id 
-    join
-        tab_product_sub_categories psc2_0 
-            on psc2_0.product_sub_category_id=p1_0.product_sub_category_id 
-    join
-        tab_companies s1_0 
-            on s1_0.company_id=p1_0.supplier_id 
+    where
+        upper(pc1_0.name) like upper(?) escape '\' 
+    order by
+        pc1_0.name 
     offset
         ? rows 
     fetch
         first ? rows only
-Hibernate: 
-    select
-        pc1_0.product_cost_id,
-        pc1_0.acquisition_value,
-        pc1_0.average_cost,
-        pc1_0.broker_commission,
-        pc1_0.commission_percentage,
-        pc1_0.commission_value,
-        pc1_0.created_at,
-        pc1_0.freight_value,
-        pc1_0.gross_value,
-        pc1_0.icms_credit_value,
-        pc1_0.ipi_value,
-        pc1_0.mean_value,
-        pc1_0.net_value,
-        pc1_0.product_id,
-        pc1_0.seller_commission,
-        pc1_0.tax_value,
-        pc1_0.updated_at 
-    from
-        tab_product_costs pc1_0 
-    where
-        pc1_0.product_id=?
-Hibernate: 
-    select
-        pc1_0.product_cost_id,
-        pc1_0.acquisition_value,
-        pc1_0.average_cost,
-        pc1_0.broker_commission,
-        pc1_0.commission_percentage,
-        pc1_0.commission_value,
-        pc1_0.created_at,
-        pc1_0.freight_value,
-        pc1_0.gross_value,
-        pc1_0.icms_credit_value,
-        pc1_0.ipi_value,
-        pc1_0.mean_value,
-        pc1_0.net_value,
-        pc1_0.product_id,
-        pc1_0.seller_commission,
-        pc1_0.tax_value,
-        pc1_0.updated_at 
-    from
-        tab_product_costs pc1_0 
-    where
-        pc1_0.product_id=?
-Hibernate: 
-    select
-        pc1_0.product_cost_id,
-        pc1_0.acquisition_value,
-        pc1_0.average_cost,
-        pc1_0.broker_commission,
-        pc1_0.commission_percentage,
-        pc1_0.commission_value,
-        pc1_0.created_at,
-        pc1_0.freight_value,
-        pc1_0.gross_value,
-        pc1_0.icms_credit_value,
-        pc1_0.ipi_value,
-        pc1_0.mean_value,
-        pc1_0.net_value,
-        pc1_0.product_id,
-        pc1_0.seller_commission,
-        pc1_0.tax_value,
-        pc1_0.updated_at 
-    from
-        tab_product_costs pc1_0 
-    where
-        pc1_0.product_id=?
-Hibernate: 
-    select
-        pc1_0.product_cost_id,
-        pc1_0.acquisition_value,
-        pc1_0.average_cost,
-        pc1_0.broker_commission,
-        pc1_0.commission_percentage,
-        pc1_0.commission_value,
-        pc1_0.created_at,
-        pc1_0.freight_value,
-        pc1_0.gross_value,
-        pc1_0.icms_credit_value,
-        pc1_0.ipi_value,
-        pc1_0.mean_value,
-        pc1_0.net_value,
-        pc1_0.product_id,
-        pc1_0.seller_commission,
-        pc1_0.tax_value,
-        pc1_0.updated_at 
-    from
-        tab_product_costs pc1_0 
-    where
-        pc1_0.product_id=?
-Hibernate: 
-    select
-        pc1_0.product_cost_id,
-        pc1_0.acquisition_value,
-        pc1_0.average_cost,
-        pc1_0.broker_commission,
-        pc1_0.commission_percentage,
-        pc1_0.commission_value,
-        pc1_0.created_at,
-        pc1_0.freight_value,
-        pc1_0.gross_value,
-        pc1_0.icms_credit_value,
-        pc1_0.ipi_value,
-        pc1_0.mean_value,
-        pc1_0.net_value,
-        pc1_0.product_id,
-        pc1_0.seller_commission,
-        pc1_0.tax_value,
-        pc1_0.updated_at 
-    from
-        tab_product_costs pc1_0 
-    where
-        pc1_0.product_id=?
-Hibernate: 
-    select
-        pc1_0.product_cost_id,
-        pc1_0.acquisition_value,
-        pc1_0.average_cost,
-        pc1_0.broker_commission,
-        pc1_0.commission_percentage,
-        pc1_0.commission_value,
-        pc1_0.created_at,
-        pc1_0.freight_value,
-        pc1_0.gross_value,
-        pc1_0.icms_credit_value,
-        pc1_0.ipi_value,
-        pc1_0.mean_value,
-        pc1_0.net_value,
-        pc1_0.product_id,
-        pc1_0.seller_commission,
-        pc1_0.tax_value,
-        pc1_0.updated_at 
-    from
-        tab_product_costs pc1_0 
-    where
-        pc1_0.product_id=?
-Hibernate: 
-    select
-        pc1_0.product_cost_id,
-        pc1_0.acquisition_value,
-        pc1_0.average_cost,
-        pc1_0.broker_commission,
-        pc1_0.commission_percentage,
-        pc1_0.commission_value,
-        pc1_0.created_at,
-        pc1_0.freight_value,
-        pc1_0.gross_value,
-        pc1_0.icms_credit_value,
-        pc1_0.ipi_value,
-        pc1_0.mean_value,
-        pc1_0.net_value,
-        pc1_0.product_id,
-        pc1_0.seller_commission,
-        pc1_0.tax_value,
-        pc1_0.updated_at 
-    from
-        tab_product_costs pc1_0 
-    where
-        pc1_0.product_id=?
-Hibernate: 
-    select
-        pc1_0.product_cost_id,
-        pc1_0.acquisition_value,
-        pc1_0.average_cost,
-        pc1_0.broker_commission,
-        pc1_0.commission_percentage,
-        pc1_0.commission_value,
-        pc1_0.created_at,
-        pc1_0.freight_value,
-        pc1_0.gross_value,
-        pc1_0.icms_credit_value,
-        pc1_0.ipi_value,
-        pc1_0.mean_value,
-        pc1_0.net_value,
-        pc1_0.product_id,
-        pc1_0.seller_commission,
-        pc1_0.tax_value,
-        pc1_0.updated_at 
-    from
-        tab_product_costs pc1_0 
-    where
-        pc1_0.product_id=?
-2025-12-15T16:24:32.346-03:00 DEBUG 7348 --- [sigeve] [nio-8081-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /api/purchase-items
-✅ Autenticação construída para: admin@sigeve.com
-✅ Autoridades do token: [ROLE_ADMIN]
-2025-12-15T16:24:32.361-03:00 DEBUG 7348 --- [sigeve] [nio-8081-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /api/purchase-items
-2025-12-15T16:24:32.391-03:00  WARN 7348 --- [sigeve] [nio-8081-exec-6] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot deserialize value of type `java.lang.Integer` from String "4e03cc99-fb90-46f9-a33b-a751e12ee53a": not a valid `java.lang.Integer` value]
+2026-01-18T08:35:23.865-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-01-18T08:35:23.865-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.sigeve.manager.dto.products.ProductCategoryDTO@3a826d76, com.sigeve.manager.dto.products.Produc (truncated)...]
+2026-01-18T08:35:23.866-03:00 DEBUG 10836 --- [Manager] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK

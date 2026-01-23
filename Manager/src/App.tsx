@@ -36,6 +36,7 @@ import TransportadorPage from "./pages/transportadores/FormTransportadorPage";
 import RawMaterialPage from "./pages/rawMaterials/RawMaterialPage";
 
 import FormCompositionPage from "./pages/compositions/FormCompositionPage";
+import FormProductAccessoryTabs from "./pages/productAccessories/FormProductAccessoryTabs";
 import ProductManagementPage from "./pages/products/ProductManagementPage";
 import StockManagementGridPage from "./pages/stock/StockManagementGridPage";
 
@@ -45,6 +46,11 @@ import OrderPage from "./pages/orders/OrderPage";
 import FormSalesPersonPage from "./pages/salesPersons/FormSalesPersonPage";
 import StockEntryPage from "./pages/stock/StockEntryPage";
 import TestPrincipalNamespace from "./components/TestMainNamespace";
+
+// Sale pages
+import SaleListPage from "./pages/sales/SaleListPage";
+import SaleFormPage from "./pages/sales/SaleFormPage";
+import SaleDetailsPage from "./pages/sales/SaleDetailsPage";
 
 import { AuthProvider } from "./contexts/AuthContext";
 
@@ -104,6 +110,7 @@ function App({ user }: { user?: { language?: string } }) {
               <Route path="notes" element={<NotePage />} />
               <Route path="activities" element={<ActivityPage />} />
               <Route path="currencies" element={<CurrencyPage />} />
+              <Route path="produtos-categorias" element={<FormProductAccessoryTabs />} />
             </Route>
 
             {/* Principais */}
@@ -150,7 +157,10 @@ function App({ user }: { user?: { language?: string } }) {
               <Route path="reajustes" element={<div>Página de Reajustes</div>} />
               <Route path="purchases" element={<FormPurchasePage />} />
               <Route path="orders" element={<OrderPage />} />
-              <Route path="venda-escritorio" element={<div>Página de Vendas no Escritório</div>} />
+              <Route path="sales" element={<SaleListPage />} />
+              <Route path="sales/new" element={<SaleFormPage />} />
+              <Route path="sales/:id" element={<SaleDetailsPage />} />
+              <Route path="sales/:id/edit" element={<SaleFormPage />} />
               <Route path="formas-cupom" element={<div>Página de Formas de Cupom</div>} />
               <Route path="fechamento-diario" element={<div>Página de Fechamento Diário</div>} />
               <Route path="transferencia-interna" element={<div>Página de Transferência Interna</div>} />

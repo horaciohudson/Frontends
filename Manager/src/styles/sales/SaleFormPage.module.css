@@ -1,0 +1,24 @@
+/* src/styles/sales/SaleFormPage.module.css */
+
+.container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.loading {
+    text-align: center;
+    padding: 3rem;
+    font-size: 1.125rem;
+    color: #888;
+}

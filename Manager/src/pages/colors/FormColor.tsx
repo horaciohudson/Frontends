@@ -32,6 +32,8 @@ export default function FormColor() {
       console.log("🎨 Carregando cores...");
       const colorsList = await ColorService.getAll();
       console.log("📋 Cores carregadas:", colorsList);
+      console.log("📋 Primeira cor:", colorsList[0]);
+      console.log("📋 Estrutura da primeira cor:", JSON.stringify(colorsList[0], null, 2));
       setColors(colorsList.filter(c => c.active !== false));
     } catch (error) {
       console.error("❌ Erro ao carregar cores:", error);
@@ -61,13 +63,13 @@ export default function FormColor() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
-    
-    setForm((prev) => ({ 
-      ...prev, 
-      [name]: type === 'checkbox' ? checked : 
-              name === 'displayOrder' ? parseInt(value) || 0 :
-              name === 'sizeId' ? (value === '' ? null : value) :
-              value
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked :
+        name === 'displayOrder' ? parseInt(value) || 0 :
+          name === 'sizeId' ? (value === '' ? null : value) :
+            value
     }));
   };
 
@@ -86,7 +88,7 @@ export default function FormColor() {
       setError(null);
       setSuccessMessage(null);
 
-      const payload = { 
+      const payload = {
         name: form.name.trim(),
         hexCode: form.hexCode?.trim() || "",
         active: form.active,
@@ -134,7 +136,7 @@ export default function FormColor() {
   const handleDelete = async (id: string | null) => {
     if (!id) return;
     if (!window.confirm("Tem certeza que deseja excluir esta cor?")) return;
-    
+
     try {
       await ColorService.delete(id);
       setColors((prev) => prev.filter((c) => c.id !== id));
@@ -165,7 +167,7 @@ export default function FormColor() {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>🎨 Cadastro de Cores</h2>
-      
+
       <form className={styles.form} onSubmit={handleSave}>
         <div className={styles.formRow}>
           <div className={styles.formCol}>
@@ -293,15 +295,15 @@ export default function FormColor() {
             <tr key={color.id ?? `temp-${color.name}`}>
               <td>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div 
-                    style={{ 
-                      width: '24px', 
-                      height: '24px', 
-                      borderRadius: '50%', 
+                  <div
+                    style={{
+                      width: '24px',
+                      height: '24px',
+                      borderRadius: '50%',
                       backgroundColor: color.hexCode || '#CCCCCC',
                       border: '1px solid #ccc',
                       flexShrink: 0
-                    }} 
+                    }}
                   />
                 </div>
               </td>
@@ -314,13 +316,13 @@ export default function FormColor() {
                 </span>
               </td>
               <td>
-                <button 
+                <button
                   className={`${styles.actionButton} ${styles.editButton}`}
                   onClick={() => handleEdit(color)}
                 >
                   Editar
                 </button>
-                <button 
+                <button
                   className={`${styles.actionButton} ${styles.deleteButton}`}
                   onClick={() => handleDelete(color.id)}
                 >

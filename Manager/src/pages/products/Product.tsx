@@ -9,7 +9,7 @@ import { PackagingType, packagingTypes, packagingI18nKey } from "../../enums/pac
 import { ProductFormModel } from "../../models/Product";
 
 interface Option { id: number; name: string; }
-interface SupplierOption { id: number; name: string; }
+interface SupplierOption { id: string; name: string; }
 
 interface ProductProps {
   onSelectProduct?: (product: ProductFormModel | null) => void;
@@ -19,44 +19,54 @@ interface ProductProps {
 // ---------- helpers ----------
 const takeList = <T,>(data: any): T[] => (Array.isArray(data) ? data : data?.content ?? []);
 
-const mapProductFromApi = (p: any): ProductFormModel => ({
-  id: Number(p.id) || null,
-  name: p.name || "",
-  reference: p.reference ?? null,
-  technicalReference: p.technicalReference ?? null,
-  warrantyMonths: Number(p.warrantyMonths) || 0,
-  packaging: (p.packaging as PackagingType) || "",
+const mapProductFromApi = (p: any): ProductFormModel => {
+  console.log("🗺️ Mapeando produto da API:", p);
+  console.log("🆔 ID original:", p.id, "tipo:", typeof p.id);
 
-  productCategoryId: Number(p.categoryId) || 0,
-  productCategoryName: p.categoryName || "",
-  productSubcategoryId: Number(p.subCategoryId) || 0, // DTO uses subCategoryId
-  productSubcategoryName: p.subCategoryName || "",
-  productSizeId: Number(p.sizeId) || 0,
-  productSizeName: p.sizeName || "",
+  const mapped = {
+    id: p.id ? String(p.id) : null, // Keep as string (UUID)
+    name: p.name || "",
+    reference: p.reference ?? null,
+    technicalReference: p.technicalReference ?? null,
+    warrantyMonths: Number(p.warrantyMonths) || 0,
+    packaging: (p.packaging as PackagingType) || "",
 
-  supplierId: p.supplierId ? Number(p.supplierId) : 0,
-  supplierName: p.supplierName || "",
-});
+    productCategoryId: Number(p.categoryId) || 0,
+    productCategoryName: p.categoryName || "",
+    productSubcategoryId: Number(p.subCategoryId) || 0, // DTO uses subCategoryId
+    productSubcategoryName: p.subCategoryName || "",
+    productSizeId: Number(p.sizeId) || 0,
+    productSizeName: p.sizeName || "",
 
-const mapCategory = (c: any): Option => ({ 
-  id: Number(c.id) || 0, 
-  name: c.name || c.nome || "" 
+    supplierId: p.supplierId ? String(p.supplierId) : "",
+    supplierName: p.supplierName || "",
+  };
+
+  console.log("✅ Produto mapeado:", mapped);
+  console.log("🆔 ID mapeado:", mapped.id, "tipo:", typeof mapped.id);
+
+  return mapped;
+};
+
+const mapCategory = (c: any): Option => ({
+  id: Number(c.id) || 0,
+  name: c.name || c.nome || ""
 });
-const mapSubcategory = (s: any): Option => ({ 
-  id: Number(s.id) || 0, 
-  name: s.name || s.nome || "" 
+const mapSubcategory = (s: any): Option => ({
+  id: Number(s.id) || 0,
+  name: s.name || s.nome || ""
 });
-const mapSize = (sz: any): Option => ({ 
-  id: Number(sz.id || sz.idTamanho) || 0, 
-  name: sz.size || sz.tamanho || "" 
+const mapSize = (sz: any): Option => ({
+  id: Number(sz.id || sz.idTamanho) || 0,
+  name: sz.size || sz.tamanho || ""
 });
 const mapSupplier = (s: any): SupplierOption => ({
-  id: Number(s.id) || 0,
-  name: String(s.tradeName || s.corporateName || s.name || "").trim(),
+  id: String(s.id || ""),
+  name: String(s.name || s.tradeName || s.corporateName || "").trim(),
 });
 
 const initialProduct: ProductFormModel = {
-  id: null,
+  id: null, // Agora é string | null
   name: "",
   reference: "",
   technicalReference: "",
@@ -70,7 +80,7 @@ const initialProduct: ProductFormModel = {
   productSizeId: 0,
   productSizeName: "",
 
-  supplierId: 0,
+  supplierId: "",
   supplierName: "",
 };
 
@@ -93,8 +103,19 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
 
   // ---- loads ----
   const loadProducts = async () => {
+    console.log("📦 Carregando produtos da API...");
     const res = await api.get("/products");
-    setProducts(takeList<any>(res.data).map(mapProductFromApi));
+    console.log("📊 Resposta da API /products:", res.data);
+
+    const rawProducts = takeList<any>(res.data);
+    console.log("📋 Produtos brutos:", rawProducts);
+    console.log("🔍 Primeiro produto bruto:", rawProducts[0]);
+
+    const mappedProducts = rawProducts.map(mapProductFromApi);
+    console.log("🗺️ Produtos mapeados:", mappedProducts);
+    console.log("🔍 Primeiro produto mapeado:", mappedProducts[0]);
+
+    setProducts(mappedProducts);
   };
   const loadCategories = async () => {
     try {
@@ -125,9 +146,9 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
       // Use specific suppliers endpoint
       const res = await api.get("/companies/suppliers");
       console.log("📦 Suppliers API response:", res.data);
-      
+
       const suppliersList = takeList<any>(res.data).map(mapSupplier);
-      
+
       console.log("🏢 Suppliers loaded:", suppliersList);
       setSuppliers(suppliersList);
     } catch (error) {
@@ -241,10 +262,9 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
         ...prev,
         [name]:
           name === "productCategoryId" ||
-          name === "productSubcategoryId" ||
-          name === "productSizeId" ||
-          name === "supplierId" ||
-          name === "warrantyMonths"
+            name === "productSubcategoryId" ||
+            name === "productSizeId" ||
+            name === "warrantyMonths"
             ? Number(value) || 0
             : value,
       };
@@ -259,7 +279,7 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
         const sel = sizes.find((s) => s.id === Number(value));
         next.productSizeName = sel?.name || "";
       } else if (name === "supplierId") {
-        const sel = suppliers.find((s) => s.id === Number(value));
+        const sel = suppliers.find((s) => s.id === value);
         next.supplierName = sel?.name || "";
       } else if (name === "packaging") {
         // keep only valid enum values or empty string
@@ -313,7 +333,7 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
       setProducts((prev) => prev.filter((x) => x.id !== id));
       if (form.id === id) resetForm();
     } catch {
-              setError(t("products.deleteError"));
+      setError(t("products.deleteError"));
     }
   };
 
@@ -326,11 +346,11 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
       supplierIdValid: form.supplierId > 0,
       packaging: form.packaging
     });
-    
+
     if (!form.name.trim()) return t("products.nameRequired");
     if (!form.productCategoryId) return t("products.categoryRequired");
     if (!form.productSubcategoryId) return t("products.subcategoryRequired");
-    if (!form.supplierId || form.supplierId <= 0) return t("products.supplierRequired");
+    if (!form.supplierId || form.supplierId.trim() === "") return t("products.supplierRequired");
     if (!form.packaging) return t("products.packagingRequired");
     return null;
   };
@@ -356,13 +376,13 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
       sizeId: form.productSizeId || null,
       sizeName: form.productSizeName || null,
 
-      ...(form.supplierId > 0 ? { supplierId: form.supplierId } : {}),
+      ...(form.supplierId && form.supplierId.trim() !== "" ? { supplierId: form.supplierId } : {}),
       ...(form.supplierName ? { supplierName: form.supplierName } : {}),
     };
 
     console.log("🔍 Payload construction:", {
       originalSupplierId: form.supplierId,
-      supplierIdIncluded: form.supplierId > 0,
+      supplierIdIncluded: form.supplierId && form.supplierId.trim() !== "",
       finalPayload: payload,
       supplierIdInPayload: payload.supplierId
     });
@@ -387,13 +407,13 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
         supplierName: form.supplierName,
         suppliers: suppliers,
         supplierIdType: typeof form.supplierId,
-        supplierIdValid: form.supplierId > 0
+        supplierIdValid: form.supplierId && form.supplierId.trim() !== ""
       });
       console.log("🏢 Available suppliers in state:", suppliers);
       console.log("🔍 Selected supplier details:", suppliers.find(s => s.id === form.supplierId));
       console.log("🔍 Supplier ID being sent:", form.supplierId);
       console.log("🔍 Supplier exists in state:", suppliers.some(s => s.id === form.supplierId));
-      
+
       const url = form.id ? `/products/${form.id}` : "/products";
       const res = form.id ? await api.put(url, payload) : await api.post(url, payload);
       const saved = mapProductFromApi(res.data);
@@ -408,7 +428,7 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
         message: error.message,
         stack: error.stack
       });
-      
+
       // Log complete error response for debugging
       if (error.response) {
         console.log("📡 Full error response:", {
@@ -418,21 +438,21 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
           headers: error.response.headers
         });
       }
-      
+
       let errorMessage = t("products.saveError");
-      
+
       // Handle specific supplier error
-      if (error.response?.status === 400 && 
-          error.response?.data?.message?.includes("Supplier not found")) {
+      if (error.response?.status === 400 &&
+        error.response?.data?.message?.includes("Supplier not found")) {
         errorMessage = t("products.supplierNotFound") || "Supplier not found. Please select a valid supplier.";
       }
-      
+
       // Handle 500 internal server error
       if (error.response?.status === 500) {
         errorMessage = `Internal server error: ${error.response?.data?.message || error.message}`;
         console.error("🚨 500 Internal Server Error - Check backend logs");
       }
-      
+
       setError(errorMessage);
     } finally {
       setSaving(false);
@@ -557,7 +577,7 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
               disabled={!editingMode}
               required
             >
-              <option value={0}>{t("products.select")}</option>
+              <option value="">{t("products.select")}</option>
               {suppliers.map((s) => (
                 <option key={s.id} value={s.id}>{s.name}</option>
               ))}
@@ -629,28 +649,28 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
       <table className={styles["product-table"]}>
         <thead>
           <tr>
-              <th>{t("products.name")}</th>            
-              <th>{t("products.category")}</th>
-              <th>{t("products.subcategory")}</th>
-              <th>{t("products.size")}</th>
-              <th>{t("products.supplier")}</th>        
-              <th>{t("products.warrantyMonths")}</th>
-              <th>{t("products.actions")}</th>
+            <th>{t("products.name")}</th>
+            <th>{t("products.category")}</th>
+            <th>{t("products.subcategory")}</th>
+            <th>{t("products.technicalReference")}</th>
+            <th>{t("products.supplier")}</th>
+            <th>{t("products.warrantyMonths")}</th>
+            <th>{t("products.actions")}</th>
           </tr>
         </thead>
         <tbody>
           {products.map((p) => (
-            <tr 
+            <tr
               key={p.id ?? `no-id-${p.name}`}
               className={styles["clickable-row"]}
               onDoubleClick={() => onDoubleClickProduct?.(p)}
               title={t("products.doubleClickToSelect")}
             >
-              <td>{p.name}</td>            
+              <td>{p.name}</td>
               <td>{p.productCategoryName}</td>
               <td>{p.productSubcategoryName}</td>
-              <td>{p.productSizeName}</td>
-              <td>{p.supplierName}</td>                           
+              <td>{p.technicalReference || "-"}</td>
+              <td>{p.supplierName}</td>
               <td>{p.warrantyMonths ? `${p.warrantyMonths} meses` : "-"}</td>
               <td>
                 <button
@@ -670,7 +690,7 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
           ))}
           {products.length === 0 && (
             <tr>
-              <td colSpan={10}>{t("common.noRecords")}</td>
+              <td colSpan={7}>{t("common.noRecords")}</td>
             </tr>
           )}
         </tbody>

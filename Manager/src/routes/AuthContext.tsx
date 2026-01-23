@@ -15,7 +15,7 @@ interface JwtPayload {
 interface AuthContextType {
   isAuthenticated: boolean;
   user: JwtPayload | null;
-  login: (email: string, senha: string) => Promise<void>;
+  login: (username: string, senha: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -70,12 +70,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setLoading(false);
   }, []);
 
-  const login = async (email: string, senha: string) => {
+  const login = async (username: string, senha: string) => {
     try {
       logWithTime("🔑 AuthContext - Iniciando login...");
       const response = await api.post('/auth/login', {
-        login: email,
-        senha: senha,
+        username: username,
+        password: senha,
       });
 
       const token = response.data.token;

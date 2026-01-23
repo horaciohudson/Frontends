@@ -6,14 +6,14 @@ export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login(email, senha);
+      await login(username, senha);
       navigate('/');
     } catch (err) {
       setErro('Credenciais inválidas');
@@ -32,12 +32,12 @@ export default function LoginPage() {
       <h2 style={{ marginBottom: '2rem', textAlign: 'center' }}>🔐 Login no SIGEVE</h2>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '1rem' }}>
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="username">Usuário:</label>
           <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            id="username"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
             autoComplete="username"
             style={{ width: '100%', padding: '0.5rem', marginTop: '0.3rem' }}

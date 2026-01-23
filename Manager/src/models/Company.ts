@@ -1,6 +1,6 @@
 // models/Company.ts
 export interface Company {
-  id: number | null; // Permitir null para novas empresas
+  id: string | null; // UUID from backend
   corporateName: string;
   tradeName: string;
   cnpj: string;

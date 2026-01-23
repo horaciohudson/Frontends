@@ -39,6 +39,12 @@ const ReferenceSidebar: React.FC = () => {
             </NavLink>
           </li>
           <li className={styles.item}>
+            <NavLink to="/referenciais/produtos-categorias" className={linkClass}>
+              <span className={styles.emoji}>📂</span>
+              Categorias de Produtos
+            </NavLink>
+          </li>
+          <li className={styles.item}>
             <NavLink to="/referenciais/tamanhos" className={linkClass}>
               <span className={styles.emoji}>📏</span>
               Tamanhos

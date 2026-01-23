@@ -4,26 +4,34 @@ import { TRANSLATION_NAMESPACES } from "../../locales";
 import Product from "./Product";
 import ProductFiscal from "./ProductFiscal";
 import ProductCost from "./ProductCost";
-import { Product as ProductModel } from "../../models/Product";
-import styles from "../../styles/products/ProductTabs.module.css";
 import ProductFinancial from "./ProductFinancial";
 import ProductHistory from "./ProductHistory";
+import VariantGrid from "../../components/products/VariantGrid";
+import { Product as ProductModel } from "../../models/Product";
+import styles from "../../styles/products/ProductTabs.module.css";
 
 export default function ProductTabs() {
   const { t } = useTranslation(TRANSLATION_NAMESPACES.PRINCIPAL);
-  const [tab, setTab] = useState<"product" | "fiscal" | "cost" | "financial" | "history">("product");
+  const [tab, setTab] = useState<"product" | "fiscal" | "cost" | "financial" | "history" | "variants">("product");
   const [selectedProduct, setSelectedProduct] = useState<ProductModel | null>(null);
 
   const tabsEnabled = !!selectedProduct;
 
   const handleSelectProduct = (product: ProductModel | null) => {
+    console.log("🎯 Produto selecionado:", product);
+    console.log("🆔 ID do produto:", product?.id);
+    console.log("📝 Nome do produto:", product?.name);
     setSelectedProduct(product);
-    console.log("Product selected:", product);
   };
 
   const handleDoubleClickProduct = (product: ProductModel) => {
+    console.log("🖱️ Duplo clique no produto:", product);
+    console.log("🆔 ID do produto (duplo clique):", product?.id);
+    
+    // Selecionar o produto primeiro
     setSelectedProduct(product);
-    // Avança para a próxima aba após um pequeno delay
+    
+    // Depois avançar para a próxima aba
     setTimeout(() => {
       const currentTab = tab;
       if (currentTab === "product") {
@@ -35,6 +43,8 @@ export default function ProductTabs() {
       } else if (currentTab === "financial") {
         setTab("history");
       } else if (currentTab === "history") {
+        setTab("variants");
+      } else if (currentTab === "variants") {
         setTab("fiscal"); // Volta para a primeira aba de dados
       }
     }, 100);
@@ -87,13 +97,27 @@ export default function ProductTabs() {
         >
           {t("productHistory.title")}
         </button>
+
+        <button
+          className={`${styles.tab} ${tab === "variants" ? styles.active : ""}`}
+          onClick={() => tabsEnabled && setTab("variants")}
+          disabled={!tabsEnabled}
+        >
+          Variantes
+        </button>
       </div>
       <div className={styles.content}>
         {tab === "product" && <Product onSelectProduct={handleSelectProduct} onDoubleClickProduct={handleDoubleClickProduct} />}
         {tab === "fiscal" && selectedProduct && <ProductFiscal product={selectedProduct} onDoubleClickProduct={handleDoubleClickProduct} />}
         {tab === "cost" && selectedProduct && <ProductCost product={selectedProduct} onDoubleClickProduct={handleDoubleClickProduct} />}     
         {tab === "financial" && selectedProduct && <ProductFinancial product={selectedProduct} onDoubleClickProduct={handleDoubleClickProduct} />}       
-        {tab === "history" && selectedProduct && <ProductHistory product={selectedProduct} onDoubleClickProduct={handleDoubleClickProduct} />}                  
+        {tab === "history" && selectedProduct && <ProductHistory product={selectedProduct} onDoubleClickProduct={handleDoubleClickProduct} />}
+        {tab === "variants" && selectedProduct && (
+          <div>
+            <p>🔍 Debug: ProductId = {selectedProduct.id}</p>
+            <VariantGrid productId={selectedProduct.id} />
+          </div>
+        )}                  
       </div>
     </div>
   );

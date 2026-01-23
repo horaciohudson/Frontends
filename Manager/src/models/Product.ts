@@ -7,7 +7,7 @@ import { ProductSize } from './ProductSize';
 
 // Interface principal do Product alinhada com o backend
 export interface Product {
-  id?: number;
+  id?: string; // UUID string
   name: string;
   reference?: string;
   technicalReference?: string;
@@ -43,7 +43,7 @@ export interface ProductSubCategory {
 
 // Interface para uso em formulários (com IDs separados)
 export interface ProductFormModel {
-  id: number | null;
+  id: string | null; // UUID string
   name: string;
   reference: string | null;
   technicalReference: string | null;
@@ -57,7 +57,7 @@ export interface ProductFormModel {
   productSizeId: number;
   productSizeName: string;
 
-  supplierId: number;
+  supplierId: string;
   supplierName: string;
 }
 

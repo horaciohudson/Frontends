@@ -56,7 +56,7 @@ const CommercialSidebar: React.FC = () => {
           </li>
 
           <li className={styles.item}>
-            <NavLink to="/comerciais/venda-escritorio" className={linkClass}>
+            <NavLink to="/comerciais/sales" className={linkClass}>
               <span className={styles.emoji}>💡</span>
               {t("sidebar.officeSales")}
             </NavLink>

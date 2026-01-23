@@ -1,0 +1,288 @@
+/* src/styles/sales/FormSaleItems.module.css */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.addButton {
+    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(39, 174, 96, 0.3);
+    align-self: flex-start;
+}
+
+.addButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(39, 174, 96, 0.4);
+}
+
+/* Table */
+.tableContainer {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.table thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.table th {
+    padding: 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.table td {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.quantityInput,
+.priceInput {
+    padding: 0.5rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    width: 100px;
+    transition: border-color 0.3s ease;
+}
+
+.quantityInput:focus,
+.priceInput:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.totalCell {
+    font-weight: 600;
+    color: #27ae60;
+}
+
+.removeButton {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.375rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.removeButton:hover {
+    background: #ffebee;
+}
+
+/* Total Section */
+.totalSection {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.totalLabel {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.totalValue {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #27ae60;
+}
+
+/* Empty State */
+.emptyState {
+    text-align: center;
+    padding: 3rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.emptyState p {
+    font-size: 1.125rem;
+    color: #888;
+    margin: 0.5rem 0;
+}
+
+.emptyStateHint {
+    font-size: 0.95rem !important;
+    color: #aaa !important;
+}
+
+/* Product Dialog */
+.dialogOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.dialog {
+    background: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.dialogHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.dialogHeader h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #2c3e50;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #888;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+    background: #f0f0f0;
+    color: #2c3e50;
+}
+
+.dialogBody {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.searchInput:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.productList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.productItem {
+    padding: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.productItem:hover {
+    border-color: #667eea;
+    background: #f8f9fa;
+}
+
+.productName {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.productDetails {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.productRef {
+    color: #666;
+}
+
+.productPrice {
+    color: #27ae60;
+    font-weight: 600;
+}
+
+.noProducts {
+    text-align: center;
+    padding: 2rem;
+    color: #888;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .table {
+        font-size: 0.85rem;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.5rem;
+    }
+
+    .quantityInput,
+    .priceInput {
+        width: 80px;
+        font-size: 0.85rem;
+    }
+
+    .totalSection {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .dialog {
+        width: 95%;
+        max-height: 90vh;
+    }
+}

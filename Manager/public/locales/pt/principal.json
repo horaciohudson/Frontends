@@ -448,6 +448,8 @@
     "versionConflict": "Conflito de versão detectado. Os dados foram modificados por outro usuário.",
     "retryMessage": "Tentando novamente em {seconds} segundos...",
     "maxRetriesExceeded": "Máximo de tentativas excedido. Tente novamente mais tarde.",
+    "companyNotFound": "Empresa não encontrada. Pode ter sido removida.",
+    "update": "Atualizar",
     "yes": "Sim",
     "no": "Não"
   },

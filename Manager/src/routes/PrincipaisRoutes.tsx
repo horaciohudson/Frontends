@@ -2,6 +2,7 @@
 import { Routes, Route } from "react-router-dom";
 import PrincipaisLayout from "../layouts/MainLayout";
 import FormCompositionPage from "../pages/compositions/FormCompositionPage";
+import FormProductAccessoryTabs from "../pages/productAccessories/FormProductAccessoryTabs";
 
 
 
@@ -14,7 +15,7 @@ function PrincipaisRoutes() {
         <Route path="clientes" element={<div>Cadastro de Clientes</div>} />      
         <Route path="contas-correntes" element={<div>Contas Correntes</div>} />    
         <Route path="fornecedores" element={<div>Fornecedores</div>} />
-        <Route path="produtos-categorias" element={<div>Categoria de Produtos </div>} />       
+        <Route path="produtos-categorias" element={<FormProductAccessoryTabs />} />       
         <Route path="produtos" element={<div>Cadastro de Produtos </div>} /> 
         
         <Route path="empresas" element={<div>Empresas</div>} />

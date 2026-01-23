@@ -4,7 +4,7 @@ import { TRANSLATION_NAMESPACES } from "../../locales";
 import api from "../../service/api";
 import styles from "../../styles/companies/FormCompany.module.css";
 import { Company } from "../../models/Company";
-import { withConcurrencyRetry, isConcurrencyError, delay } from "../../utils/concurrencyUtils";
+import { isConcurrencyError } from "../../utils/concurrencyUtils";
 
 interface Currency { id: number; name: string; }
 interface Activity { id: number; name: string; }
@@ -37,6 +37,22 @@ const initial: Company = {
   customerFlag: false,
   transporterFlag: false,
   version: 1, // Initialize with version 1 for new companies
+};
+
+// Utility function to format phone numbers
+const formatPhone = (value: string): string => {
+  if (!value) return "";
+  const digits = value.replace(/\D/g, "");
+
+  if (digits.length === 10) {
+    // Format: (11) 3333-4444
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+  } else if (digits.length === 11) {
+    // Format: (11) 93333-4444
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+  }
+
+  return digits; // Return unformatted if not 10 or 11 digits
 };
 
 function FormCompany({ company, companies, onEdit, onSave }: Props) {
@@ -86,6 +102,11 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
     if (company) {
       setForm({
         ...company,
+        phone: formatPhone(company.phone),
+        mobile: formatPhone(company.mobile),
+        whatsapp: formatPhone(company.whatsapp),
+        currencyId: company.currencyId ? Number(company.currencyId) : null,
+        activityId: company.activityId ? Number(company.activityId) : null,
         issRate: company.issRate || 0,
         funruralRate: company.funruralRate || 0,
         transporterFlag: company.transporterFlag || false,
@@ -118,8 +139,23 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
           type === "checkbox"
             ? checked
             : name === "currencyId" || name === "activityId"
-            ? value ? Number(value) : null
-            : value,
+              ? value ? Number(value) : null
+              : value,
+      }));
+    },
+    []
+  );
+
+  const handlePhoneChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      // Remove all non-digits, then format for display
+      const digits = value.replace(/\D/g, "");
+      const formatted = formatPhone(digits);
+
+      setForm((prev) => ({
+        ...prev,
+        [name]: formatted,
       }));
     },
     []
@@ -144,12 +180,12 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
   };
 
   const handleEdit = useCallback((c: Company) => {
-    // Ensure ID is a valid number
-    if (!c.id || c.id <= 0) {
+    // Ensure ID is valid
+    if (!c.id) {
       console.warn("Attempt to edit company without valid ID:", c);
       return;
     }
-    
+
     setForm({ ...c });
     setEditingMode(true);
     setError(null);
@@ -157,10 +193,10 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
     setTimeout(() => corporateNameRef.current?.focus(), 0);
   }, [onEdit]);
 
-  const handleDelete = useCallback(async (id: number | null) => {
-    if (!id || id <= 0) return; // Check if ID is valid
+  const handleDelete = useCallback(async (id: string | null) => {
+    if (!id) return; // Check if ID is valid
     if (!window.confirm(t("companies.confirmDelete"))) return;
-    
+
     try {
       setDeleting(true);
       await api.delete(`/companies/${id}`);
@@ -176,15 +212,15 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
 
   const handleSave = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const msg = validate();
-    if (msg) { 
-      setError(msg); 
-      return; 
+    if (msg) {
+      setError(msg);
+      return;
     }
 
     // For updates, check if company still exists
-    if (form.id && form.id > 0) {
+    if (form.id) {
       try {
         const checkResponse = await api.get(`/companies/${form.id}`);
         if (!checkResponse.data) {
@@ -214,10 +250,10 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
           cnpj: form.cnpj.replace(/\D/g, ""),
           stateRegistration: form.stateRegistration || null,
           municipalRegistration: form.municipalRegistration || null,
-          phone: form.phone || null,
-          mobile: form.mobile || null,
+          phone: form.phone ? form.phone.replace(/\D/g, "") : null,
+          mobile: form.mobile ? form.mobile.replace(/\D/g, "") : null,
           email: form.email || null,
-          whatsapp: form.whatsapp || null,
+          whatsapp: form.whatsapp ? form.whatsapp.replace(/\D/g, "") : null,
           issRate: Number(form.issRate) || 0,
           funruralRate: Number(form.funruralRate) || 0,
           manager: form.manager || null,
@@ -227,11 +263,11 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
           transporterFlag: form.transporterFlag,
           currencyId: form.currencyId,
           activityId: form.activityId,
-          ...(form.id && form.id > 0 ? { version: form.version } : {}), // Only include version for existing companies
+          ...(form.id ? { version: form.version } : {}), // Only include version for existing companies
         };
 
         let res;
-        if (form.id && form.id > 0) {
+        if (form.id) {
           res = await api.put(`/companies/${form.id}`, payload);
         } else {
           res = await api.post("/companies", payload);
@@ -245,58 +281,58 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
         console.log("   Message:", err.response?.data?.message);
         console.log("   Error:", err.message);
         console.log("   isConcurrencyError:", isConcurrencyError(err));
-        
+
         // Handle entity not found error FIRST
-        if (err.response?.status === 404 || 
-            err.response?.data?.message?.includes("not found") ||
-            err.response?.data?.message?.includes("Company not found") ||
-            err.message?.includes("EntityNotFoundException") ||
-            err.message?.includes("Company not found")) {
+        if (err.response?.status === 404 ||
+          err.response?.data?.message?.includes("not found") ||
+          err.response?.data?.message?.includes("Company not found") ||
+          err.message?.includes("EntityNotFoundException") ||
+          err.message?.includes("Company not found")) {
           console.log("❌ Entity not found, not a concurrency error");
           throw new Error("ENTITY_NOT_FOUND");
         }
-        
+
         // Handle specific concurrency error
         if (isConcurrencyError(err)) {
           console.log("✅ Concurrency error detected, starting retry...");
           if (retryCount < 3) {
             const currentRetry = retryCount + 1;
             const maxRetries = 3;
-            
+
             console.log(`🔄 Concurrency conflict detected, attempt ${currentRetry}/${maxRetries}`);
-            
+
             // Show retry information to user
             setRetryInfo({
               count: currentRetry,
               maxRetries: maxRetries,
               message: t("companies.retryMessage") || `Attempt ${currentRetry} of ${maxRetries}...`
             });
-            
+
             // Wait with more responsive exponential backoff
             const delay = Math.min(Math.pow(1.5, retryCount) * 300, 1500); // Maximum of 1.5s
             console.log(`⏳ Waiting ${delay}ms before next attempt...`);
             await new Promise(resolve => setTimeout(resolve, delay));
-            
+
             // Reload company data to get latest version
             try {
               console.log("📥 Reloading company data to get updated version...");
-              
+
               // Only reload if company has valid ID
-              if (form.id && form.id > 0) {
+              if (form.id) {
                 const freshData = await api.get(`/companies/${form.id}`);
-                
+
                 // Update form with latest data
                 setForm(prev => ({
                   ...prev,
                   ...freshData.data,
                   version: freshData.data.version
                 }));
-                
+
                 console.log("✅ Data reloaded, version updated:", freshData.data.version);
               } else {
                 console.log("⚠️ Company without valid ID, cannot reload data");
               }
-              
+
               // Try again with updated data
               return await attemptSave(retryCount + 1);
             } catch (refreshErr) {
@@ -311,7 +347,7 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
         } else {
           console.log("❌ Error is not concurrency-related, re-throwing...");
         }
-        
+
         throw err; // Re-throw other types of errors
       }
     };
@@ -319,7 +355,7 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
     try {
       setSaving(true);
       setError(null);
-      
+
       console.log("🚀 Starting company save...");
       const res = await attemptSave();
 
@@ -339,10 +375,10 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
       };
 
       onEdit(updatedCompany);
-      
+
       // Clear retry information
       setRetryInfo(null);
-      
+
       // Wait a bit before reloading to avoid conflicts
       setTimeout(() => {
         onSave();
@@ -358,12 +394,12 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
       console.log("   Data:", err.response?.data);
       console.log("   Message:", err.message);
       console.log("   Stack:", err.stack);
-      
+
       // Clear retry information
       setRetryInfo(null);
-      
+
       let msg: string;
-      
+
       if (err.message === "ENTITY_NOT_FOUND") {
         msg = t("companies.companyNotFound") || "Company not found. It may have been removed.";
         resetForm();
@@ -377,7 +413,7 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
       } else {
         msg = err.response?.data?.message || t("companies.saveError") || "Error saving company.";
       }
-      
+
       setError(msg);
     } finally {
       setSaving(false);
@@ -461,7 +497,7 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
             <input
               name="phone"
               value={form.phone}
-              onChange={handleChange}
+              onChange={handlePhoneChange}
               className={styles["form-input"]}
               disabled={!editingMode}
               type="text"
@@ -476,7 +512,7 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
             <input
               name="mobile"
               value={form.mobile}
-              onChange={handleChange}
+              onChange={handlePhoneChange}
               className={styles["form-input"]}
               disabled={!editingMode}
               type="text"
@@ -500,7 +536,7 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
             <input
               name="whatsapp"
               value={form.whatsapp}
-              onChange={handleChange}
+              onChange={handlePhoneChange}
               className={styles["form-input"]}
               disabled={!editingMode}
               type="text"
@@ -680,7 +716,7 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
         </div>
 
         {error && <p className={styles.error}>{error}</p>}
-        
+
         {retryInfo && (
           <div className={styles.retryInfo}>
             <div className={styles.retryProgress}>
@@ -715,20 +751,20 @@ function FormCompany({ company, companies, onEdit, onSave }: Props) {
               <td>{c.tradeName}</td>
               <td>{c.cnpj}</td>
               <td>{c.email}</td>
-              <td>{c.phone}</td>
+              <td>{formatPhone(c.phone)}</td>
               <td>{c.factory ? t("common.yes") : t("common.no")}</td>
               <td>
                 <button
                   className={styles["button-edit"]}
                   onClick={() => handleEdit(c)}
-                  disabled={editingMode || saving || !c.id || c.id <= 0}
+                  disabled={editingMode || saving || !c.id}
                 >
                   {t("companies.edit")}
                 </button>
                 <button
                   className={styles["button-delete"]}
                   onClick={() => handleDelete(c.id)}
-                  disabled={!c.id || c.id <= 0 || deleting || editingMode || saving}
+                  disabled={!c.id || deleting || editingMode || saving}
                 >
                   {t("companies.delete")}
                 </button>
