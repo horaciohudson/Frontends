@@ -1,10 +1,9 @@
-import { Customer } from "./Customer";
-
 export interface CustomerAddress {
-  id: number;
-  customer: Customer;
-  addressType: "COMMERCIAL" | "RESIDENTIAL" | "BILLING";
+  id: string; // UUID
+  companyId?: string; // UUID
+  addressType: string;
   street: string;
+  number: string;
   district: string;
   city: string;
   state: string;

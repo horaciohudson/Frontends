@@ -19,7 +19,7 @@ interface ProductProps {
 // ---------- helpers ----------
 const takeList = <T,>(data: any): T[] => (Array.isArray(data) ? data : data?.content ?? []);
 
-const mapProductFromApi = (p: any): ProductFormModel => {
+export const mapProductFromApi = (p: any): ProductFormModel => {
   console.log("🗺️ Mapeando produto da API:", p);
   console.log("🆔 ID original:", p.id, "tipo:", typeof p.id);
 
@@ -35,11 +35,12 @@ const mapProductFromApi = (p: any): ProductFormModel => {
     productCategoryName: p.categoryName || "",
     productSubcategoryId: Number(p.subCategoryId) || 0, // DTO uses subCategoryId
     productSubcategoryName: p.subCategoryName || "",
-    productSizeId: Number(p.sizeId) || 0,
-    productSizeName: p.sizeName || "",
+
+
 
     supplierId: p.supplierId ? String(p.supplierId) : "",
     supplierName: p.supplierName || "",
+    sellingPrice: p.sellingPrice ?? null,
   };
 
   console.log("✅ Produto mapeado:", mapped);
@@ -56,10 +57,7 @@ const mapSubcategory = (s: any): Option => ({
   id: Number(s.id) || 0,
   name: s.name || s.nome || ""
 });
-const mapSize = (sz: any): Option => ({
-  id: Number(sz.id || sz.idTamanho) || 0,
-  name: sz.size || sz.tamanho || ""
-});
+
 const mapSupplier = (s: any): SupplierOption => ({
   id: String(s.id || ""),
   name: String(s.name || s.tradeName || s.corporateName || "").trim(),
@@ -77,8 +75,6 @@ const initialProduct: ProductFormModel = {
   productCategoryName: "",
   productSubcategoryId: 0,
   productSubcategoryName: "",
-  productSizeId: 0,
-  productSizeName: "",
 
   supplierId: "",
   supplierName: "",
@@ -92,7 +88,6 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
 
   const [categories, setCategories] = useState<Option[]>([]);
   const [subcategories, setSubcategories] = useState<Option[]>([]);
-  const [sizes, setSizes] = useState<Option[]>([]);
   const [suppliers, setSuppliers] = useState<SupplierOption[]>([]);
 
   const [editingMode, setEditingMode] = useState(false);
@@ -180,31 +175,7 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
       }
     }
   };
-  const loadSizes = async (subCategoryId: number) => {
-    if (!subCategoryId) { setSizes([]); return; }
-    console.log("🔍 Loading sizes for subcategory:", subCategoryId);
-    try {
-      // Try first with English default
-      const res = await api.get(`/product-sizes?subCategoryId=${subCategoryId}`);
-      console.log("📦 Sizes API response:", res.data);
-      const sizesList = takeList<any>(res.data).map(mapSize);
-      console.log("📏 Sizes mapped:", sizesList);
-      setSizes(sizesList);
-    } catch (error) {
-      console.error("❌ Error loading sizes with /product-sizes:", error);
-      try {
-        // Try with Portuguese default
-        const res = await api.get(`/produtos-tamanhos?subcategoriaId=${subCategoryId}`);
-        console.log("📦 Sizes API response (pt):", res.data);
-        const sizesList = takeList<any>(res.data).map(mapSize);
-        console.log("📏 Sizes mapped (pt):", sizesList);
-        setSizes(sizesList);
-      } catch (error2) {
-        console.error("❌ Error loading sizes with /produtos-tamanhos:", error2);
-        setSizes([]);
-      }
-    }
-  };
+
 
   // initial
   useEffect(() => {
@@ -223,35 +194,14 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
         ...prev,
         productSubcategoryId: 0,
         productSubcategoryName: "",
-        productSizeId: 0,
-        productSizeName: "",
       }));
-      setSizes([]);
-    } else {
-      setSubcategories([]);
-      setSizes([]);
-      setForm((prev) => ({
-        ...prev,
-        productSubcategoryId: 0,
-        productSubcategoryName: "",
-        productSizeId: 0,
-        productSizeName: "",
-      }));
+
+
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.productCategoryId]);
 
-  // cascade subcategory -> size (packaging is independent)
-  useEffect(() => {
-    if (form.productSubcategoryId > 0) {
-      loadSizes(form.productSubcategoryId);
-      setForm(prev => ({ ...prev, productSizeId: 0, productSizeName: "" }));
-    } else {
-      setSizes([]);
-      setForm(prev => ({ ...prev, productSizeId: 0, productSizeName: "" }));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form.productSubcategoryId]);
+
 
   // ---- handlers ----
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -263,8 +213,8 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
         [name]:
           name === "productCategoryId" ||
             name === "productSubcategoryId" ||
-            name === "productSizeId" ||
             name === "warrantyMonths"
+
             ? Number(value) || 0
             : value,
       };
@@ -275,9 +225,7 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
       } else if (name === "productSubcategoryId") {
         const sel = subcategories.find((s) => s.id === Number(value));
         next.productSubcategoryName = sel?.name || "";
-      } else if (name === "productSizeId") {
-        const sel = sizes.find((s) => s.id === Number(value));
-        next.productSizeName = sel?.name || "";
+
       } else if (name === "supplierId") {
         const sel = suppliers.find((s) => s.id === value);
         next.supplierName = sel?.name || "";
@@ -298,8 +246,8 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
       packaging: "",
     });
     setSubcategories([]);
-    setSizes([]);
     setEditingMode(true);
+
     setError(null);
     setTimeout(() => nameRef.current?.focus(), 0);
   };
@@ -309,7 +257,7 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
     setEditingMode(true);
     setError(null);
     if (p.productCategoryId) await loadSubcategories(p.productCategoryId);
-    if (p.productSubcategoryId) await loadSizes(p.productSubcategoryId);
+
 
     // ensure packaging is within the centralized enum
     setForm(prev => ({
@@ -325,7 +273,7 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
     setTimeout(() => nameRef.current?.focus(), 0);
   };
 
-  const handleDelete = async (id: number | null) => {
+  const handleDelete = async (id: string | null) => {
     if (!id) return;
     if (!window.confirm(t("products.confirmDelete"))) return;
     try {
@@ -343,7 +291,7 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
       productCategoryId: form.productCategoryId,
       productSubcategoryId: form.productSubcategoryId,
       supplierId: form.supplierId,
-      supplierIdValid: form.supplierId > 0,
+      supplierIdValid: !!form.supplierId,
       packaging: form.packaging
     });
 
@@ -373,8 +321,9 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
       subCategoryId: form.productSubcategoryId || null, // matches DTO
       subCategoryName: form.productSubcategoryName || null,
 
-      sizeId: form.productSizeId || null,
-      sizeName: form.productSizeName || null,
+
+
+
 
       ...(form.supplierId && form.supplierId.trim() !== "" ? { supplierId: form.supplierId } : {}),
       ...(form.supplierName ? { supplierName: form.supplierName } : {}),
@@ -465,8 +414,8 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
       packaging: "",
     });
     setSubcategories([]);
-    setSizes([]);
     setEditingMode(false);
+
     setError(null);
   };
 
@@ -549,21 +498,8 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
             </select>
           </div>
 
-          <div className={styles.column}>
-            <label className={styles["form-label"]}>{t("products.size")}:</label>
-            <select
-              name="productSizeId"
-              value={form.productSizeId}
-              onChange={handleChange}
-              className={styles["form-input"]}
-              disabled={!editingMode || !form.productSubcategoryId}
-            >
-              <option value={0}>{t("products.select")}</option>
-              {sizes.map((sz) => (
-                <option key={sz.id} value={sz.id}>{sz.name}</option>
-              ))}
-            </select>
-          </div>
+
+
         </div>
 
         <div className={styles["form-row"]}>
@@ -644,7 +580,7 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
         </div>
 
         {error && <p className={styles.error}>{error}</p>}
-      </form>
+      </form >
 
       <table className={styles["product-table"]}>
         <thead>
@@ -654,6 +590,7 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
             <th>{t("products.subcategory")}</th>
             <th>{t("products.technicalReference")}</th>
             <th>{t("products.supplier")}</th>
+            <th>Preço Venda</th>
             <th>{t("products.warrantyMonths")}</th>
             <th>{t("products.actions")}</th>
           </tr>
@@ -671,6 +608,7 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
               <td>{p.productSubcategoryName}</td>
               <td>{p.technicalReference || "-"}</td>
               <td>{p.supplierName}</td>
+              <td>{p.sellingPrice ? `R$ ${p.sellingPrice.toFixed(2)}` : "-"}</td>
               <td>{p.warrantyMonths ? `${p.warrantyMonths} meses` : "-"}</td>
               <td>
                 <button
@@ -695,6 +633,6 @@ export default function Product({ onSelectProduct, onDoubleClickProduct }: Produ
           )}
         </tbody>
       </table>
-    </div>
+    </div >
   );
 }

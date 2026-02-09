@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { TRANSLATION_NAMESPACES } from '../../locales';
 import { ProductVariantService } from '../../service/ProductVariant';
 import { SizeService } from '../../service/Size';
 import { ColorService } from '../../service/Color';
 import type { ProductVariant, ProductVariantRequest } from '../../types/ProductVariant';
-import type { Size } from '../../types/Size';
-import type { Color } from '../../types/Color';
+import type { Size } from '../../models/Size';
+import type { Color } from '../../models/Color';
+import { ProductCostService } from '../../service/ProductCost';
+import { ProductPriceService } from '../../service/ProductPrice';
 import styles from '../../styles/products/VariantGrid.module.css';
 
 interface VariantGridProps {
@@ -25,11 +25,10 @@ interface VariantCell {
 
 function VariantGrid({ productId, onVariantsChange }: VariantGridProps) {
     console.log("🎨 VariantGrid renderizado com productId:", productId);
-    
-    const { t } = useTranslation(TRANSLATION_NAMESPACES.PRINCIPAL);
+
     const [sizes, setSizes] = useState<Size[]>([]);
     const [colors, setColors] = useState<Color[]>([]);
-    const [variants, setVariants] = useState<ProductVariant[]>([]);
+    // const [variants, setVariants] = useState<ProductVariant[]>([]); // State seems unused, using cellsMap instead
     const [variantCells, setVariantCells] = useState<Map<string, VariantCell>>(new Map());
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -48,17 +47,19 @@ function VariantGrid({ productId, onVariantsChange }: VariantGridProps) {
         try {
             console.log("📊 Iniciando loadData para productId:", productId, "tipo:", typeof productId);
             setLoading(true);
-            
+
             // ProductId is already a string (UUID)
             if (!productId) {
                 throw new Error("ProductId inválido");
             }
-            
+
             console.log("🔄 Chamando APIs com productId:", productId);
-            const [sizesRes, colorsRes, variantsRes] = await Promise.all([
+            const [sizesRes, colorsRes, variantsRes, costRes, priceRes] = await Promise.all([
                 SizeService.getAll(),
                 ColorService.getAll(),
-                ProductVariantService.getByProductId(productId)
+                ProductVariantService.getByProductId(productId),
+                ProductCostService.findByProductId(productId),
+                ProductPriceService.findByProductId(productId)
             ]);
 
             console.log("📏 Sizes response:", sizesRes);
@@ -84,7 +85,7 @@ function VariantGrid({ productId, onVariantsChange }: VariantGridProps) {
 
             setSizes(activeSizes);
             setColors(activeColors);
-            setVariants(loadedVariants);
+            // setVariants(loadedVariants);
 
             // Build variant cells map
             const cellsMap = new Map<string, VariantCell>();
@@ -96,12 +97,12 @@ function VariantGrid({ productId, onVariantsChange }: VariantGridProps) {
                     );
 
                     cellsMap.set(key, {
-                        sizeId: size.id,
-                        colorId: color.id,
+                        sizeId: size.id!, // Assert non-null since fetched sizes have IDs
+                        colorId: color.id!, // Assert non-null since fetched colors have IDs
                         variant: existingVariant,
                         stockQuantity: existingVariant?.stockQuantity || 0,
-                        salePrice: existingVariant?.salePrice || undefined,
-                        costPrice: existingVariant?.costPrice || undefined
+                        salePrice: existingVariant?.salePrice ?? priceRes?.sellingPrice,
+                        costPrice: existingVariant?.costPrice ?? costRes?.averageCost
                     });
                 });
             });
@@ -117,9 +118,10 @@ function VariantGrid({ productId, onVariantsChange }: VariantGridProps) {
         }
     };
 
-    const getCellKey = (sizeId: string, colorId: string) => `${sizeId}-${colorId}`;
+    const getCellKey = (sizeId: string | null, colorId: string | null) => `${sizeId || ''}-${colorId || ''}`;
 
-    const handleStockChange = (sizeId: string, colorId: string, value: string) => {
+    const handleStockChange = (sizeId: string | null, colorId: string | null, value: string) => {
+        if (!sizeId || !colorId) return;
         const key = getCellKey(sizeId, colorId);
         const cell = variantCells.get(key);
         if (!cell) return;
@@ -132,7 +134,8 @@ function VariantGrid({ productId, onVariantsChange }: VariantGridProps) {
         setVariantCells(newMap);
     };
 
-    const handlePriceChange = (sizeId: string, colorId: string, field: 'salePrice' | 'costPrice', value: string) => {
+    const handlePriceChange = (sizeId: string | null, colorId: string | null, field: 'salePrice' | 'costPrice', value: string) => {
+        if (!sizeId || !colorId) return;
         const key = getCellKey(sizeId, colorId);
         const cell = variantCells.get(key);
         if (!cell) return;
@@ -175,7 +178,7 @@ function VariantGrid({ productId, onVariantsChange }: VariantGridProps) {
             });
 
             // Execute bulk create
-            if (variantsToCreate.length > 0) {
+            if (variantsToCreate.length > 0 && productId) {
                 await ProductVariantService.bulkCreate(productId, variantsToCreate);
             }
 
@@ -261,6 +264,10 @@ function VariantGrid({ productId, onVariantsChange }: VariantGridProps) {
                 </div>
             </div>
 
+
+
+
+
             <div className={styles.tableWrapper}>
                 <table className={styles.table}>
                     <thead>
@@ -273,7 +280,7 @@ function VariantGrid({ productId, onVariantsChange }: VariantGridProps) {
                                             className={styles.colorPreview}
                                             style={{ backgroundColor: color.hexCode || '#ccc' }}
                                         />
-                                        <span>{color.colorName || color.name}</span>
+                                        <span>{color.name}</span>
                                     </div>
                                 </th>
                             ))}
@@ -332,7 +339,7 @@ function VariantGrid({ productId, onVariantsChange }: VariantGridProps) {
             <div className={styles.legend}>
                 <p>💡 <strong>Dica:</strong> Preencha o estoque e preços para as combinações disponíveis.</p>
             </div>
-        </div>
+        </div >
     );
 }
 

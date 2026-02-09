@@ -166,3 +166,68 @@
         width: 100%;
     }
 }
+
+/* Financial Summary Table */
+.financialSummary {
+    margin-top: 2rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid #e0e0e0;
+}
+
+.summaryTitle {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.summaryTable {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.summaryTable th,
+.summaryTable td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.summaryTable th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.summaryTable td {
+    color: #2c3e50;
+    font-size: 1rem;
+}
+
+.summaryTable tr:last-child td {
+    border-bottom: none;
+}
+
+.amountPositive {
+    color: #27ae60;
+    font-weight: 600;
+}
+
+.amountNegative {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.amountNeutral {
+    color: #2c3e50;
+    font-weight: 600;
+}

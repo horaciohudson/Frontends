@@ -58,6 +58,37 @@ export interface ImportResult {
     errors?: string[];
 }
 
+// Enhanced error handling types for DataSync component
+export enum ExportErrorType {
+    NETWORK_ERROR = 'NETWORK_ERROR',
+    AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR', 
+    DATA_ERROR = 'DATA_ERROR',
+    SERVER_ERROR = 'SERVER_ERROR',
+    VALIDATION_ERROR = 'VALIDATION_ERROR',
+    TIMEOUT_ERROR = 'TIMEOUT_ERROR',
+    CONFIGURATION_ERROR = 'CONFIGURATION_ERROR'
+}
+
+export interface ExportError {
+    type: ExportErrorType;
+    code: string;
+    message: string;
+    details?: string;
+    retryable: boolean;
+    module?: string;
+    entity?: string;
+    timestamp?: string;
+}
+
+export interface ExportState {
+    loading: boolean;
+    error: ExportError | null;
+    success: boolean;
+    progress?: number;
+    cancellable?: boolean;
+    retryCount?: number;
+}
+
 export interface User {
     username: string;
     roles: string[];

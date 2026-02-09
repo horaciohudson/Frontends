@@ -1,12 +1,21 @@
 // src/pages/sales/FormSale.tsx
 import { useState, useEffect } from "react";
-import { Sale, SaleCreateDTO, SaleItemDTO } from "../../models/Sale";
+import { Sale, SaleCreateDTO, SaleItemDTO, SaleType, SaleFinancial, SaleAddress, SaleTransport, SalesContext } from "../../models/Sale";
 import { Customer } from "../../models/Customer";
 import { SalesPerson } from "../../models/SalesPerson";
-import { getCustomers } from "../../service/Customer";
 import { getSalesPersons } from "../../service/SalesPerson";
-import FormSaleItems from "./FormSaleItems";
+import { CustomerAddress } from "../../models/CustomerAddress";
+import { searchCustomers, getCustomers, getCustomerAddresses } from "../../service/Customer";
+
+
 import styles from "../../styles/sales/FormSale.module.css";
+
+// Tab Components
+import FormSaleGeneral from "../../components/sales/tabs/FormSaleGeneral";
+import FormSaleItems from "../../components/sales/tabs/FormSaleItems";
+import FormSaleFinancial from "../../components/sales/tabs/FormSaleFinancial";
+import FormSaleLogistics from "../../components/sales/tabs/FormSaleLogistics";
+import FormSaleContext from "../../components/sales/tabs/FormSaleContext";
 
 interface FormSaleProps {
     sale: Sale | null;
@@ -15,203 +24,281 @@ interface FormSaleProps {
     loading: boolean;
 }
 
-export default function FormSale({ sale, onSave, onCancel, loading }: FormSaleProps) {
-    // Form state
-    const [customerId, setCustomerId] = useState<string>("");
-    const [salespersonId, setSalespersonId] = useState<number>(0);
-    const [type, setType] = useState<string>("");
-    const [items, setItems] = useState<SaleItemDTO[]>([]);
+type TabType = 'general' | 'items' | 'financial' | 'logistics' | 'context';
 
-    // Autocomplete state
-    const [customers, setCustomers] = useState<Customer[]>([]);
+export default function FormSale({ sale, onSave, onCancel, loading }: FormSaleProps) {
+    // Tab State
+    const [activeTab, setActiveTab] = useState<TabType>('general');
+
+    // Form State
+    const [formData, setFormData] = useState<SaleCreateDTO>({
+        customerId: "",
+        salespersonId: "",
+        type: undefined,
+        items: [],
+        financial: {
+            paymentMethod: "CASH",
+            amountPaid: 0
+        } as SaleFinancial,
+        address: { type: "DELIVERY" } as SaleAddress,
+        transport: {} as SaleTransport,
+        context: {} as SalesContext
+    });
+
+    // Autocomplete & Lists State
     const [salesPersons, setSalesPersons] = useState<SalesPerson[]>([]);
     const [customerSearch, setCustomerSearch] = useState("");
-    const [showCustomerDropdown, setShowCustomerDropdown] = useState(false);
     const [filteredCustomers, setFilteredCustomers] = useState<Customer[]>([]);
+    const [customerAddresses, setCustomerAddresses] = useState<CustomerAddress[]>([]);
 
-    // Load customers and salespersons
+    // Fetch addresses when customer changes
     useEffect(() => {
-        loadCustomers();
-        loadSalesPersons();
+        if (formData.customerId) {
+            getCustomerAddresses(formData.customerId).then(setCustomerAddresses);
+        } else {
+            setCustomerAddresses([]);
+        }
+    }, [formData.customerId]);
+
+    // Init Data
+    useEffect(() => {
+        loadData();
     }, []);
 
-    // Populate form when editing
+    // Populate when editing
     useEffect(() => {
         if (sale) {
-            setCustomerId(sale.customer.customerId);
-            setSalespersonId(sale.salesperson.id);
-            setType(sale.type || "");
-
-            // Convert sale items to DTO format
-            const saleItems: SaleItemDTO[] = sale.items.map(item => ({
-                itemNumber: item.itemNumber,
-                productId: item.product.id || 0,
-                description: item.description,
-                quantity: item.quantity,
-                unitPrice: item.unitPrice,
-                totalPrice: item.totalPrice,
-                unit: item.unit,
-                size: item.size,
-                weight: item.weight,
-                status: item.status
-            }));
-            setItems(saleItems);
-
-            // Set customer search to show selected customer name
-            setCustomerSearch(sale.customer.name);
+            populateForm(sale);
         }
     }, [sale]);
 
-    // Filter customers based on search
+    // Customer Search Debounce
     useEffect(() => {
-        if (customerSearch) {
-            const filtered = customers.filter(c =>
-                c.name.toLowerCase().includes(customerSearch.toLowerCase()) ||
-                (c.email && c.email.toLowerCase().includes(customerSearch.toLowerCase()))
-            );
-            setFilteredCustomers(filtered);
-        } else {
-            setFilteredCustomers(customers);
-        }
-    }, [customerSearch, customers]);
+        const timer = setTimeout(async () => {
+            if (customerSearch) {
+                try {
+                    const results = await searchCustomers(customerSearch);
+                    setFilteredCustomers(results);
+                } catch (err) {
+                    console.error("Error searching customers:", err);
+                }
+            } else {
+                loadDefaultCustomers();
+            }
+        }, 300);
+        return () => clearTimeout(timer);
+    }, [customerSearch]);
 
-    const loadCustomers = async () => {
+    const loadData = async () => {
+        try {
+            const [spData, custData] = await Promise.all([
+                getSalesPersons(),
+                getCustomers()
+            ]);
+            setSalesPersons(spData);
+            setFilteredCustomers(custData);
+        } catch (err) {
+            console.error("Error loading initial data:", err);
+        }
+    };
+
+    const loadDefaultCustomers = async () => {
         try {
             const data = await getCustomers();
-            setCustomers(data);
             setFilteredCustomers(data);
-        } catch (err) {
-            console.error("Error loading customers:", err);
-        }
+        } catch (err) { console.error(err); }
     };
 
-    const loadSalesPersons = async () => {
+    const populateForm = (sale: Sale) => {
         try {
-            const data = await getSalesPersons();
-            setSalesPersons(data);
-        } catch (err) {
-            console.error("Error loading salespersons:", err);
+            console.log("Populating form with sale:", sale);
+            setCustomerSearch(sale.customer?.name || "");
+
+            // Map Items
+            const mappedItems: SaleItemDTO[] = sale.items?.map(item => {
+                if (!item.product) {
+                    console.error("Item validation error: Product is null for item", item);
+                    // Safe fallback or throw? Falling back to empty string ID might cause other issues but prevents crash here
+                    return {
+                        itemNumber: item.itemNumber,
+                        productId: "",
+                        description: item.description || "Produto Desconhecido",
+                        quantity: item.quantity,
+                        unitPrice: item.unitPrice,
+                        totalPrice: item.totalPrice,
+                        unit: item.unit,
+                        size: item.size,
+                        weight: item.weight,
+                        status: item.status,
+                        sizeName: item.sizeName,
+                        colorName: item.colorName
+                    };
+                }
+                return {
+                    itemNumber: item.itemNumber,
+                    productId: String(item.product.id),
+                    description: item.description,
+                    quantity: item.quantity,
+                    unitPrice: item.unitPrice,
+                    totalPrice: item.totalPrice,
+                    unit: item.unit,
+                    size: item.size,
+                    weight: item.weight,
+                    status: item.status,
+                    sizeName: item.sizeName,
+                    colorName: item.colorName,
+                    sizeId: item.sizeId,
+                    colorId: item.colorId,
+                    variantId: item.variantId
+                };
+            }) || [];
+
+            console.log("Mapped items:", mappedItems);
+
+            setFormData({
+                customerId: sale.customer?.customerId || "",
+                salespersonId: sale.salesperson?.id ? String(sale.salesperson.id) : "",
+                type: (sale.type as SaleType) || undefined,
+                items: mappedItems,
+                financial: sale.financial || { paymentMethod: "CASH", amountPaid: 0 } as SaleFinancial,
+                address: sale.address || { type: "DELIVERY" } as SaleAddress,
+                transport: sale.transport || {} as SaleTransport,
+                context: sale.context || {} as SalesContext
+            });
+        } catch (error) {
+            console.error("Error populating form:", error);
         }
     };
 
-    const handleCustomerSelect = (customer: Customer) => {
-        setCustomerId(customer.customerId);
-        setCustomerSearch(customer.name);
-        setShowCustomerDropdown(false);
+    // Auto-update amountPaid when items change
+    useEffect(() => {
+        const totalSale = formData.items.reduce((sum, item) => sum + item.totalPrice, 0);
+
+        // Only update if financial exists and amountPaid is different from totalSale
+        if (formData.financial && formData.financial.amountPaid !== totalSale) {
+            setFormData(prev => ({
+                ...prev,
+                financial: {
+                    ...prev.financial!,
+                    amountPaid: totalSale
+                }
+            }));
+        }
+    }, [formData.items]);
+
+    // Update Handlers
+    const updateGeneral = (field: keyof SaleCreateDTO, value: any) => {
+        setFormData(prev => ({ ...prev, [field]: value }));
+    };
+
+    const updateItems = (newItems: SaleItemDTO[]) => {
+        setFormData(prev => ({ ...prev, items: newItems }));
+    };
+
+    const updateFinancial = (financial: SaleFinancial) => {
+        setFormData(prev => ({ ...prev, financial }));
+    };
+
+    const updateLogistics = (address: SaleAddress, transport: SaleTransport) => {
+        setFormData(prev => ({ ...prev, address, transport }));
+    };
+
+    const updateContext = (context: SalesContext) => {
+        setFormData(prev => ({ ...prev, context }));
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Validation
-        if (!customerId) {
-            alert("Por favor, selecione um cliente.");
-            return;
-        }
-        if (!salespersonId) {
-            alert("Por favor, selecione um vendedor.");
-            return;
-        }
-        if (items.length === 0) {
-            alert("Por favor, adicione pelo menos um item à venda.");
+        // Validation moved to final check
+        if (!formData.customerId || !formData.salespersonId) {
+            alert("Preencha os campos obrigatórios.");
             return;
         }
 
-        const saleData: SaleCreateDTO = {
-            customerId,
-            salespersonId,
-            type: type || undefined,
-            items
-        };
-
-        onSave(saleData);
+        onSave(formData);
     };
+
+    const tabs: { id: TabType, label: string, icon: string }[] = [
+        { id: 'general', label: 'Geral', icon: '📋' },
+        { id: 'items', label: 'Itens', icon: '🛒' },
+        { id: 'financial', label: 'Financeiro', icon: '💰' },
+        { id: 'logistics', label: 'Endereço/Frete', icon: '🚚' },
+        { id: 'context', label: 'Contexto', icon: '⚙️' },
+    ];
 
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.section}>
-                <h2 className={styles.sectionTitle}>📋 Informações da Venda</h2>
-
-                <div className={styles.formGrid}>
-                    {/* Customer Autocomplete */}
-                    <div className={styles.formGroup}>
-                        <label className={styles.label}>
-                            Cliente <span className={styles.required}>*</span>
-                        </label>
-                        <div className={styles.autocompleteContainer}>
-                            <input
-                                type="text"
-                                value={customerSearch}
-                                onChange={(e) => {
-                                    setCustomerSearch(e.target.value);
-                                    setShowCustomerDropdown(true);
-                                }}
-                                onFocus={() => setShowCustomerDropdown(true)}
-                                placeholder="Digite para buscar cliente..."
-                                className={styles.input}
-                                required
-                            />
-                            {showCustomerDropdown && filteredCustomers.length > 0 && (
-                                <div className={styles.dropdown}>
-                                    {filteredCustomers.slice(0, 10).map((customer) => (
-                                        <div
-                                            key={customer.customerId}
-                                            className={styles.dropdownItem}
-                                            onClick={() => handleCustomerSelect(customer)}
-                                        >
-                                            <div className={styles.dropdownItemName}>
-                                                {customer.name}
-                                            </div>
-                                            {customer.email && (
-                                                <div className={styles.dropdownItemDetail}>
-                                                    {customer.email}
-                                                </div>
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* Salesperson Select */}
-                    <div className={styles.formGroup}>
-                        <label className={styles.label}>
-                            Vendedor <span className={styles.required}>*</span>
-                        </label>
-                        <select
-                            value={salespersonId}
-                            onChange={(e) => setSalespersonId(Number(e.target.value))}
-                            className={styles.select}
-                            required
-                        >
-                            <option value="">Selecione um vendedor</option>
-                            {salesPersons.map((sp) => (
-                                <option key={sp.id} value={sp.id}>
-                                    {sp.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-
-                    {/* Type */}
-                    <div className={styles.formGroup}>
-                        <label className={styles.label}>Tipo</label>
-                        <input
-                            type="text"
-                            value={type}
-                            onChange={(e) => setType(e.target.value)}
-                            placeholder="Ex: Atacado, Varejo..."
-                            className={styles.input}
-                        />
-                    </div>
-                </div>
+            {/* Tab Navigation */}
+            <div className="flex border-b border-gray-200 mb-4 overflow-x-auto">
+                {tabs.map(tab => (
+                    <button
+                        type="button"
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`px-4 py-2 font-medium flex items-center gap-2 border-b-2 transition-colors ${activeTab === tab.id
+                            ? 'border-blue-500 text-blue-600'
+                            : 'border-transparent text-gray-500 hover:text-gray-700'
+                            }`}
+                        style={{ // Fallback inline styles if Tailwind not fully integrated
+                            borderBottom: activeTab === tab.id ? '2px solid #2563eb' : '2px solid transparent',
+                            color: activeTab === tab.id ? '#2563eb' : '#6b7280',
+                            padding: '10px 16px',
+                            fontWeight: 500,
+                            background: 'none',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        <span>{tab.icon}</span>
+                        {tab.label}
+                    </button>
+                ))}
             </div>
 
-            {/* Sale Items */}
+            {/* Tab Content */}
             <div className={styles.section}>
-                <h2 className={styles.sectionTitle}>🛒 Itens da Venda</h2>
-                <FormSaleItems items={items} setItems={setItems} />
+                {activeTab === 'general' && (
+                    <FormSaleGeneral
+                        formData={formData}
+                        customers={filteredCustomers}
+                        salesPersons={salesPersons}
+                        onUpdate={updateGeneral}
+                        onCustomerSearch={setCustomerSearch}
+                        customerSearchTerm={customerSearch}
+                    />
+                )}
+
+                {activeTab === 'items' && (
+                    <FormSaleItems
+                        items={formData.items}
+                        onUpdateItems={updateItems}
+                    />
+                )}
+
+                {activeTab === 'financial' && (
+                    <FormSaleFinancial
+                        financial={formData.financial!}
+                        totalSale={formData.items.reduce((sum, item) => sum + item.totalPrice, 0)}
+                        onUpdate={updateFinancial}
+                    />
+                )}
+
+                {activeTab === 'logistics' && (
+                    <FormSaleLogistics
+                        address={formData.address!}
+                        transport={formData.transport!}
+                        onUpdateAddress={(addr) => updateLogistics(addr, formData.transport!)}
+                        onUpdateTransport={(trans) => updateLogistics(formData.address!, trans)}
+                        customerAddresses={customerAddresses}
+                    />
+                )}
+
+                {activeTab === 'context' && (
+                    <FormSaleContext
+                        context={formData.context!}
+                        onUpdate={updateContext}
+                    />
+                )}
             </div>
 
             {/* Action Buttons */}

@@ -1,36 +1,53 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
+import api from "../../service/api";
 import { TRANSLATION_NAMESPACES } from "../../locales";
-import Product from "./Product";
+import Product, { mapProductFromApi } from "./Product";
 import ProductFiscal from "./ProductFiscal";
 import ProductCost from "./ProductCost";
 import ProductFinancial from "./ProductFinancial";
 import ProductHistory from "./ProductHistory";
-import VariantGrid from "../../components/products/VariantGrid";
-import { Product as ProductModel } from "../../models/Product";
+import ProductPriceTab from "./ProductPriceTab";
+import { ProductFormModel } from "../../models/Product";
 import styles from "../../styles/products/ProductTabs.module.css";
-
+// ...
 export default function ProductTabs() {
   const { t } = useTranslation(TRANSLATION_NAMESPACES.PRINCIPAL);
-  const [tab, setTab] = useState<"product" | "fiscal" | "cost" | "financial" | "history" | "variants">("product");
-  const [selectedProduct, setSelectedProduct] = useState<ProductModel | null>(null);
+  const [tab, setTab] = useState<"product" | "fiscal" | "cost" | "financial" | "history" | "price">("product");
+  const [selectedProduct, setSelectedProduct] = useState<ProductFormModel | null>(null);
 
+  const [searchParams] = useSearchParams();
   const tabsEnabled = !!selectedProduct;
 
-  const handleSelectProduct = (product: ProductModel | null) => {
+  useEffect(() => {
+    const productId = searchParams.get("productId");
+    if (productId && !selectedProduct) {
+      console.log("🔗 Deep linking to product:", productId);
+      api.get(`/products/${productId}`)
+        .then(res => {
+          const mapped = mapProductFromApi(res.data);
+          setSelectedProduct(mapped);
+          setTab("price");
+        })
+        .catch(err => console.error("❌ Error loading deep linked product:", err));
+    }
+  }, [searchParams, selectedProduct]);
+
+  const handleSelectProduct = (product: ProductFormModel | null) => {
     console.log("🎯 Produto selecionado:", product);
-    console.log("🆔 ID do produto:", product?.id);
-    console.log("📝 Nome do produto:", product?.name);
+    // ...
     setSelectedProduct(product);
   };
 
-  const handleDoubleClickProduct = (product: ProductModel) => {
+  const handleDoubleClickProduct = (product: ProductFormModel) => {
+    // ...
     console.log("🖱️ Duplo clique no produto:", product);
     console.log("🆔 ID do produto (duplo clique):", product?.id);
-    
+
     // Selecionar o produto primeiro
     setSelectedProduct(product);
-    
+
     // Depois avançar para a próxima aba
     setTimeout(() => {
       const currentTab = tab;
@@ -43,8 +60,8 @@ export default function ProductTabs() {
       } else if (currentTab === "financial") {
         setTab("history");
       } else if (currentTab === "history") {
-        setTab("variants");
-      } else if (currentTab === "variants") {
+        setTab("price");
+      } else if (currentTab === "price") {
         setTab("fiscal"); // Volta para a primeira aba de dados
       }
     }, 100);
@@ -89,7 +106,7 @@ export default function ProductTabs() {
         >
           {t("productFinancial.title")}
         </button>
-      
+
         <button
           className={`${styles.tab} ${tab === "history" ? styles.active : ""}`}
           onClick={() => tabsEnabled && setTab("history")}
@@ -99,25 +116,22 @@ export default function ProductTabs() {
         </button>
 
         <button
-          className={`${styles.tab} ${tab === "variants" ? styles.active : ""}`}
-          onClick={() => tabsEnabled && setTab("variants")}
+          className={`${styles.tab} ${tab === "price" ? styles.active : ""}`}
+          onClick={() => tabsEnabled && setTab("price")}
           disabled={!tabsEnabled}
         >
-          Variantes
+          Preço de Venda
         </button>
       </div>
       <div className={styles.content}>
         {tab === "product" && <Product onSelectProduct={handleSelectProduct} onDoubleClickProduct={handleDoubleClickProduct} />}
-        {tab === "fiscal" && selectedProduct && <ProductFiscal product={selectedProduct} onDoubleClickProduct={handleDoubleClickProduct} />}
-        {tab === "cost" && selectedProduct && <ProductCost product={selectedProduct} onDoubleClickProduct={handleDoubleClickProduct} />}     
-        {tab === "financial" && selectedProduct && <ProductFinancial product={selectedProduct} onDoubleClickProduct={handleDoubleClickProduct} />}       
-        {tab === "history" && selectedProduct && <ProductHistory product={selectedProduct} onDoubleClickProduct={handleDoubleClickProduct} />}
-        {tab === "variants" && selectedProduct && (
-          <div>
-            <p>🔍 Debug: ProductId = {selectedProduct.id}</p>
-            <VariantGrid productId={selectedProduct.id} />
-          </div>
-        )}                  
+        {tab === "fiscal" && selectedProduct && <ProductFiscal product={selectedProduct as any} onDoubleClickProduct={handleDoubleClickProduct} />}
+        {tab === "cost" && selectedProduct && <ProductCost product={selectedProduct as any} onDoubleClickProduct={handleDoubleClickProduct} />}
+        {tab === "financial" && selectedProduct && <ProductFinancial product={selectedProduct as any} onDoubleClickProduct={handleDoubleClickProduct} />}
+        {tab === "history" && selectedProduct && <ProductHistory product={selectedProduct as any} onDoubleClickProduct={handleDoubleClickProduct} />}
+        {tab === "price" && selectedProduct && (
+          <ProductPriceTab product={selectedProduct as any} />
+        )}
       </div>
     </div>
   );

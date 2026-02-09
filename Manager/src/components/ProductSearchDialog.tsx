@@ -141,7 +141,7 @@ export default function ProductSearchDialog({ isOpen, onClose, onSelect }: Props
                                             <td>{product.id}</td>
                                             <td>{product.name}</td>
                                             <td>{product.reference || "-"}</td>
-                                            <td>{product.productCategory?.name || "-"}</td>
+                                            <td>{product.categoryName || product.productCategory?.name || "-"}</td>
                                             <td>
                                                 <button
                                                     className={styles.selectButton}

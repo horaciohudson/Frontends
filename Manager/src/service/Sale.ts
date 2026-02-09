@@ -29,5 +29,15 @@ export const SaleService = {
     update: async (id: string, data: SaleCreateDTO): Promise<Sale> => {
         const response = await api.put<Sale>(`/sales/${id}`, data);
         return response.data;
+    },
+    // Confirm sale
+    confirmSale: async (id: string): Promise<Sale> => {
+        const response = await api.post<Sale>(`/sales/${id}/confirm`, {});
+        return response.data;
+    },
+    // Finalize sale and emit NFe
+    finalizeSale: async (id: string): Promise<Sale> => {
+        const response = await api.post<Sale>(`/sales/${id}/finalize`, {});
+        return response.data;
     }
 };

@@ -153,3 +153,13 @@ export async function searchCustomers(query: string): Promise<Customer[]> {
     return []; // Retorna lista vazia em vez de dados mock
   }
 }
+
+export async function getCustomerAddresses(customerId: string): Promise<any[]> {
+  try {
+    const response = await apiNoPrefix.get(`/api/customers/${customerId}/addresses`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching customer addresses:", error);
+    return [];
+  }
+}

@@ -32,7 +32,7 @@ const mockAddresses: SalesPersonAddress[] = [
 
 export async function getSalesPersonAddresses(salespersonId: number): Promise<SalesPersonAddress[]> {
   try {
-    const { data } = await api.get(`/salespersons/${salespersonId}/addresses`);
+    const { data } = await api.get(`/seller-addresses/salesperson/${salespersonId}`);
     return data as SalesPersonAddress[];
   } catch (error) {
     console.warn("Backend endpoint not available, using mock data:", error);
@@ -43,8 +43,8 @@ export async function getSalesPersonAddresses(salespersonId: number): Promise<Sa
 
 export async function getSalesPersonAddress(salespersonId: number): Promise<SalesPersonAddress | null> {
   try {
-    const { data } = await api.get(`/salespersons/${salespersonId}/address`);
-    return data as SalesPersonAddress;
+    const { data } = await api.get(`/seller-addresses/salesperson/${salespersonId}`);
+    return data && data.length > 0 ? (data[0] as SalesPersonAddress) : null;
   } catch (error) {
     console.warn("Backend endpoint not available, using mock data:", error);
     // Retorna o primeiro endereço do vendedor quando o endpoint não estiver disponível
@@ -55,7 +55,7 @@ export async function getSalesPersonAddress(salespersonId: number): Promise<Sale
 
 export async function createSalesPersonAddress(dto: SalesPersonAddress): Promise<SalesPersonAddress> {
   try {
-    const { data } = await api.post(`/salespersons/${dto.salespersonId}/addresses`, dto);
+    const { data } = await api.post(`/seller-addresses`, dto);
     return data as SalesPersonAddress;
   } catch (error) {
     console.warn("Backend endpoint not available, simulating creation:", error);
@@ -71,7 +71,7 @@ export async function createSalesPersonAddress(dto: SalesPersonAddress): Promise
 
 export async function updateSalesPersonAddress(id: number, dto: SalesPersonAddress): Promise<SalesPersonAddress> {
   try {
-    const { data } = await api.put(`/salespersons/${dto.salespersonId}/addresses/${id}`, dto);
+    const { data } = await api.put(`/seller-addresses/${id}`, dto);
     return data as SalesPersonAddress;
   } catch (error) {
     console.warn("Backend endpoint not available, simulating update:", error);
@@ -88,7 +88,7 @@ export async function updateSalesPersonAddress(id: number, dto: SalesPersonAddre
 
 export async function deleteSalesPersonAddress(id: number): Promise<void> {
   try {
-    await api.delete(`/salespersons/addresses/${id}`);
+    await api.delete(`/seller-addresses/${id}`);
   } catch (error) {
     console.warn("Backend endpoint not available, simulating deletion:", error);
     // Simula exclusão com dados mock
@@ -102,7 +102,7 @@ export async function deleteSalesPersonAddress(id: number): Promise<void> {
 
 export async function upsertSalesPersonAddress(salespersonId: number, dto: SalesPersonAddress): Promise<SalesPersonAddress> {
   try {
-    const { data } = await api.put(`/salespersons/${salespersonId}/address`, dto);
+    const { data } = await api.put(`/seller-addresses/salesperson/${salespersonId}/upsert`, dto);
     return data as SalesPersonAddress;
   } catch (error) {
     console.warn("Backend endpoint not available, simulating upsert:", error);

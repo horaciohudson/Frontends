@@ -12,4 +12,9 @@ export interface SaleItem {
     size?: string;
     weight?: number;
     status?: string;
+    sizeName?: string;
+    colorName?: string;
+    sizeId?: string;
+    colorId?: string;
+    variantId?: string;
 }

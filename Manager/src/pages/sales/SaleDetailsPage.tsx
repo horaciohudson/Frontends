@@ -51,16 +51,61 @@ export default function SaleDetailsPage() {
         }
     };
 
+    const handleConfirmSale = async () => {
+        if (!id || !sale) return;
+
+        if (!window.confirm("Confirma a venda? Após confirmar, não será possível editar os itens.")) {
+            return;
+        }
+
+        try {
+            setLoading(true);
+            const updatedSale = await SaleService.confirmSale(id);
+            setSale(updatedSale);
+            alert("Venda confirmada com sucesso!");
+        } catch (err: any) {
+            console.error("Error confirming sale:", err);
+            alert(`Erro ao confirmar venda: ${err.message || "Erro desconhecido"}`);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleFinalizeSale = async () => {
+        if (!id || !sale) return;
+
+        if (!window.confirm("Confirma a emissão da Nota Fiscal?")) {
+            return;
+        }
+
+        try {
+            setLoading(true);
+            const updatedSale = await SaleService.finalizeSale(id);
+            setSale(updatedSale);
+            alert(`Nota Fiscal emitida com sucesso! Número: ${updatedSale.nfeNumber || 'Gerando...'}`);
+        } catch (err: any) {
+            console.error("Error finalizing sale:", err);
+            alert(`Erro ao emitir Nota Fiscal: ${err.message || "Erro desconhecido"}`);
+            // Reload to get latest status anyway
+            loadSale();
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const getStatusBadge = (status: SaleStatus) => {
         switch (status) {
             case "OPEN":
-                return <span className={styles.badgeOpen}>Aberta</span>;
+                return <span className={`${styles.badge} ${styles.badgeOpen}`}>Aberta</span>;
+            case "CONFIRMED":
+                return <span className={`${styles.badge} ${styles.badgeConfirmed}`} style={{ backgroundColor: '#3b82f6', color: 'white' }}>Confirmada</span>;
+            case "BILLED": // Legacy/Backend mapping might settle on CLOSED or BILLED, ensure consistency
             case "CLOSED":
-                return <span className={styles.badgeClosed}>Fechada</span>;
-            case "CANCELLED":
-                return <span className={styles.badgeCancelled}>Cancelada</span>;
+                return <span className={`${styles.badge} ${styles.badgeClosed}`}>Faturada</span>;
+            case "CANCELED":
+                return <span className={`${styles.badge} ${styles.badgeCancelled}`}>Cancelada</span>;
             default:
-                return <span>{status}</span>;
+                return <span className={styles.badge}>{status}</span>;
         }
     };
 
@@ -81,21 +126,8 @@ export default function SaleDetailsPage() {
         });
     };
 
-    if (loading) {
-        return (
-            <div className={styles.container}>
-                <div className={styles.loading}>Carregando venda...</div>
-            </div>
-        );
-    }
-
-    if (!sale) {
-        return (
-            <div className={styles.container}>
-                <div className={styles.error}>Venda não encontrada</div>
-            </div>
-        );
-    }
+    if (loading && !sale) return <div className={styles.loading}>Carregando...</div>;
+    if (!sale) return <div className={styles.error}>Venda não encontrada</div>;
 
     return (
         <div className={styles.container}>
@@ -111,17 +143,39 @@ export default function SaleDetailsPage() {
                     <h1 className={styles.title}>📋 Detalhes da Venda</h1>
                 </div>
                 <div className={styles.headerRight}>
+                    {sale.status === 'OPEN' && (
+                        <button
+                            onClick={handleConfirmSale}
+                            className={styles.confirmButton}
+                            style={{ backgroundColor: '#f59e0b', color: 'white', marginRight: '8px' }}
+                            disabled={loading}
+                        >
+                            ✅ Confirmar Venda
+                        </button>
+                    )}
+
+                    {sale.status === 'CONFIRMED' && (
+                        <button
+                            onClick={handleFinalizeSale}
+                            className={styles.nfeButton}
+                            style={{ backgroundColor: '#10b981', color: 'white', marginRight: '8px' }}
+                            disabled={loading || sale.nfeStatus === 'AUTHORIZED'}
+                        >
+                            📜 Emitir Nota Fiscal
+                        </button>
+                    )}
+
                     <button
                         onClick={() => navigate(`/comerciais/sales/${id}/edit`)}
                         className={styles.editButton}
-                        disabled={sale.status === "CLOSED" || sale.status === "CANCELLED"}
+                        disabled={sale.status !== "OPEN"} // Strict logic: Only OPEN can be edited
                     >
                         ✏️ Editar
                     </button>
                     <button
                         onClick={handleDelete}
                         className={styles.deleteButton}
-                        disabled={sale.status === "CLOSED"}
+                        disabled={sale.status !== "OPEN"} // Only OPEN can be deleted (or maybe CANCELLED logic later)
                     >
                         🗑️ Excluir
                     </button>
@@ -154,6 +208,37 @@ export default function SaleDetailsPage() {
                             <span className={styles.infoLabel}>Tipo:</span>
                             <span className={styles.infoValue}>{sale.type}</span>
                         </div>
+                    )}
+
+                    {/* NFe Info */}
+                    {sale.nfeStatus && (
+                        <>
+                            <div className={styles.infoItem}>
+                                <span className={styles.infoLabel}>Status NFe:</span>
+                                <span
+                                    className={styles.infoValue}
+                                    style={{
+                                        color: sale.nfeStatus === 'AUTHORIZED' ? 'green' :
+                                            sale.nfeStatus === 'FAILED' ? 'red' : 'orange',
+                                        fontWeight: 'bold'
+                                    }}
+                                >
+                                    {sale.nfeStatus}
+                                </span>
+                            </div>
+                            {sale.nfeNumber && (
+                                <div className={styles.infoItem}>
+                                    <span className={styles.infoLabel}>NFe Nº:</span>
+                                    <span className={styles.infoValue}>{sale.nfeNumber}</span>
+                                </div>
+                            )}
+                            {sale.nfeErrorMessage && (
+                                <div className={styles.infoItem} style={{ gridColumn: '1 / -1', color: 'red' }}>
+                                    <span className={styles.infoLabel}>Erro NFe:</span>
+                                    <span className={styles.infoValue}>{sale.nfeErrorMessage}</span>
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
             </div>
@@ -222,6 +307,7 @@ export default function SaleDetailsPage() {
                                 <th>#</th>
                                 <th>Produto</th>
                                 <th>Tamanho</th>
+                                <th>Cor</th>
                                 <th>Unidade</th>
                                 <th>Quantidade</th>
                                 <th>Preço Unitário</th>
@@ -235,7 +321,8 @@ export default function SaleDetailsPage() {
                                     <td>
                                         <strong>{item.description}</strong>
                                     </td>
-                                    <td>{item.size || "-"}</td>
+                                    <td>{item.sizeName || item.size || "-"}</td>
+                                    <td>{item.colorName || "-"}</td>
                                     <td>{item.unit}</td>
                                     <td className={styles.centerAlign}>{item.quantity}</td>
                                     <td>{formatCurrency(item.unitPrice)}</td>

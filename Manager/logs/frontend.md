@@ -1,16 +1,34 @@
-Download the React DevTools for a better development experience: https://react.dev/link/react-devtools
-AuthContext.tsx:34 [12:13:44.540] 🔐 AuthContext - Verificando token no useEffect: false
-AuthContext.tsx:34 [12:13:44.540] ⚠️ AuthContext - Nenhum token encontrado
-AuthContext.tsx:34 [12:13:44.541] 🔐 AuthContext - Verificando token no useEffect: false
-AuthContext.tsx:34 [12:13:44.541] ⚠️ AuthContext - Nenhum token encontrado
-AuthContext.jsx:119 🔐 AuthContext.jsx - Verificando token no useEffect: false
-AuthContext.jsx:122 ⚠️ AuthContext.jsx - Token ausente ou expirado, fazendo logout
-AuthContext.jsx:119 🔐 AuthContext.jsx - Verificando token no useEffect: false
-AuthContext.jsx:122 ⚠️ AuthContext.jsx - Token ausente ou expirado, fazendo logout
-AuthContext.tsx:34 [12:14:44.797] 🔑 AuthContext - Iniciando login...
-api.ts:45 🔐 Interceptor - Token encontrado: false
-api.ts:46 🔐 Interceptor - URL da requisição: /auth/login
-api.ts:71 ⚠️ Nenhum token encontrado no localStorage
-api/auth/login:1   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
-AuthContext.tsx:106  ❌ AuthContext - Erro no login: AxiosErrorcode: "ERR_BAD_RESPONSE"config: {transitional: {…}, adapter: Array(3), transformRequest: Array(1), transformResponse: Array(1), timeout: 0, …}message: "Request failed with status code 500"name: "AxiosError"request: XMLHttpRequest {onreadystatechange: null, readyState: 4, timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload, …}response: {data: '', status: 500, statusText: 'Internal Server Error', headers: AxiosHeaders, config: {…}, …}status: 500stack: "AxiosError: Request failed with status code 500\n    at settle (http://localhost:5173/node_modules/.vite/deps/axios.js?v=94386f90:1232:12)\n    at XMLHttpRequest.onloadend (http://localhost:5173/node_modules/.vite/deps/axios.js?v=94386f90:1564:7)\n    at Axios.request (http://localhost:5173/node_modules/.vite/deps/axios.js?v=94386f90:2122:41)\n    at async login (http://localhost:5173/src/routes/AuthContext.tsx:64:24)\n    at async handleSubmit (http://localhost:5173/src/LoginPage.tsx:31:7)"[[Prototype]]: Error
-login @ AuthContext.tsx:106
+ Token exp: 1769337723 | Agora: 1769334450 | Válido: true
+api.ts:45 🔐 Interceptor - Token encontrado: true
+api.ts:46 🔐 Interceptor - URL da requisição: /products/ddb3c0a1-5933-4eb6-9588-3d3b5dbd14f2/variants
+api.ts:50 🔐 Interceptor - Authorization header adicionado
+api.ts:57 🕐 Token exp: 1769337723 | Agora: 1769334450 | Válido: true
+:5173/api/sizes:1   Failed to load resource: the server responded with a status of 403 (Forbidden)
+Size.ts:55  ❌ Erro ao buscar tamanhos: Error: API Error: 403 - Forbidden
+    at SizeService.getAll (Size.ts:38:15)
+    at async Promise.all (index 0)
+    at async loadData (VariantGrid.tsx:58:56)
+getAll @ Size.ts:55
+VariantGrid.tsx:112  ❌ Erro ao carregar dados de variantes: Error: API Error: 403 - Forbidden
+    at SizeService.getAll (Size.ts:38:15)
+    at async Promise.all (index 0)
+    at async loadData (VariantGrid.tsx:58:56)
+loadData @ VariantGrid.tsx:112
+VariantGrid.tsx:116 ✅ LoadData finalizado
+:5173/api/sizes:1   Failed to load resource: the server responded with a status of 403 (Forbidden)
+Size.ts:55  ❌ Erro ao buscar tamanhos: Error: API Error: 403 - Forbidden
+    at SizeService.getAll (Size.ts:38:15)
+    at async Promise.all (index 0)
+    at async loadData (VariantGrid.tsx:58:56)
+getAll @ Size.ts:55
+VariantGrid.tsx:112  ❌ Erro ao carregar dados de variantes: Error: API Error: 403 - Forbidden
+    at SizeService.getAll (Size.ts:38:15)
+    at async Promise.all (index 0)
+    at async loadData (VariantGrid.tsx:58:56)
+loadData @ VariantGrid.tsx:112
+VariantGrid.tsx:116 ✅ LoadData finalizado
+ProductVariant.ts:13 ✅ Variantes carregadas: Array(5)0: {id: '03f30a6f-d5f8-43bc-851f-f141173b7163', productId: '74d50b4e-0caf-49dd-9ae4-238bf5ad925d', productName: 'Camiseta Básica Masculina', sizeId: '5a1714f4-482d-48eb-ad79-ad08fbc97e6e', sizeName: 'PP', …}1: {id: 'b6797a6a-f153-4432-b867-e4987cd69995', productId: '74d50b4e-0caf-49dd-9ae4-238bf5ad925d', productName: 'Camiseta Básica Masculina', sizeId: '5a1714f4-482d-48eb-ad79-ad08fbc97e6e', sizeName: 'PP', …}2: {id: '5b345a44-b820-4275-97ed-963aa09f2e77', productId: '74d50b4e-0caf-49dd-9ae4-238bf5ad925d', productName: 'Camiseta Básica Masculina', sizeId: '9d1d0f44-ae75-40cd-9f47-efe2daa29544', sizeName: 'M', …}3: {id: 'fb8ed5a3-b78b-4509-9a40-bd0828758aee', productId: '74d50b4e-0caf-49dd-9ae4-238bf5ad925d', productName: 'Camiseta Básica Masculina', sizeId: '9d1d0f44-ae75-40cd-9f47-efe2daa29544', sizeName: 'M', …}4: {id: '5e9d3fe7-55de-44ba-8220-24e4a548f438', productId: '74d50b4e-0caf-49dd-9ae4-238bf5ad925d', productName: 'Camiseta Básica Masculina', sizeId: 'd94da02e-5169-4a13-8484-16dd90584401', sizeName: 'G', …}length: 5[[Prototype]]: Array(0)
+ProductVariant.ts:13 ✅ Variantes carregadas: Array(5)0: {id: '03f30a6f-d5f8-43bc-851f-f141173b7163', productId: '74d50b4e-0caf-49dd-9ae4-238bf5ad925d', productName: 'Camiseta Básica Masculina', sizeId: '5a1714f4-482d-48eb-ad79-ad08fbc97e6e', sizeName: 'PP', …}1: {id: 'b6797a6a-f153-4432-b867-e4987cd69995', productId: '74d50b4e-0caf-49dd-9ae4-238bf5ad925d', productName: 'Camiseta Básica Masculina', sizeId: '5a1714f4-482d-48eb-ad79-ad08fbc97e6e', sizeName: 'PP', …}2: {id: '5b345a44-b820-4275-97ed-963aa09f2e77', productId: '74d50b4e-0caf-49dd-9ae4-238bf5ad925d', productName: 'Camiseta Básica Masculina', sizeId: '9d1d0f44-ae75-40cd-9f47-efe2daa29544', sizeName: 'M', …}3: {id: 'fb8ed5a3-b78b-4509-9a40-bd0828758aee', productId: '74d50b4e-0caf-49dd-9ae4-238bf5ad925d', productName: 'Camiseta Básica Masculina', sizeId: '9d1d0f44-ae75-40cd-9f47-efe2daa29544', sizeName: 'M', …}4: {id: '5e9d3fe7-55de-44ba-8220-24e4a548f438', productId: '74d50b4e-0caf-49dd-9ae4-238bf5ad925d', productName: 'Camiseta Básica Masculina', sizeId: 'd94da02e-5169-4a13-8484-16dd90584401', sizeName: 'G', …}length: 5[[Prototype]]: Array(0)
+Color.ts:13 ✅ Cores carregadas da API: Array(10)0: {id: 'ee7d2b98-0fdf-407d-9e27-3104f1b99570', name: 'Branco', hexCode: '#FFFFFF', active: true, displayOrder: 1, …}1: {id: '378b7650-0b00-423b-81d8-cb8415ab6b36', name: 'Preto', hexCode: '#000000', active: true, displayOrder: 2, …}2: {id: '994374af-9d0d-49c2-8989-4a072e329921', name: 'Azul', hexCode: '#0000FF', active: true, displayOrder: 3, …}3: {id: '1e494017-d768-4082-9fd3-39f35e577413', name: 'Vermelho', hexCode: '#FF0000', active: true, displayOrder: 4, …}4: {id: 'c7eab67a-f402-4482-8e6f-ea3e86e16834', name: 'Verde', hexCode: '#00FF00', active: true, displayOrder: 5, …}5: {id: '86df3b47-13dd-409c-8e3b-44e4b323e489', name: 'Amarelo', hexCode: '#FFFF00', active: true, displayOrder: 6, …}6: {id: 'fe66acb1-0d8c-45c1-bff4-add181ed3fc5', name: 'Rosa', hexCode: '#FFC0CB', active: true, displayOrder: 7, …}7: {id: '04b6f1fd-2eed-4dca-b732-05e920820347', name: 'Cinza', hexCode: '#808080', active: true, displayOrder: 8, …}8: {id: 'fb690a5a-7b24-428a-a7aa-987247bea3ad', name: 'Marrom', hexCode: '#A52A2A', active: true, displayOrder: 9, …}9: {id: '9bd66ab2-d1b3-4775-b15f-2bc7ab6fc789', name: 'Bege', hexCode: '#F5F5DC', active: true, displayOrder: 10, …}length: 10[[Prototype]]: Array(0)
+Color.ts:13 ✅ Cores carregadas da API: Array(10)0: {id: 'ee7d2b98-0fdf-407d-9e27-3104f1b99570', name: 'Branco', hexCode: '#FFFFFF', active: true, displayOrder: 1, …}1: {id: '378b7650-0b00-423b-81d8-cb8415ab6b36', name: 'Preto', hexCode: '#000000', active: true, displayOrder: 2, …}2: {id: '994374af-9d0d-49c2-8989-4a072e329921', name: 'Azul', hexCode: '#0000FF', active: true, displayOrder: 3, …}3: {id: '1e494017-d768-4082-9fd3-39f35e577413', name: 'Vermelho', hexCode: '#FF0000', active: true, displayOrder: 4, …}4: {id: 'c7eab67a-f402-4482-8e6f-ea3e86e16834', name: 'Verde', hexCode: '#00FF00', active: true, displayOrder: 5, …}5: {id: '86df3b47-13dd-409c-8e3b-44e4b323e489', name: 'Amarelo', hexCode: '#FFFF00', active: true, displayOrder: 6, …}6: {id: 'fe66acb1-0d8c-45c1-bff4-add181ed3fc5', name: 'Rosa', hexCode: '#FFC0CB', active: true, displayOrder: 7, …}7: {id: '04b6f1fd-2eed-4dca-b732-05e920820347', name: 'Cinza', hexCode: '#808080', active: true, displayOrder: 8, …}8: {id: 'fb690a5a-7b24-428a-a7aa-987247bea3ad', name: 'Marrom', hexCode: '#A52A2A', active: true, displayOrder: 9, …}9: {id: '9bd66ab2-d1b3-4775-b15f-2bc7ab6fc789', name: 'Bege', hexCode: '#F5F5DC', active: true, displayOrder: 10, …}length: 10[[Prototype]]: Array(0)at: ƒ at()concat: ƒ concat()constructor: ƒ Array()copyWithin: ƒ copyWithin()entries: ƒ entries()every: ƒ every()fill: ƒ fill()filter: ƒ filter()find: ƒ find()findIndex: ƒ findIndex()findLast: ƒ findLast()findLastIndex: ƒ findLastIndex()flat: ƒ flat()flatMap: ƒ flatMap()forEach: ƒ forEach()includes: ƒ includes()indexOf: ƒ indexOf()join: ƒ join()keys: ƒ keys()lastIndexOf: ƒ lastIndexOf()length: 0map: ƒ map()pop: ƒ pop()push: ƒ push()reduce: ƒ reduce()reduceRight: ƒ reduceRight()reverse: ƒ reverse()shift: ƒ shift()slice: ƒ slice()some: ƒ some()sort: ƒ sort()splice: ƒ splice()toLocaleString: ƒ toLocaleString()toReversed: ƒ toReversed()toSorted: ƒ toSorted()toSpliced: ƒ toSpliced()toString: ƒ toString()unshift: ƒ unshift()values: ƒ values()with: ƒ with()Symbol(Symbol.iterator): ƒ values()Symbol(Symbol.unscopables): {at: true, copyWithin: true, entries: true, fill: true, find: true, …}[[Prototype]]: Object
+2VariantGrid.tsx:27 🎨 VariantGrid renderizado com productId: ddb3c0a1-5933-4eb6-9588-3d3b5dbd14f2

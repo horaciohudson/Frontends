@@ -2,7 +2,9 @@
 import { useState, useEffect } from "react";
 import { SaleItemDTO } from "../../models/Sale";
 import { Product } from "../../models/Product";
+import { ProductVariant } from "../../types/ProductVariant";
 import { listProducts } from "../../service/product";
+import VariantSelectionDialog from "../../components/sales/VariantSelectionDialog";
 import styles from "../../styles/sales/FormSaleItems.module.css";
 
 interface FormSaleItemsProps {
@@ -13,6 +15,8 @@ interface FormSaleItemsProps {
 export default function FormSaleItems({ items, setItems }: FormSaleItemsProps) {
     const [products, setProducts] = useState<Product[]>([]);
     const [showProductDialog, setShowProductDialog] = useState(false);
+    const [showVariantDialog, setShowVariantDialog] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [productSearch, setProductSearch] = useState("");
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
@@ -44,23 +48,55 @@ export default function FormSaleItems({ items, setItems }: FormSaleItemsProps) {
         }
     };
 
-    const handleAddProduct = (product: Product) => {
+    const handleProductSelect = (product: Product) => {
+        setSelectedProduct(product);
+        setShowProductDialog(false);
+        setShowVariantDialog(true);
+    };
+
+    const handleVariantSelect = (variant: ProductVariant) => {
+        if (!selectedProduct) return;
+
+        console.log("🎯 Variante selecionada:", variant);
+        console.log("💰 Preço da variante:", variant.salePrice);
+        console.log("📦 Produto:", selectedProduct);
+
+        // Prioridade: 1. Preço da variante, 2. Preço de venda do produto, 3. Custo médio, 4. Zero
+        const unitPrice = variant.salePrice
+            || (selectedProduct as any).sellingPrice
+            || selectedProduct.productCost?.averageCost
+            || 0;
+        const quantity = 1;
+
         const newItem: SaleItemDTO = {
             itemNumber: items.length + 1,
-            productId: product.id || 0,
-            description: product.name,
-            quantity: 1,
-            unitPrice: product.productCost?.averageCost || 0,
-            totalPrice: product.productCost?.averageCost || 0,
+            productId: selectedProduct.id || "",
+            variantId: variant.id,
+            sizeId: variant.sizeId,
+            colorId: variant.colorId,
+            description: selectedProduct.name,
+            quantity: quantity,
+            unitPrice: unitPrice,
+            totalPrice: unitPrice * quantity,
             unit: "UN",
-            size: product.productSize?.size,
+            sizeName: variant.sizeName,
+            colorName: variant.colorName,
             weight: undefined,
             status: "ACTIVE"
         };
 
+        console.log("📝 Item criado:", newItem);
+
         setItems([...items, newItem]);
-        setShowProductDialog(false);
+        setShowVariantDialog(false);
+        setSelectedProduct(null);
         setProductSearch("");
+    };
+
+    const handleCloseVariantDialog = () => {
+        setShowVariantDialog(false);
+        setSelectedProduct(null);
+        setShowProductDialog(true);
     };
 
     const handleRemoveItem = (index: number) => {
@@ -119,6 +155,7 @@ export default function FormSaleItems({ items, setItems }: FormSaleItemsProps) {
                                     <th>#</th>
                                     <th>Produto</th>
                                     <th>Tamanho</th>
+                                    <th>Cor</th>
                                     <th>Quantidade</th>
                                     <th>Preço Unitário</th>
                                     <th>Total</th>
@@ -132,7 +169,8 @@ export default function FormSaleItems({ items, setItems }: FormSaleItemsProps) {
                                         <td>
                                             <strong>{item.description}</strong>
                                         </td>
-                                        <td>{item.size || "-"}</td>
+                                        <td>{item.sizeName || "-"}</td>
+                                        <td>{item.colorName || "-"}</td>
                                         <td>
                                             <input
                                                 type="number"
@@ -222,7 +260,7 @@ export default function FormSaleItems({ items, setItems }: FormSaleItemsProps) {
                                         <div
                                             key={product.id}
                                             className={styles.productItem}
-                                            onClick={() => handleAddProduct(product)}
+                                            onClick={() => handleProductSelect(product)}
                                         >
                                             <div className={styles.productName}>
                                                 {product.name}
@@ -250,6 +288,16 @@ export default function FormSaleItems({ items, setItems }: FormSaleItemsProps) {
                         </div>
                     </div>
                 </div>
+            )}
+
+            {/* Variant Selection Dialog */}
+            {showVariantDialog && selectedProduct && (
+                <VariantSelectionDialog
+                    productId={String(selectedProduct.id)}
+                    productName={selectedProduct.name}
+                    onSelect={handleVariantSelect}
+                    onClose={handleCloseVariantDialog}
+                />
             )}
         </div>
     );

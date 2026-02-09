@@ -15,10 +15,14 @@ export interface Product {
   packaging: PackagingType;
 
   // Relacionamentos com IDs e nomes para o frontend
-  productCategory: ProductCategory;
-  productSubCategory: ProductSubCategory;
-  supplier: Company;
+  productCategory?: ProductCategory;
+  categoryName?: string;
+  productSubCategory?: ProductSubCategory;
+  subCategoryName?: string;
+  supplier?: Company;
+  supplierName?: string;
   productSize?: ProductSize;
+  sellingPrice?: number;
 
   // Product cost information
   productCost?: {
@@ -54,11 +58,11 @@ export interface ProductFormModel {
   productCategoryName: string;
   productSubcategoryId: number;
   productSubcategoryName: string;
-  productSizeId: number;
-  productSizeName: string;
+
 
   supplierId: string;
   supplierName: string;
+  sellingPrice?: number;
 }
 
 // Enums para status

@@ -74,7 +74,7 @@ const mockCompanies: Company[] = [
 export async function getCompanies(): Promise<Company[]> {
   try {
     const { data } = await api.get(`/companies`);
-    return data as Company[];
+    return (data.content || data) as Company[];
   } catch (error) {
     console.warn("Backend endpoint not available, using mock data:", error);
     // Return mock data when endpoint is not available

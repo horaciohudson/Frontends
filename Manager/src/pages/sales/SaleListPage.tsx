@@ -207,7 +207,12 @@ export default function SaleListPage() {
                         </thead>
                         <tbody>
                             {filteredSales.map((sale) => (
-                                <tr key={sale.id}>
+                                <tr
+                                    key={sale.id}
+                                    onDoubleClick={() => navigate(`/comerciais/sales/${sale.id}/edit`)}
+                                    style={{ cursor: 'pointer' }}
+                                    title="Duplo clique para editar"
+                                >
                                     <td>{formatDate(sale.createdDate)}</td>
                                     <td>
                                         <strong>{sale.customer.name}</strong>
@@ -227,14 +232,20 @@ export default function SaleListPage() {
                                         <div className={styles.actionButtons}>
                                             <button
                                                 className={styles.viewButton}
-                                                onClick={() => navigate(`/comerciais/sales/${sale.id}`)}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    navigate(`/comerciais/sales/${sale.id}`);
+                                                }}
                                                 title="Ver detalhes"
                                             >
                                                 👁️
                                             </button>
                                             <button
                                                 className={styles.editButton}
-                                                onClick={() => navigate(`/comerciais/sales/${sale.id}/edit`)}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    navigate(`/comerciais/sales/${sale.id}/edit`);
+                                                }}
                                                 title="Editar"
                                                 disabled={sale.status === "CLOSED" || sale.status === "CANCELLED"}
                                             >
@@ -242,7 +253,10 @@ export default function SaleListPage() {
                                             </button>
                                             <button
                                                 className={styles.deleteButton}
-                                                onClick={() => handleDelete(sale.id)}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleDelete(sale.id);
+                                                }}
                                                 title="Excluir"
                                                 disabled={sale.status === "CLOSED"}
                                             >
