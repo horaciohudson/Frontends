@@ -28,6 +28,9 @@ const Navbar: React.FC = () => {
                     <Link to="/launcher" className="navbar-link">
                         Launcher
                     </Link>
+                    <Link to="/studio" className="navbar-link">
+                        Studio
+                    </Link>
                     <Link to="/health" className="navbar-link">
                         Health Check
                     </Link>

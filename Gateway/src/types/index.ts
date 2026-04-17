@@ -93,3 +93,47 @@ export interface User {
     username: string;
     roles: string[];
 }
+
+export interface StudioAdminUser {
+    userId: string;
+    username: string;
+    fullName: string;
+    email: string;
+    status: string;
+    roles: string[];
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+export interface StudioCreateUserRequest {
+    username: string;
+    fullName: string;
+    email: string;
+    password: string;
+    admin: boolean;
+}
+
+export interface StudioSetting {
+    key: string;
+    value: string;
+    description?: string;
+    updatedBy?: string;
+    updatedAt?: string;
+}
+
+export interface StudioCostSync {
+    costId: string;
+    costReference: string;
+    status: 'PENDING' | 'SENT' | 'ERROR' | string;
+    integrationTarget: string;
+    totalCost: number;
+    currency: string;
+    correlationId?: string;
+    createdAt?: string;
+    createdBy?: string;
+    lastActionBy?: string;
+    attemptCount?: number;
+    lastError?: string;
+    syncedAt?: string;
+    message?: string;
+}

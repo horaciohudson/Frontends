@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import SystemLauncher from './pages/SystemLauncher/SystemLauncher';
 import HealthCheck from './pages/HealthCheck/HealthCheck';
 import DataSync from './pages/DataSync/DataSync';
+import StudioAdmin from './pages/StudioAdmin/StudioAdmin';
 import './App.css';
 
 const App: React.FC = () => {
@@ -28,6 +29,7 @@ const App: React.FC = () => {
                         <Route index element={<Navigate to="/dashboard" replace />} />
                         <Route path="dashboard" element={<Dashboard />} />
                         <Route path="launcher" element={<SystemLauncher />} />
+                        <Route path="studio" element={<StudioAdmin />} />
                         <Route path="health" element={<HealthCheck />} />
                         <Route path="sync" element={<DataSync />} />
                     </Route>
