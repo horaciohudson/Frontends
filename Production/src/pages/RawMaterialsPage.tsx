@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { rawMaterialService } from '../services/rawMaterialService';
 import { companyService, type Company } from '../services/companyService';
+import { authService } from '../services/authService';
 import type { RawMaterialDTO, CreateRawMaterialDTO, UpdateRawMaterialDTO } from '../types/rawMaterial';
 import RawMaterialGrid from '../components/ui/RawMaterialGrid';
 import RawMaterialFormModal from '../components/ui/RawMaterialFormModal';
@@ -101,6 +102,44 @@ const RawMaterialsPage: React.FC = () => {
         setError('');
         setEditingMaterial(undefined);
         setShowForm(true);
+    };
+
+    const handleCopyAccessToken = async () => {
+        const token = authService.getToken();
+        if (!token) {
+            alert('Nenhum token de acesso encontrado. Faça login novamente.');
+            return;
+        }
+
+        const tokenValue = token.trim();
+        const bearerValue = `Bearer ${tokenValue}`;
+
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(tokenValue);
+                alert('Token copiado para área de transferência.');
+                return;
+            }
+
+            const textArea = document.createElement('textarea');
+            textArea.value = tokenValue;
+            textArea.style.position = 'fixed';
+            textArea.style.opacity = '0';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            const copied = document.execCommand('copy');
+            document.body.removeChild(textArea);
+
+            if (copied) {
+                alert('Token copiado para área de transferência.');
+                return;
+            }
+        } catch (error) {
+            console.warn('Falha ao copiar token automaticamente:', error);
+        }
+
+        window.prompt('Copie manualmente o token abaixo:', bearerValue);
     };
 
     const handleCompanyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -211,14 +250,23 @@ const RawMaterialsPage: React.FC = () => {
             <div className="raw-materials-page">
                 <div className="page-header">
                     <h1 className="page-title">🧱 Matérias-Primas</h1>
-                    <button
-                        onClick={handleCreate}
-                        className={`btn btn-primary ${!selectedCompanyId ? 'btn-disabled' : ''}`}
-                        disabled={!selectedCompanyId}
-                        title={!selectedCompanyId ? 'Selecione uma empresa primeiro' : 'Criar nova matéria-prima'}
-                    >
-                        + Nova Matéria-Prima
-                    </button>
+                    <div className="header-actions">
+                        <button
+                            onClick={handleCopyAccessToken}
+                            className="btn btn-secondary"
+                            title="Copiar token de acesso para integração com Studio"
+                        >
+                            🔐 Token Acesso
+                        </button>
+                        <button
+                            onClick={handleCreate}
+                            className={`btn btn-primary ${!selectedCompanyId ? 'btn-disabled' : ''}`}
+                            disabled={!selectedCompanyId}
+                            title={!selectedCompanyId ? 'Selecione uma empresa primeiro' : 'Criar nova matéria-prima'}
+                        >
+                            + Nova Matéria-Prima
+                        </button>
+                    </div>
                 </div>
 
                 <div className="page-filters">
